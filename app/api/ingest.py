@@ -53,10 +53,10 @@ async def upload_pdf(file: UploadFile = File(...)):
 
     chunk_service = ChunkService(
         chunk_size=500,
-        chunk_overlap=50
+        chunk_overlap=100
     )
 
-    chunks = chunk_service.create_chunks(pages)
+    chunks = chunk_service.create_chunks(pages, document=destination.name)
 
     # -------------------------
     # Step 3 : Generate Embeddings
