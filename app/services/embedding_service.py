@@ -27,3 +27,10 @@ class EmbeddingService:
             chunk["embedding"] = embedding.tolist()
 
         return chunks
+
+    def generate_query_embedding(self, text: str) -> list[float]:
+
+        return self.model.encode(
+            text,
+            normalize_embeddings=True
+        ).tolist()

@@ -22,9 +22,3 @@ class RetrievalService:
         )
 
         return results
-
-    def generate_query_embedding(self, text: str) -> list[float]:
-        return self.model.encode(
-            text,
-            normalize_embeddings=True
-        ).tolist()
