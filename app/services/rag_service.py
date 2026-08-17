@@ -1,15 +1,25 @@
 from app.services.retrieval_service import RetrievalService
 from app.services.llm_service import LLMService
+from app.services.guardrail_service import GuardrailService
 
 
 class RAGService:
 
     def __init__(self):
 
+        self.guardrail = GuardrailService()
         self.retriever = RetrievalService()
         self.llm = LLMService()
 
     def ask(self, question: str):
+
+        guard = self.guardrail.check(question)
+
+        if not guard["allowed"]:
+            return {
+                "answer": "I can only answer questions related to your insurance policy documents.",
+                "sources": []
+            }
 
         results = self.retriever.retrieve(question)
 
