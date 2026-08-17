@@ -23,7 +23,14 @@ class RAGService:
             context=context
         )
 
+        sources = []
+        for meta in metadata:
+            source = {"page": meta["page"]}
+            if meta.get("section") and meta["section"] != "Unknown":
+                source["title"] = meta["section"]
+            sources.append(source)
+
         return {
             "answer": answer,
-            "sources": metadata
+            "sources": sources
         }

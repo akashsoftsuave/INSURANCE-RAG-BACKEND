@@ -22,8 +22,8 @@ class ChunkService:
         )
 
         self.heading_pattern = re.compile(
-            r"^(SECTION\s+\d+|Section\s+\d+|ARTICLE\s+\d+|\d+(\.\d+)*)",
-            re.MULTILINE,
+            r"^(SECTION\s+\d+|ARTICLE\s+\d+|\d+(\.\d+)+|\d+\.\s+[A-Za-z][^\n]*)",
+            flags=re.MULTILINE | re.IGNORECASE,
         )
 
     @staticmethod

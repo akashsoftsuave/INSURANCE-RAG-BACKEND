@@ -47,7 +47,8 @@ class VectorStore:
 
             metadatas.append(
                 {
-                    "page": chunk["page"]
+                    "page": chunk["page"],
+                    "section": chunk["section"]
                 }
             )
 

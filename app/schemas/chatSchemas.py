@@ -6,6 +6,7 @@ class ChatRequest(BaseModel):
 
 class Source(BaseModel):
     page: int
+    title: str | None = None
 
 
 class ChatResponse(BaseModel):
