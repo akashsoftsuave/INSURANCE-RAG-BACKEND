@@ -19,3 +19,5 @@ pydantic
 python-multipart
 
 langchain-text-splitters
+
+rank-bm25
