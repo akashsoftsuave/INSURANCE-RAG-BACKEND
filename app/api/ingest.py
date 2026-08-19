@@ -67,7 +67,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     chunks = embedding_service.generate_embeddings(chunks)
 
     # -------------------------
-    # Step 3 : Store in Vector Store
+    # Step 4 : Store in Vector Store
     # -------------------------
 
     vector_store = VectorStore()
