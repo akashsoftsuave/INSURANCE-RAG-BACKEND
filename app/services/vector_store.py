@@ -5,14 +5,14 @@ from app.core.config import settings
 
 class VectorStore:
 
-    def __init__(self):
+    def __init__(self, chroma_path: str | None = None, collection_name: str | None = None, client=None):
 
-        self.client = chromadb.PersistentClient(
-            path=settings.CHROMA_PATH
+        self.client = client or chromadb.PersistentClient(
+            path=chroma_path or settings.CHROMA_PATH
         )
 
         self.collection = self.client.get_or_create_collection(
-            name=settings.COLLECTION_NAME
+            name=collection_name or settings.COLLECTION_NAME
         )
 
     def clear_collection(self):
