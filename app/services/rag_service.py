@@ -5,6 +5,7 @@ from app.services.llm_service import LLMService
 from app.services.guardrail_service import GuardrailService
 from app.services.trace_logger import TraceLogger
 from app.core.redaction import redact
+from app.core.config import settings
 
 
 class RAGService:
@@ -31,6 +32,7 @@ class RAGService:
                 question=question,
                 guard=guard,
                 results=[],
+                pre_rerank_results=[],
                 generation=None,
                 answer=answer,
             )
@@ -41,7 +43,7 @@ class RAGService:
                 "trace_id": trace_id,
             }
 
-        results = self.retriever.retrieve(question)
+        results, pre_rerank_results = self.retriever.retrieve(question, return_pre_rerank=True)
 
         # New retrieval format: list of {id, document, metadata, score}
         documents = [r["document"] for r in results]
@@ -71,6 +73,7 @@ class RAGService:
             question=question,
             guard=guard,
             results=results,
+            pre_rerank_results=pre_rerank_results,
             generation=generation,
             answer=answer,
         )
@@ -81,12 +84,18 @@ class RAGService:
             "trace_id": trace_id,
         }
 
-    def _write_trace(self, *, trace_id, question, guard, results, generation, answer):
-        """Builds the redacted-before-write trace record. `answer` here is
-        the raw model output — this app has no separate post-processing step
-        between raw_output and the final answer, so both fields hold the
-        same redacted text; that collapse is itself worth noting when reading
-        traces, not hidden."""
+    def _write_trace(self, *, trace_id, question, guard, results, pre_rerank_results, generation, answer):
+
+        pre_rerank_candidates = [
+            {
+                "chunk_id": r.get("id"),
+                "page": r.get("metadata", {}).get("page"),
+                "section": r.get("metadata", {}).get("section"),
+                "fusion_score": r.get("score"),
+                "text_redacted": redact(r.get("document", "")),
+            }
+            for r in pre_rerank_results
+        ]
 
         candidates = [
             {
@@ -106,7 +115,9 @@ class RAGService:
             "question_redacted": redact(question),
             "guardrail": guard,
             "retrieval": {
-                "top_k": len(results),
+                "top_k": settings.TOP_K,
+                "candidate_pool_size": len(pre_rerank_results),
+                "pre_rerank_candidates": pre_rerank_candidates,
                 "candidates": candidates,
             },
             "prompt_version": generation["prompt_version"] if generation else None,
@@ -122,6 +133,7 @@ class RAGService:
                 "method": "id-regex ([A-Z]{2,10}-...-YYYY-ALPHANUM)",
                 "fields": [
                     "question_redacted",
+                    "retrieval.pre_rerank_candidates[].text_redacted",
                     "retrieval.candidates[].text_redacted",
                     "raw_output_redacted",
                     "final_answer_redacted",
