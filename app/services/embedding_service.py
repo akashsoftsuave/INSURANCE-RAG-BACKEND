@@ -8,9 +8,11 @@ class EmbeddingService:
 
     def __init__(self):
 
+        print(f"[Embedding] Loading model: {settings.EMBEDDING_MODEL}")
         self.model = SentenceTransformer(
             settings.EMBEDDING_MODEL
         )
+        print("[Embedding] Model loaded.")
 
     def generate_embeddings(
         self,

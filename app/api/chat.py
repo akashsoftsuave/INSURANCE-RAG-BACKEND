@@ -13,4 +13,7 @@ rag_service = RAGService()
 
 @router.post("/", response_model=ChatResponse, response_model_exclude_none=True)
 async def chat(request: ChatRequest):
-    return rag_service.ask(request.question)
+    print(f"[Chat] POST /api/v1/chat | question={request.question!r}")
+    response = rag_service.ask(request.question)
+
+    return response

@@ -7,6 +7,7 @@ class LLMService:
 
     def __init__(self):
 
+        print(f"[LLM][Init] Groq client | model={settings.MODEL_NAME}")
         self.client = Groq(
             api_key=settings.GROQ_API_KEY
         )
@@ -39,6 +40,9 @@ Question:
 
 {question}
 """
+
+        print(f"[LLM] Requesting answer | model={settings.MODEL_NAME} "
+              f"context_chars={len(context)} prompt_chars={len(prompt)}")
 
         response = self.client.chat.completions.create(
             model=settings.MODEL_NAME,
