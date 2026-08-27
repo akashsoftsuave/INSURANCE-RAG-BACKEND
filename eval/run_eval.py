@@ -2,11 +2,14 @@
 """
 Usage (from repo root, with venv active):
     python -m eval.run_eval
+
+To run a different predefined PDF + golden-question set, change
+ACTIVE_DATASET below to one of the keys in eval/datasets.py
+("shieldcare_full", "shieldcare_basic", "acko_bike").
 """
 
 import json
 import re
-from pathlib import Path
 
 from app.services.chunk_service import ChunkService
 from app.services.embedding_service import EmbeddingService
@@ -15,27 +18,27 @@ from app.services.pdf_loader import PDFLoader
 from app.services.retrieval_service import RetrievalService
 from app.services.vector_store import VectorStore
 
-PDF_PATH = Path("eval/data/insurance.pdf") if Path("eval/data/insurance.pdf").exists() else Path("documents/uploads/insurance.pdf")
-QUESTIONS_PATH = Path("eval/questions.json")
-REPORT_PATH = Path("eval/report.md")
+from eval.datasets import DATASETS
+
+ACTIVE_DATASET = "acko_bike"
+
 TOP_K = 3
-EVAL_COLLECTION_NAME = "eval_insurance_benchmark"
 
 
-def ingest():
-    pages = PDFLoader.extract_text(str(PDF_PATH))
+def ingest(pdf_path, collection_name):
+    pages = PDFLoader.extract_text(str(pdf_path))
 
     chunk_service = ChunkService(chunk_size=500, chunk_overlap=100)
-    chunks = chunk_service.create_chunks(pages, document=PDF_PATH.name)
+    chunks = chunk_service.create_chunks(pages, document=pdf_path.name)
 
     embedding_service = EmbeddingService()
     chunks = embedding_service.generate_embeddings(chunks)
 
-    vector_store = VectorStore(collection_name=EVAL_COLLECTION_NAME)
+    vector_store = VectorStore(collection_name=collection_name)
     vector_store.clear_collection()
     vector_store.add_documents(chunks)
 
-    print(f"Ingested {len(chunks)} chunks from {PDF_PATH.name} into collection '{EVAL_COLLECTION_NAME}'")
+    print(f"Ingested {len(chunks)} chunks from {pdf_path.name} into collection '{collection_name}'")
     return embedding_service, vector_store
 
 
@@ -76,7 +79,21 @@ def label_failure(hit: bool, answer_ok: bool) -> str:
 
 
 def main():
-    embedding_service, vector_store = ingest()
+    if ACTIVE_DATASET not in DATASETS:
+        raise ValueError(
+            f"Unknown ACTIVE_DATASET {ACTIVE_DATASET!r}. "
+            f"Choose one of: {', '.join(DATASETS)}"
+        )
+
+    dataset = DATASETS[ACTIVE_DATASET]
+    pdf_path = dataset["pdf"]
+    questions_path = dataset["questions"]
+    report_path = dataset["report"]
+    collection_name = dataset["collection"]
+
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    embedding_service, vector_store = ingest(pdf_path, collection_name)
     n_chunks = len(vector_store.collection.get()["ids"])
 
     retriever = RetrievalService()
@@ -84,7 +101,7 @@ def main():
     retriever.vector_store = vector_store
     llm = LLMService()
 
-    questions = json.loads(QUESTIONS_PATH.read_text())
+    questions = json.loads(questions_path.read_text())
 
     rows = []
     for q in questions:
@@ -119,7 +136,7 @@ def main():
     lines.append(
         "**Configuration under test:** current implementation "
         "(hybrid RRF + cross-encoder rerank `ms-marco-MiniLM-L-6-v2`). "
-        f"Corpus: `{PDF_PATH.name}` ({n_chunks} chunks), k={TOP_K}.\n"
+        f"Dataset: `{ACTIVE_DATASET}` — corpus: `{pdf_path.name}` ({n_chunks} chunks), k={TOP_K}.\n"
     )
     lines.append("## Headline numbers\n")
     lines.append("| Metric | Value |")
@@ -156,8 +173,8 @@ def main():
         lines.append("")
 
     report = "\n".join(lines)
-    REPORT_PATH.write_text(report)
-    print(f"\nWrote report: {REPORT_PATH}")
+    report_path.write_text(report)
+    print(f"\nWrote report: {report_path}")
     print(f"hit-rate@{TOP_K}: {hit_rate:.0%}")
 
 
