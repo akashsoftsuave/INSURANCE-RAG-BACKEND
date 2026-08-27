@@ -15,10 +15,11 @@ from app.services.pdf_loader import PDFLoader
 from app.services.retrieval_service import RetrievalService
 from app.services.vector_store import VectorStore
 
-PDF_PATH = Path("documents/uploads/insurance.pdf")
+PDF_PATH = Path("eval/data/insurance.pdf") if Path("eval/data/insurance.pdf").exists() else Path("documents/uploads/insurance.pdf")
 QUESTIONS_PATH = Path("eval/questions.json")
 REPORT_PATH = Path("eval/report.md")
 TOP_K = 3
+EVAL_COLLECTION_NAME = "eval_insurance_benchmark"
 
 
 def ingest():
@@ -30,11 +31,11 @@ def ingest():
     embedding_service = EmbeddingService()
     chunks = embedding_service.generate_embeddings(chunks)
 
-    vector_store = VectorStore()
+    vector_store = VectorStore(collection_name=EVAL_COLLECTION_NAME)
     vector_store.clear_collection()
     vector_store.add_documents(chunks)
 
-    print(f"Ingested {len(chunks)} chunks from {PDF_PATH.name}")
+    print(f"Ingested {len(chunks)} chunks from {PDF_PATH.name} into collection '{EVAL_COLLECTION_NAME}'")
     return embedding_service, vector_store
 
 
