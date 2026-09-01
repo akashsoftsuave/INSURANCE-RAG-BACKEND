@@ -1,0 +1,17 @@
+[
+  {
+    "question": "when does my policy expire",
+    "marker": "Jun 27",
+    "expected_answer_contains": "2027"
+  },
+  {
+    "question": "does this policy cover damage to my bike if I have an accident",
+    "marker": "Accident",
+    "expected_answer_contains": "not covered"
+  },
+  {
+    "question": "if my bike is stolen, does this policy cover the theft",
+    "marker": "Theft",
+    "expected_answer_contains": "not covered"
+  }
+]

@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Chroma vector DB (regenerated from source PDFs on every ingest/eval run)
+chroma_db/
+
+# macOS
+.DS_Store
+
+.bin
+
