@@ -154,38 +154,3 @@ class RetrievalService:
             r["rerank_score"] = len(q_tokens & doc_tokens) / max(len(q_tokens), 1)
         results.sort(key=lambda x: x.get("rerank_score", 0), reverse=True)
         return results
- 
-    def compute_metrics(self, results: list, relevant_ids: set = None) -> dict:
-        """Compute hit-rate@k, recall@k, and MRR metrics.
-       
-        Args:
-            results: List of retrieved result dicts with 'id' field
-            relevant_ids: Set of IDs that are considered relevant (for recall/MRR)
-        """
-        k = min(len(results), settings.TOP_K)
-       
-        # Hit-rate@k: proportion of queries where at least one relevant doc is in top-k
-        hit_at_k = 0
-        if relevant_ids:
-            retrieved_ids = {r.get("id") for r in results if r.get("id")}
-            hit_at_k = len(retrieved_ids & relevant_ids) > 0
-       
-        # Recall@k: proportion of relevant docs retrieved in top-k
-        recall_at_k = 0
-        if relevant_ids and len(relevant_ids) > 0:
-            retrieved_ids = {r.get("id") for r in results if r.get("id")}
-            recall_at_k = len(retrieved_ids & relevant_ids) / len(relevant_ids)
-       
-        # MRR (Mean Reciprocal Rank): 1/rank of first relevant doc
-        mrr = 0
-        if relevant_ids:
-            for i, r in enumerate(results, 1):
-                if r.get("id") in relevant_ids:
-                    mrr = 1.0 / i
-                    break
-       
-        return {
-            "hit_rate_at_k": hit_at_k,
-            "recall_at_k": recall_at_k,
-            "mrr": mrr
-        }

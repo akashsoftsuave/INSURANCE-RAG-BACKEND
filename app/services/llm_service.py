@@ -4,7 +4,7 @@ from app.core.config import settings
 
 # Bump this whenever the prompt template below changes — trace records store
 # it so a replayed trace can be told apart from one built on an older prompt.
-PROMPT_VERSION = "insurance-qa-v1"
+PROMPT_VERSION = "insurance-qa-v2"
 TEMPERATURE = 0
 SYSTEM_MESSAGE = "You answer only using provided documents."
 
@@ -23,19 +23,30 @@ class LLMService:
         """Pure template render — used both for live calls and for replaying
         a trace from its stored (question, context, prompt_version)."""
 
-        return f"""
-You are an Insurance Assistant.
+        return f"""You are an Insurance Assistant.
 
 Rules:
 
-1. Answer ONLY from the provided context.
+1. Answer the user's question using all relevant information in the provided context.
 
-2. If the answer is not available,
-reply exactly:
+2. The question may contain multiple requested fields.
+   Check each requested field independently.
 
-"I couldn't find this information in the provided documents."
+3. Check ALL provided context chunks before deciding that information is unavailable.
 
-3. Do not use outside knowledge.
+4. Do not say information is unavailable unless you have verified that the provided context contains no information for that specific field.
+
+5. If some fields are available and others are unavailable:
+   - answer the available fields
+   - explicitly identify only the unavailable fields.
+
+6. Do not use outside knowledge.
+
+7. Do not infer or invent information that is not explicitly stated in the context.
+
+8. If relevant information is spread across multiple context chunks, combine it into one answer.
+
+9. Preserve the exact names, dates, amounts, percentages, limits, and policy terms stated in the context.
 
 Context:
 
@@ -76,8 +87,3 @@ Question:
             "model": settings.MODEL_NAME,
             "temperature": TEMPERATURE,
         }
-
-    def generate_answer(self, question: str, context: str) -> str:
-        """Back-compat string-returning form, used by eval/run_eval.py."""
-
-        return self.generate(question, context)["raw_output"]
