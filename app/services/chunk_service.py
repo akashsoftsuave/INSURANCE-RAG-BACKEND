@@ -43,6 +43,8 @@ class ChunkService:
     KEY_ONLY = re.compile(r"^[A-Za-z][A-Za-z\s]{1,40}$")
     VALUE_ONLY = re.compile(r"^[\d\w\s\.,\-\+%\(\)\/]+$")
 
+    SENTENCE_BOUNDARY = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"‘“])")
+
     def __init__(
         self,
         chunk_size: int = 800,
@@ -290,6 +292,28 @@ class ChunkService:
 
         return merged
 
+    def _split_oversized_unit(self, unit: str, limit: int) -> List[str]:
+
+        if len(unit) <= limit:
+            return [unit]
+
+        sentences = self.SENTENCE_BOUNDARY.split(unit)
+        pieces = []
+        current = ""
+        for sentence in sentences:
+            if current and len(current) + 1 + len(sentence) > limit:
+                pieces.append(current)
+                current = sentence
+            else:
+                current = f"{current} {sentence}".strip() if current else sentence
+        if current:
+            pieces.append(current)
+
+        # A single sentence longer than `limit` (rare) has no safe
+        # smaller boundary to cut on — keep it whole rather than
+        # truncating mid-clause.
+        return pieces
+
     def split_large_segment(self, segment: TextSegment, doc_name: str, chunk_counter: int) -> Tuple[List[Chunk], int]:
         """Split a large segment while preserving logical units."""
         chunks = []
@@ -312,6 +336,21 @@ class ChunkService:
 
         units = self._group_into_logical_units(text)
 
+        def _emit(piece: str):
+            nonlocal chunk_counter
+            chunk_id = f"{doc_name.replace('.pdf', '')}_p{page}_c{chunk_counter}"
+            chunks.append(Chunk(
+                text=piece.strip(),
+                page=page,
+                section=section,
+                chunk_index=chunk_counter,
+                chunk_id=chunk_id,
+                document=doc_name,
+                segment_type=segment.segment_type,
+                metadata={**segment.metadata, "char_length": len(piece)}
+            ))
+            chunk_counter += 1
+
         current_chunk = ""
         for unit in units:
             if len(current_chunk) + len(unit) + 1 <= self.chunk_size:
@@ -321,33 +360,19 @@ class ChunkService:
                     current_chunk = unit
             else:
                 if current_chunk:
-                    chunk_id = f"{doc_name.replace('.pdf', '')}_p{page}_c{chunk_counter}"
-                    chunks.append(Chunk(
-                        text=current_chunk.strip(),
-                        page=page,
-                        section=section,
-                        chunk_index=chunk_counter,
-                        chunk_id=chunk_id,
-                        document=doc_name,
-                        segment_type=segment.segment_type,
-                        metadata={**segment.metadata, "char_length": len(current_chunk)}
-                    ))
-                    chunk_counter += 1
-                current_chunk = unit
+                    _emit(current_chunk)
+                    current_chunk = ""
+
+                if len(unit) > self.max_chunk_size:
+                    *full_pieces, last_piece = self._split_oversized_unit(unit, self.chunk_size)
+                    for piece in full_pieces:
+                        _emit(piece)
+                    current_chunk = last_piece
+                else:
+                    current_chunk = unit
 
         if current_chunk:
-            chunk_id = f"{doc_name.replace('.pdf', '')}_p{page}_c{chunk_counter}"
-            chunks.append(Chunk(
-                text=current_chunk.strip(),
-                page=page,
-                section=section,
-                chunk_index=chunk_counter,
-                chunk_id=chunk_id,
-                document=doc_name,
-                segment_type=segment.segment_type,
-                metadata={**segment.metadata, "char_length": len(current_chunk)}
-            ))
-            chunk_counter += 1
+            _emit(current_chunk)
 
         return chunks, chunk_counter
 

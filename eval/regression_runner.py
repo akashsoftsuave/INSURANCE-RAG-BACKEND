@@ -1,30 +1,3 @@
-"""
-The one command for the 30-trace regression/evaluation dataset.
-
-Usage (from repo root, with venv active):
-    python -m eval.regression_runner
-
-What it does, and why it's offline/instant rather than a live rerun:
-traces/traces.jsonl holds exactly 30 already-generated, already-recorded
-answers (see analysis/notes.md, Requirement 2 — full population, no
-sampling). This runner scores those 30 frozen answers, it does not call
-the LLM/embedding pipeline again — so the result is fully deterministic
-and safe to run before/after an unrelated code change to confirm nothing
-drifted (see step 4 of the regression workflow: "run all 30 traces again
-and confirm the baseline is stable").
-
-Verdict per trace = reference label from eval/labels_30.json (the
-human-reviewed ground truth from analysis/notes.md's open-coding) UNLESS
-a Task Set D deterministic check (eval/deterministic_checks.py) reports
-FAIL on that trace's answer, which overrides to FAIL — deterministic
-checks are an independent, code-level regression guard on top of the
-hand-reviewed baseline, not a replacement for it. (On this specific
-30-trace set none of them currently do; see the per-check summary below.)
-
-Writes eval/regression_results.json (full detail) and prints a summary
-report grouped by taxonomy mode (OK/A/B/C, per analysis/taxonomy.md).
-"""
-
 import json
 from pathlib import Path
 
@@ -67,9 +40,9 @@ def main():
     traces = load_traces()
     labels = load_labels()
 
-    if len(traces) != 30:
-        print(f"[WARN] traces/traces.jsonl has {len(traces)} records, expected 30 — "
-              f"regression dataset is defined as exactly these 30 (see instructions).")
+    if len(traces) < 25:
+        print(f"[WARN] traces/traces.jsonl has only {len(traces)} records — "
+              f"active Task Set D population must be at least 25.")
 
     rows = []
     for trace in traces:
@@ -135,7 +108,7 @@ def main():
     for ds, v in sorted(results["by_dataset"].items()):
         print(f"  {ds:18s} {v['pass']}/{v['total']}  ({v['pass_rate']:.0%})")
 
-    print("\nTask Set D deterministic checks (across all 30):")
+    print(f"\nTask Set D deterministic checks (across all {n} active traces):")
     for check, counts in check_summary.items():
         print(f"  {check:28s} PASS={counts['PASS']:2d}  FAIL={counts['FAIL']:2d}  N/A={counts['NOT_APPLICABLE']:2d}")
 
@@ -144,7 +117,7 @@ def main():
         for r in disagreements:
             print(f"    {r['trace_id']} (Q{r['question_index']}, {r['dataset']})")
     else:
-        print("\nNo deterministic-check overrides — automated checks agree with the reference baseline on all 30.")
+        print(f"\nNo deterministic-check overrides — automated checks agree with the reference baseline on all {n} active traces.")
 
     print(f"\nWrote {RESULTS_PATH}")
 

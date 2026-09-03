@@ -5,7 +5,23 @@ from rank_bm25 import BM25Okapi
 from app.core.config import settings
 from app.services.embedding_service import EmbeddingService
 from app.services.vector_store import VectorStore
+
+
 class RetrievalService:
+
+    SCENARIO_CONDITION_MARKERS = re.compile(
+        r"void\s+ab\s+initio|void\s+from\s+inception|misrepresentation|\bfraud\b|"
+        r"non[-\s]?disclosure|(?:stand\s+)?fully\s+forfeited|"
+        r"no\s+obligation\s+whatsoever\s+to\s+settle",
+        re.IGNORECASE,
+    )
+    QUERY_CONDITION_TERMS = re.compile(
+        r"\bfraud\b|misrepresent|non[-\s]?disclosure|\bvoid\b|forfeit|"
+        r"false\s+information|incorrect\s+information|\blied\b|lying|"
+        r"not\s+disclos",
+        re.IGNORECASE,
+    )
+    SCENARIO_MISMATCH_PENALTY = 10.0
 
     def __init__(self):
 
@@ -138,6 +154,13 @@ class RetrievalService:
             return final_results, pre_rerank_results
         return final_results
 
+    def _apply_scenario_mismatch_penalty(self, results: list, question: str):
+        if self.QUERY_CONDITION_TERMS.search(question or ""):
+            return
+        for r in results:
+            if self.SCENARIO_CONDITION_MARKERS.search(r.get("document", "")):
+                r["rerank_score"] -= self.SCENARIO_MISMATCH_PENALTY
+
     def _rerank(self, results: list, question: str, use_cross_encoder: bool = False):
         """Reranking using cross-encoder if available, otherwise keyword-based proxy."""
         if use_cross_encoder and self.cross_encoder is not None:
@@ -145,6 +168,7 @@ class RetrievalService:
             scores = self.cross_encoder.predict(pairs)
             for i, r in enumerate(results):
                 r["rerank_score"] = float(scores[i])
+            self._apply_scenario_mismatch_penalty(results, question)
             results.sort(key=lambda x: x["rerank_score"], reverse=True)
             return results
 
@@ -152,5 +176,6 @@ class RetrievalService:
         for r in results:
             doc_tokens = set(self._tokenize(r["document"]))
             r["rerank_score"] = len(q_tokens & doc_tokens) / max(len(q_tokens), 1)
+        self._apply_scenario_mismatch_penalty(results, question)
         results.sort(key=lambda x: x.get("rerank_score", 0), reverse=True)
         return results

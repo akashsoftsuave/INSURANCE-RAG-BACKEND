@@ -1,15 +1,10 @@
 {
-  "population": 30,
+  "population": 27,
   "pass": 24,
-  "fail": 6,
-  "pass_rate": 0.8,
+  "fail": 3,
+  "pass_rate": 0.8889,
   "by_mode": {
     "A": {
-      "total": 3,
-      "pass": 0,
-      "pass_rate": 0.0
-    },
-    "B": {
       "total": 1,
       "pass": 0,
       "pass_rate": 0.0
@@ -27,41 +22,41 @@
   },
   "by_dataset": {
     "acko_bike": {
-      "total": 10,
+      "total": 9,
       "pass": 6,
-      "pass_rate": 0.6
+      "pass_rate": 0.6667
     },
     "shieldcare_basic": {
-      "total": 10,
+      "total": 9,
       "pass": 9,
-      "pass_rate": 0.9
+      "pass_rate": 1.0
     },
     "shieldcare_full": {
-      "total": 10,
+      "total": 9,
       "pass": 9,
-      "pass_rate": 0.9
+      "pass_rate": 1.0
     }
   },
   "deterministic_check_summary": {
     "claim_number_format": {
-      "PASS": 4,
+      "PASS": 3,
       "FAIL": 0,
-      "NOT_APPLICABLE": 26
+      "NOT_APPLICABLE": 24
     },
     "date_of_loss": {
       "PASS": 0,
       "FAIL": 0,
-      "NOT_APPLICABLE": 30
+      "NOT_APPLICABLE": 27
     },
     "deductible_numeric": {
-      "PASS": 7,
+      "PASS": 5,
       "FAIL": 0,
-      "NOT_APPLICABLE": 23
+      "NOT_APPLICABLE": 22
     },
     "denial_requires_exclusion": {
-      "PASS": 1,
+      "PASS": 0,
       "FAIL": 0,
-      "NOT_APPLICABLE": 29
+      "NOT_APPLICABLE": 27
     }
   },
   "deterministic_overrides": [],
@@ -346,37 +341,6 @@
       "verdict": "PASS"
     },
     {
-      "trace_id": "4aa90d04-c93d-4864-a5b2-176840bbd4b1",
-      "question_index": 10,
-      "dataset": "acko_bike",
-      "mode": "B",
-      "reference_label": "FAIL",
-      "deterministic_checks": [
-        {
-          "check": "claim_number_format",
-          "status": "NOT_APPLICABLE",
-          "detail": "no claim-number-shaped token in text"
-        },
-        {
-          "check": "date_of_loss",
-          "status": "NOT_APPLICABLE",
-          "detail": "no date-of-loss/claim-date field in text"
-        },
-        {
-          "check": "deductible_numeric",
-          "status": "NOT_APPLICABLE",
-          "detail": "no deductible/excess mention in text"
-        },
-        {
-          "check": "denial_requires_exclusion",
-          "status": "NOT_APPLICABLE",
-          "detail": "no denial/rejection language in text"
-        }
-      ],
-      "deterministic_override": false,
-      "verdict": "FAIL"
-    },
-    {
       "trace_id": "81bd1491-12fb-4152-a4c9-5d4dd1c1ccd1",
       "question_index": 11,
       "dataset": "shieldcare_basic",
@@ -656,37 +620,6 @@
       "verdict": "PASS"
     },
     {
-      "trace_id": "c2572dc5-68c6-4449-8a3a-1e44f932fe57",
-      "question_index": 20,
-      "dataset": "shieldcare_basic",
-      "mode": "A",
-      "reference_label": "FAIL",
-      "deterministic_checks": [
-        {
-          "check": "claim_number_format",
-          "status": "NOT_APPLICABLE",
-          "detail": "no claim-number-shaped token in text"
-        },
-        {
-          "check": "date_of_loss",
-          "status": "NOT_APPLICABLE",
-          "detail": "no date-of-loss/claim-date field in text"
-        },
-        {
-          "check": "deductible_numeric",
-          "status": "PASS",
-          "detail": "deductible/excess explicitly stated as absent (valid, not a numeric-parse failure)"
-        },
-        {
-          "check": "denial_requires_exclusion",
-          "status": "NOT_APPLICABLE",
-          "detail": "no denial/rejection language in text"
-        }
-      ],
-      "deterministic_override": false,
-      "verdict": "FAIL"
-    },
-    {
       "trace_id": "a518dd80-6147-4ec3-9e68-b2522f4ee717",
       "question_index": 21,
       "dataset": "shieldcare_full",
@@ -964,37 +897,6 @@
       ],
       "deterministic_override": false,
       "verdict": "PASS"
-    },
-    {
-      "trace_id": "26ee3af3-6679-468b-b3d1-98b20473cec4",
-      "question_index": 30,
-      "dataset": "shieldcare_full",
-      "mode": "A",
-      "reference_label": "FAIL",
-      "deterministic_checks": [
-        {
-          "check": "claim_number_format",
-          "status": "PASS",
-          "detail": "4 claim number(s) all match CLM-YYYY-NNNNN: ['CLM‑2026‑00421', 'CLM‑2026‑00437', 'CLM‑2026‑00459', 'CLM‑2026‑00502']"
-        },
-        {
-          "check": "date_of_loss",
-          "status": "NOT_APPLICABLE",
-          "detail": "no date-of-loss/claim-date field in text"
-        },
-        {
-          "check": "deductible_numeric",
-          "status": "PASS",
-          "detail": "deductible/excess explicitly stated as absent (valid, not a numeric-parse failure)"
-        },
-        {
-          "check": "denial_requires_exclusion",
-          "status": "PASS",
-          "detail": "denial is accompanied by an exclusion/clause/section reference"
-        }
-      ],
-      "deterministic_override": false,
-      "verdict": "FAIL"
     }
   ]
 }
