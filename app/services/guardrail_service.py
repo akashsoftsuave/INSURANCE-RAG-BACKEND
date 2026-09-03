@@ -1,4 +1,3 @@
-from app.core.config import settings
 class GuardrailService:
 
     PROMPT_INJECTION_PATTERNS = (
