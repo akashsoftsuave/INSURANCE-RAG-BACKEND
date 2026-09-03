@@ -12,3 +12,4 @@ class Source(BaseModel):
 class ChatResponse(BaseModel):
     answer: str
     sources: list[Source]
+    trace_id: str | None = None

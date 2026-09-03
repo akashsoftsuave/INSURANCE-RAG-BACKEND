@@ -94,10 +94,10 @@ class RetrievalService:
 
         return fused_results
 
-    def retrieve(self, question: str):
+    def retrieve(self, question: str, return_pre_rerank: bool = False):
         total_docs = self.vector_store.collection.count()
         if total_docs == 0:
-            return []
+            return ([], []) if return_pre_rerank else []
 
         candidate_k = min(settings.TOP_K * 4, total_docs)
 
@@ -126,10 +126,17 @@ class RetrievalService:
 
         fused_results = self._rrf_fusion(vector_formatted, bm25_results, k=60)
 
+        # Snapshot pre-rerank state before `_rerank` mutates scores and reorders in place.
+        pre_rerank_results = [dict(r) for r in fused_results]
+
         if fused_results:
             fused_results = self._rerank(fused_results, question, use_cross_encoder=True)
 
-        return fused_results[:settings.TOP_K]
+        final_results = fused_results[:settings.TOP_K]
+
+        if return_pre_rerank:
+            return final_results, pre_rerank_results
+        return final_results
 
     def _rerank(self, results: list, question: str, use_cross_encoder: bool = False):
         """Reranking using cross-encoder if available, otherwise keyword-based proxy."""

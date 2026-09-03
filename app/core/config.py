@@ -7,7 +7,8 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str
     CHROMA_PATH: str
     COLLECTION_NAME: str
-    TOP_K: int
+    TOP_K: int = 3
+    TRACE_LOG_PATH: str = "traces/traces.jsonl"
 
     model_config = SettingsConfigDict(
         env_file=".env",

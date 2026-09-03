@@ -1,14 +1,14 @@
 # Retrieval Evaluation Report
 
-**Configuration under test:** current implementation (hybrid RRF + cross-encoder rerank `ms-marco-MiniLM-L-6-v2`). Corpus: `insurance.pdf` (22 chunks), k=3.
+**Configuration under test:** current implementation (hybrid RRF + cross-encoder rerank `ms-marco-MiniLM-L-6-v2`). Dataset: `shieldcare_basic` — corpus: `shieldcare_basic.pdf` (8 chunks), k=3.
 
 ## Headline numbers
 
 | Metric | Value |
 |---|---|
 | hit-rate@3 | 12/12 (100%) |
-| mean recall@3 | 97% |
-| mean MRR | 0.917 |
+| mean recall@3 | 100% |
+| mean MRR | 0.958 |
 
 Failures: 0/12.
 
