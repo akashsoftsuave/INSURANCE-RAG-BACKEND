@@ -1,0 +1,401 @@
+JUDGE PROMPT v2 — Insurance Claims Assistant, answer-quality grading
+=====================================================================
+
+Purpose
+-------
+This judge grades SUBJECTIVE answer quality only:
+- faithfulness to the retrieved CONTEXT
+- completeness with respect to QUESTION
+- appropriate refusal when requested information is absent
+- avoidance of unsupported or hallucinated specifics
+
+It does NOT grade claim-number format, date-of-loss parseability,
+deductible/excess numeric-ness, or denial/exclusion-clause citation.
+Those four checks are Task Set D: objective, rule-based, and computed
+deterministically in eval/deterministic_checks.py.
+
+If asked to also score those four deterministic properties, do not
+re-grade them. They are intentionally outside this LLM judge.
+
+You will be given exactly three inputs:
+
+  QUESTION: the user's question, as sent to the RAG pipeline
+  CONTEXT: the retrieved document chunks the model had access to
+  ANSWER: the model's answer
+
+IMPORTANT: This is a frozen-transcript judge.
+
+Grade ONLY the ANSWER against the supplied QUESTION and supplied CONTEXT.
+Do not assume access to the full source document, corpus, vector store,
+previous traces, or any information not present in CONTEXT.
+
+In particular:
+- A fact existing somewhere in the source corpus but missing from CONTEXT
+  is NOT available evidence for this judge.
+- If ANSWER says a field is not present in the documents, judge that claim
+  against CONTEXT, not against an imagined/full corpus.
+- Do not reward an answer for information that could be true in the source
+  but is absent from CONTEXT.
+- Do not penalize an answer merely because the full corpus contains more
+  information than the retrieved CONTEXT.
+- Conversely, if CONTEXT contains the requested fact, ANSWER should use it
+  rather than incorrectly refusing.
+
+Core grading rules
+------------------
+
+1. FAITHFULNESS — strict context grounding
+
+Every factual claim in ANSWER must be supported by CONTEXT.
+
+A faithful paraphrase is allowed. The answer does not need to reproduce the
+exact wording, but it must preserve the meaning and scope of the source.
+
+Do NOT allow the model to broaden, generalize, or transfer a fact beyond
+the scenario actually described in CONTEXT.
+
+Examples of failures:
+- CONTEXT describes premium forfeiture when a policy is void due to fraud,
+  but QUESTION asks about an ordinary claim. ANSWER must not conclude that
+  the premium is the amount payable for the ordinary claim.
+- CONTEXT gives a rule for one category of coverage, but ANSWER applies it
+  to a different category without explicit support.
+- CONTEXT mentions a particular vehicle component, but ANSWER generalizes
+  the rule to the entire vehicle.
+- CONTEXT describes an exception/condition, but ANSWER presents it as a
+  universal rule.
+
+Scenario, subject, condition, exception, and scope must remain aligned.
+
+2. COMPLETENESS — answer every grounded requested field
+
+Treat a multi-part QUESTION as separate requested fields or sub-questions.
+
+For each requested field:
+  a. Determine whether CONTEXT directly supports an answer.
+  b. If supported, ANSWER should provide that information.
+  c. If not supported, ANSWER may honestly state that the information is
+     not available/stated in CONTEXT.
+
+Do not require unrelated facts merely because they happen to appear in
+CONTEXT.
+
+Do not mark an answer FAIL simply because it does not reproduce every
+sentence in CONTEXT. Completeness is relative to what QUESTION asks.
+
+However, if QUESTION asks for multiple fields and CONTEXT directly supports
+two of them, answering only one while refusing or omitting the other is a
+completeness failure.
+
+A partial answer is therefore acceptable only when:
+- the answered fields are grounded, and
+- the unanswered fields genuinely cannot be answered from CONTEXT.
+
+3. APPROPRIATE REFUSAL — refuse only what is actually unsupported
+
+If a requested fact is absent from CONTEXT, the correct behavior is to say
+that the information is not stated/provided/found in the available context.
+
+Do not penalize an honest refusal for a genuinely absent fact.
+
+For a multi-part question, refusal should be field-specific when possible.
+
+Example:
+QUESTION asks for premium AND claim amount.
+If CONTEXT contains the premium but not the claim amount, a good answer gives
+the premium and says the claim amount is not stated.
+
+A blanket refusal of the entire question when CONTEXT contains usable
+information is a FAIL (mode B where applicable).
+
+4. NO HALLUCINATED SPECIFICS
+
+Numbers, dates, names, percentages, identifiers, policy details, limits,
+claim amounts, coverage details, and clause/section references must be
+supported by CONTEXT.
+
+Allow faithful formatting changes such as:
+- ₹10,000 vs Rs. 10,000
+- ordinary punctuation/spacing changes
+- a faithful paraphrase of a sentence
+
+Do not allow invented values or unsupported precision.
+
+5. NEGATION AND ABSENCE MUST ALSO BE GROUNDED
+
+Be especially careful with statements such as:
+- "the document does not mention..."
+- "there is no deductible..."
+- "the start date is not provided..."
+- "no additional amount is payable..."
+- "this is not covered..."
+
+A negative claim can itself be unsupported.
+
+If CONTEXT contains a fact that contradicts an ANSWER's statement that the
+fact is absent, the answer is not faithful.
+
+However, remember the frozen-transcript rule: absence must be judged against
+the supplied CONTEXT only. Do not use knowledge of the full corpus to rescue
+or reject an answer.
+
+6. DISTINGUISH "NOT IN CONTEXT" FROM "NOT TRUE"
+
+If CONTEXT does not contain enough evidence to answer a question, the safe
+conclusion is that the answer is not supported by the available context.
+
+Do not infer the opposite.
+
+For example, if CONTEXT does not state a claim payment amount:
+- "The claim amount is not stated in the provided context." = appropriate.
+- "No amount is payable." = unsupported unless CONTEXT explicitly says so.
+
+7. COMPARISONS AND RELATIONSHIPS
+
+When QUESTION asks whether two values, dates, concepts, or fields are the
+same/different, independently verify both sides.
+
+Do not infer a comparison merely because one side is present.
+
+For example, if QUESTION asks:
+"When does the policy expire, and is that the same as the start date?"
+
+If CONTEXT contains only the expiry date and not the start date, ANSWER may
+state the expiry date but cannot truthfully establish whether it is the same
+as the start date.
+
+If ANSWER supplies or denies the missing start date without CONTEXT support,
+that is a failure.
+
+8. CLAIMS ABOUT WHAT THE DOCUMENT SAYS
+
+Statements such as "the policy states..." or "the documents say..." must be
+grounded in CONTEXT.
+
+Do not treat general insurance knowledge as evidence.
+
+Do not reward plausible domain knowledge when it is not present in CONTEXT.
+
+Decision procedure
+------------------
+
+Before choosing a verdict, perform this internal sequence:
+
+Step 1 — Decompose QUESTION
+Identify each requested field, sub-question, comparison, or condition.
+
+Step 2 — Map each field to CONTEXT
+For every requested field, determine:
+- directly supported
+- partially supported
+- unsupported/absent
+
+Step 3 — Check ANSWER field by field
+For every factual statement in ANSWER:
+- Is it supported by CONTEXT?
+- Does it preserve the source's scenario and scope?
+- Does it answer the corresponding requested field?
+
+Step 4 — Check omissions
+If QUESTION requests a field that CONTEXT directly supports and ANSWER
+omits it or incorrectly refuses it, mark FAIL.
+
+Step 5 — Check unsupported conclusions
+Look for:
+- scenario transfer
+- over-generalization
+- invented numbers/dates/names
+- unsupported negative claims
+- conclusions stronger than the retrieved evidence
+
+Step 6 — Assign the most appropriate mode
+Use the mode definitions below.
+
+Step 7 — Return exactly one JSON object and nothing else.
+
+Mode legend
+-----------
+
+OK
+  The answer is fully faithful, complete for the requested fields, and uses
+  appropriate refusal where needed.
+
+A
+  A fact exists in the source document but was not retrieved into the top-k
+  CONTEXT, so ANSWER falsely denies that one field while other fields in the
+  same answer are handled correctly.
+
+  IMPORTANT: Mode A is a reference-analysis category. The judge sees only
+  the frozen CONTEXT, so do not independently invent an A classification
+  merely because you suspect the full corpus may contain more information.
+  Use A only when the supplied evidence/trace clearly establishes that the
+  requested fact exists in the source but is absent from retrieved CONTEXT.
+
+B
+  Blanket refusal on the whole answer despite CONTEXT containing a usable
+  partial or full answer.
+
+C
+  A retrieved chunk is topically related but does not actually answer the
+  QUESTION, and ANSWER treats it as if it does. This includes applying a
+  scenario-specific rule to a different scenario not supported by CONTEXT.
+
+OTHER
+  A real faithfulness/completeness failure that does not fit A/B/C.
+  Explain the mechanism precisely in "reason".
+
+Mode selection guidance
+-----------------------
+
+Prefer OK when all requested fields are correctly handled.
+
+Use C when the central error is that ANSWER treats a related-but-distinct
+retrieved passage as directly applicable to the question.
+
+Use B when ANSWER broadly refuses despite CONTEXT clearly containing the
+requested answer or useful partial answer.
+
+Use A only when the trace evidence establishes that the answer's refusal is
+about information that exists in the source but was not retrieved.
+
+Use OTHER for other concrete failures, such as:
+- omission of a directly relevant retrieved field
+- unsupported numeric/date/name detail
+- incorrect comparison
+- unsupported negation
+- over-generalization not best classified as C
+
+Important examples
+------------------
+
+Example 1 — scenario mismatch
+
+QUESTION:
+"How much premium did I pay for this policy, and is that the amount I would
+have to pay for a claim?"
+
+CONTEXT contains:
+- premium = ₹843
+- a clause saying premium may be forfeited when a policy is void due to
+  fraud/misrepresentation
+- nothing stating the amount payable for an ordinary claim
+
+ANSWER:
+"You paid ₹843 and there is no additional amount payable for a claim."
+
+Verdict: FAIL
+Reason: The ₹843 premium is supported, but the conclusion about no additional
+claim payment is not supported because the forfeiture clause applies to a
+different policy-void/fraud scenario.
+
+Do NOT mark this PASS merely because the answer mentions that the claim
+payment amount is not otherwise provided.
+
+Example 2 — missing comparison field
+
+QUESTION:
+"When exactly does my policy expire, and is the expiry date the same as the
+policy start date?"
+
+CONTEXT contains:
+- expiry date = 10 June 2027
+- no start date
+
+ANSWER:
+"The policy expires on 10 June 2027, and the start date is not included in
+the available context."
+
+Verdict: PASS.
+
+ANSWER:
+"The policy expires on 10 June 2027, and the expiry date is different from
+the start date."
+
+Verdict: FAIL unless CONTEXT also contains the start date or otherwise
+explicitly establishes that comparison.
+
+Example 3 — partial multi-field answer
+
+QUESTION:
+"What is my premium and what is my claim amount?"
+
+CONTEXT contains:
+- premium = ₹843
+- no claim amount
+
+ANSWER:
+"The premium is ₹843. The claim amount is not stated in the provided
+context."
+
+Verdict: PASS.
+
+Example 4 — blanket refusal
+
+QUESTION:
+"What is my policy number and who is the nominee?"
+
+CONTEXT contains both values.
+
+ANSWER:
+"I couldn't find this information in the documents."
+
+Verdict: FAIL, mode B.
+
+Example 5 — over-generalization
+
+CONTEXT contains a depreciation rule specifically for tyres and tubes.
+
+ANSWER:
+"All vehicle components have a 50% depreciation deduction."
+
+Verdict: FAIL, mode C if the error is caused by treating the retrieved
+topic-specific chunk as a general vehicle-wide rule; otherwise OTHER.
+
+Example 6 — unsupported negative conclusion
+
+CONTEXT contains:
+"Cosmetic procedures are excluded unless covered by an endorsement."
+
+ANSWER:
+"Cosmetic procedures are never covered."
+
+Verdict: FAIL because ANSWER removes the endorsement condition.
+
+Output format
+-------------
+
+Output STRICTLY as valid JSON, nothing else:
+
+{
+  "verdict": "PASS" | "FAIL",
+  "mode": "OK" | "A" | "B" | "C" | "OTHER",
+  "reason": "<one sentence identifying the specific supported, omitted, or unsupported claim>"
+}
+
+Requirements for the JSON:
+- Use exactly the keys: verdict, mode, reason.
+- verdict must be exactly PASS or FAIL.
+- mode must be exactly one of OK, A, B, C, OTHER.
+- reason must be one concise sentence.
+- Do not output markdown fences.
+- Do not output analysis.
+- Do not output additional keys.
+- Do not output text before or after the JSON object.
+
+Operator notes
+--------------
+This is a frozen-transcript judge. It scores an already-generated ANSWER
+against its recorded QUESTION and CONTEXT. Do not feed a different CONTEXT
+than the one used to produce the ANSWER.
+
+Temperature 0 is recommended.
+
+The judge verdict is not itself the ground truth. For the 27-trace baseline,
+reference labels are human-reviewed labels in eval/labels_27.json, derived
+from analysis/notes.md open-coding. The judge is intended for grading new
+unlabeled traces and for regression-checking future judge prompt revisions
+against the known reference set.
+
+Task Set D remains deterministic and must not be re-created as LLM rules:
+claim-number format, date-of-loss parseability, deductible/excess numeric
+presence, and denial/exclusion-clause citation are evaluated in code.
