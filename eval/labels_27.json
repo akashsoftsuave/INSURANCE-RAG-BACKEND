@@ -1,8 +1,8 @@
 {
-  "version": "labels_30_v1",
+  "version": "labels_27_v1",
   "source": "analysis/notes.md (open-coding, Requirement 3) + analysis/taxonomy.md (mode clustering) — 2026-09-01. Reference labels only; not derived by re-running the pipeline.",
-  "population": 30,
-  "population_source": "traces/traces.jsonl, 10 questions each over eval/data/acko_bike.pdf, eval/data/shieldcare_basic.pdf, eval/data/shieldcare_full.pdf",
+  "population": 27,
+  "population_source": "traces/traces.jsonl, 9 questions each over eval/data/acko_bike.pdf, eval/data/shieldcare_basic.pdf, eval/data/shieldcare_full.pdf",
   "labels": {
     "b4549815-91a7-493d-ab55-196f02fe50e7": {
       "question_index": 1,
@@ -76,16 +76,8 @@
       "mode": "OK",
       "reason": "Says the requested claim-documentation checklist \"couldn't be found\" — accurate; no chunk in the ACKO corpus lists what to submit with a claim."
     },
-    "4aa90d04-c93d-4864-a5b2-176840bbd4b1": {
-      "question_index": 10,
-      "dataset": "acko_bike",
-      "question": "Can you summarize my bike insurance policy using only information explicitly stated in the document, including the insured bike, policy type, premium, nominee, liability limit, and policy dates?",
-      "label": "FAIL",
-      "mode": "B",
-      "reason": "Says the entire summary (bike, policy type, premium, nominee, liability limit, dates) \"couldn't be found,\" even though this query's own retrieved context includes chunks naming the bike, policy number, premium clause, and expiry date."
-    },
     "81bd1491-12fb-4152-a4c9-5d4dd1c1ccd1": {
-      "question_index": 11,
+      "question_index": 10,
       "dataset": "shieldcare_basic",
       "question": "What is my policy number and who is the beneficiary?",
       "label": "PASS",
@@ -93,7 +85,7 @@
       "reason": "Correctly returns the beneficiary name; policy number is redacted rather than answered, as expected."
     },
     "e61a25bc-5465-48a3-b081-872d2087779d": {
-      "question_index": 12,
+      "question_index": 11,
       "dataset": "shieldcare_basic",
       "question": "What percentage of the policy benefit does my beneficiary receive?",
       "label": "PASS",
@@ -101,7 +93,7 @@
       "reason": "Correctly returns the 100% beneficiary percentage."
     },
     "a4d8dcdb-1781-4311-ba1d-f3b757634cea": {
-      "question_index": 13,
+      "question_index": 12,
       "dataset": "shieldcare_basic",
       "question": "What is my hospitalization deductible, and is it the same as my co-pay?",
       "label": "PASS",
@@ -109,7 +101,7 @@
       "reason": "Correctly returns the deductible and correctly distinguishes it from co-pay — but the raw retrieved chunk itself already renders the rupee sign as a bare \"I\" (e.g. \"I10,000\") rather than ₹, so the model is repeating a source-data defect, not introducing one."
     },
     "32c41bcd-088c-4f5d-a879-0bff7a0ecfac": {
-      "question_index": 14,
+      "question_index": 13,
       "dataset": "shieldcare_basic",
       "question": "How much was my hospitalization claim, and what is the hospitalization coverage limit?",
       "label": "PASS",
@@ -117,7 +109,7 @@
       "reason": "Correctly returns the hospitalization claim amount and coverage limit, again passing through the source chunk's \"I\" in place of ₹."
     },
     "c62c0880-25ab-4745-9192-0467d1157674": {
-      "question_index": 15,
+      "question_index": 14,
       "dataset": "shieldcare_basic",
       "question": "What is the diagnostic-test coverage limit and what was the amount of my diagnostic claim?",
       "label": "PASS",
@@ -125,7 +117,7 @@
       "reason": "Correctly returns the diagnostic coverage limit and claim amount."
     },
     "6e6434b6-9e5b-4352-b7d9-e09089db2c0f": {
-      "question_index": 16,
+      "question_index": 15,
       "dataset": "shieldcare_basic",
       "question": "Has my diagnostic claim been approved, and what evidence in the policy supports that answer?",
       "label": "PASS",
@@ -133,7 +125,7 @@
       "reason": "Correctly reports the diagnostic claim as \"Under Review,\" not approved, and cites the claims table as evidence."
     },
     "a0be337e-1ab0-456b-aa23-56f4116406ff": {
-      "question_index": 17,
+      "question_index": 16,
       "dataset": "shieldcare_basic",
       "question": "Are cosmetic procedures covered under my policy?",
       "label": "PASS",
@@ -141,7 +133,7 @@
       "reason": "Correctly states cosmetic procedures are excluded absent an endorsement."
     },
     "69db754e-2e0f-4812-90db-32cdce356eec": {
-      "question_index": 18,
+      "question_index": 17,
       "dataset": "shieldcare_basic",
       "question": "What co-pay applies to diagnostic tests, and how is it different from the deductible?",
       "label": "PASS",
@@ -149,23 +141,15 @@
       "reason": "Correctly explains the diagnostic co-pay and correctly distinguishes it from a deductible."
     },
     "70297e14-d5b0-4843-aa01-79c7e6bf356f": {
-      "question_index": 19,
+      "question_index": 18,
       "dataset": "shieldcare_basic",
       "question": "What is the ambulance-services coverage limit?",
       "label": "PASS",
       "mode": "OK",
       "reason": "Correctly returns the ambulance coverage limit, again showing the source \"I10,000\" instead of ₹10,000."
     },
-    "c2572dc5-68c6-4449-8a3a-1e44f932fe57": {
-      "question_index": 20,
-      "dataset": "shieldcare_basic",
-      "question": "Give me a concise summary of my policy's beneficiary, hospitalization, diagnostic-test, cosmetic-procedure, ambulance, and expiry information. Do not infer anything that isn't explicitly stated.",
-      "label": "FAIL",
-      "mode": "A",
-      "reason": "Answers 5 of 6 requested summary sections correctly and precisely, but says expiry \"couldn't be found\" even though this document has an explicit expiry date — the expiry chunk simply isn't among the 5 retrieved for this query."
-    },
     "a518dd80-6147-4ec3-9e68-b2522f4ee717": {
-      "question_index": 21,
+      "question_index": 19,
       "dataset": "shieldcare_full",
       "question": "What is my policy number, and who is listed as the beneficiary?",
       "label": "PASS",
@@ -173,7 +157,7 @@
       "reason": "Correctly returns all three beneficiaries with percentages and relationships."
     },
     "a9ef481c-78e7-4f9f-a991-e0807a1033c4": {
-      "question_index": 22,
+      "question_index": 20,
       "dataset": "shieldcare_full",
       "question": "What percentage of the policy benefit is assigned to the beneficiary?",
       "label": "PASS",
@@ -181,7 +165,7 @@
       "reason": "Correctly repeats the three beneficiary percentages."
     },
     "983ef060-b97d-4258-aabc-af86d02c0ab5": {
-      "question_index": 23,
+      "question_index": 21,
       "dataset": "shieldcare_full",
       "question": "What is the hospitalization deductible, and what does the deductible mean for a claim?",
       "label": "PASS",
@@ -189,7 +173,7 @@
       "reason": "Correctly returns the deductible and correctly explains what it means for a claim."
     },
     "b5d7be71-3782-4fc1-af39-de57784ea1b6": {
-      "question_index": 24,
+      "question_index": 22,
       "dataset": "shieldcare_full",
       "question": "What was my hospitalization claim amount, and what is my hospitalization coverage limit?",
       "label": "PASS",
@@ -197,7 +181,7 @@
       "reason": "Correctly returns the hospitalization claim amount and coverage limit — this document's currency renders as \"Rs.\" cleanly, unlike shieldcare_basic's \"I\"."
     },
     "b95829b9-1295-4001-9570-15a0bc14b08c": {
-      "question_index": 25,
+      "question_index": 23,
       "dataset": "shieldcare_full",
       "question": "What is the diagnostic-test coverage limit compared with the amount of my diagnostic claim?",
       "label": "PASS",
@@ -205,7 +189,7 @@
       "reason": "Correctly returns the diagnostic limit and lists both diagnostic claims with dates, amounts, and status in a table."
     },
     "bc3d9e98-4c60-4f98-a239-8d7f64ab668c": {
-      "question_index": 26,
+      "question_index": 24,
       "dataset": "shieldcare_full",
       "question": "Is my diagnostic claim approved? Answer only if the document explicitly supports the answer.",
       "label": "PASS",
@@ -213,7 +197,7 @@
       "reason": "Correctly identifies which of the two diagnostic claims is approved vs. under review."
     },
     "8ca605c2-5ae9-43cc-9c73-cdc7d4ba8cd0": {
-      "question_index": 27,
+      "question_index": 25,
       "dataset": "shieldcare_full",
       "question": "Are cosmetic procedures covered, excluded, or subject to any conditions?",
       "label": "PASS",
@@ -221,7 +205,7 @@
       "reason": "Correctly states cosmetic procedures are excluded, quoting the exclusion wording and a real rejected-claim example."
     },
     "266c8000-88d8-4139-8e45-694ef456fda6": {
-      "question_index": 28,
+      "question_index": 26,
       "dataset": "shieldcare_full",
       "question": "What co-pay applies to diagnostic tests, and does the policy mention any separate deductible?",
       "label": "PASS",
@@ -229,30 +213,21 @@
       "reason": "Correctly states the diagnostic co-pay and correctly notes no separate deductible is listed for diagnostics."
     },
     "a70efd3e-11bb-44f6-8264-45f4355f05a9": {
-      "question_index": 29,
+      "question_index": 27,
       "dataset": "shieldcare_full",
       "question": "What ambulance-services coverage is available under this policy?",
       "label": "PASS",
       "mode": "OK",
       "reason": "Correctly returns the ambulance coverage limit and \"no deductible\" detail."
-    },
-    "26ee3af3-6679-468b-b3d1-98b20473cec4": {
-      "question_index": 30,
-      "dataset": "shieldcare_full",
-      "question": "Summarize the policy's beneficiary, hospitalization, diagnostic, cosmetic-procedure, and ambulance. Separate confirmed facts from anything the document does not establish.",
-      "label": "FAIL",
-      "mode": "A",
-      "reason": "Answers 5 of 6 sections in a well-organized fact/not-established split, but again labels expiry as \"not mentioned,\" even though this document does contain an expiry date — same missed-chunk pattern as Q20."
     }
   },
   "summary": {
     "pass": 24,
-    "fail": 6,
+    "fail": 3,
     "by_mode": {
       "OK": 24,
       "C": 2,
-      "A": 3,
-      "B": 1
+      "A": 1
     }
   }
 }

@@ -66,8 +66,8 @@ Notes for the operator wiring this prompt into a runner:
   one, and would make the baseline non-reproducible.
 - Temperature 0 recommended. Even so, do not treat this judge's verdict
   on a fixed (QUESTION, CONTEXT, ANSWER) triple as ground truth on its
-  own — for the 30-trace baseline in traces/traces.jsonl, the reference
-  verdicts already exist as human-reviewed labels in eval/labels_30.json
+  own — for the 27-trace baseline in traces/traces.jsonl, the reference
+  verdicts already exist as human-reviewed labels in eval/labels_27.json
   (derived from analysis/notes.md's open-coding). This prompt is for
   grading *new* traces that arrive without a hand-reviewed label, and for
   spot-checking that a future judge_v2 revision still agrees with the

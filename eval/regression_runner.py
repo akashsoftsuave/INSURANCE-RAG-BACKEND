@@ -4,7 +4,7 @@ from pathlib import Path
 from eval.deterministic_checks import run_all_checks, FAIL as CHECK_FAIL
 
 TRACES_PATH = Path("traces/traces.jsonl")
-LABELS_PATH = Path("eval/labels_30.json")
+LABELS_PATH = Path("eval/labels_27.json")
 RESULTS_PATH = Path("eval/regression_results.json")
 
 

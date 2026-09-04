@@ -94,7 +94,7 @@ def test_deductible_numeric_value_later_in_sentence():
     # only inspected a fixed +/-60 char window around the FIRST "deductible"
     # occurrence, which sat before the explanatory clause and missed the
     # numeric value stated later in the same sentence -- a false FAIL caught
-    # by running eval/regression_runner.py against eval/labels_30.json
+    # by running eval/regression_runner.py against eval/labels_27.json
     # (reference label for this trace is PASS).
     r = check_deductible_numeric(
         "A co‑pay is a percentage of the cost of the service that you must pay, "

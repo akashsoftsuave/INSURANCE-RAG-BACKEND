@@ -342,7 +342,7 @@
     },
     {
       "trace_id": "81bd1491-12fb-4152-a4c9-5d4dd1c1ccd1",
-      "question_index": 11,
+      "question_index": 10,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -373,7 +373,7 @@
     },
     {
       "trace_id": "e61a25bc-5465-48a3-b081-872d2087779d",
-      "question_index": 12,
+      "question_index": 11,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -404,7 +404,7 @@
     },
     {
       "trace_id": "a4d8dcdb-1781-4311-ba1d-f3b757634cea",
-      "question_index": 13,
+      "question_index": 12,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -435,7 +435,7 @@
     },
     {
       "trace_id": "32c41bcd-088c-4f5d-a879-0bff7a0ecfac",
-      "question_index": 14,
+      "question_index": 13,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -466,7 +466,7 @@
     },
     {
       "trace_id": "c62c0880-25ab-4745-9192-0467d1157674",
-      "question_index": 15,
+      "question_index": 14,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -497,7 +497,7 @@
     },
     {
       "trace_id": "6e6434b6-9e5b-4352-b7d9-e09089db2c0f",
-      "question_index": 16,
+      "question_index": 15,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -528,7 +528,7 @@
     },
     {
       "trace_id": "a0be337e-1ab0-456b-aa23-56f4116406ff",
-      "question_index": 17,
+      "question_index": 16,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -559,7 +559,7 @@
     },
     {
       "trace_id": "69db754e-2e0f-4812-90db-32cdce356eec",
-      "question_index": 18,
+      "question_index": 17,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -590,7 +590,7 @@
     },
     {
       "trace_id": "70297e14-d5b0-4843-aa01-79c7e6bf356f",
-      "question_index": 19,
+      "question_index": 18,
       "dataset": "shieldcare_basic",
       "mode": "OK",
       "reference_label": "PASS",
@@ -621,7 +621,7 @@
     },
     {
       "trace_id": "a518dd80-6147-4ec3-9e68-b2522f4ee717",
-      "question_index": 21,
+      "question_index": 19,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -652,7 +652,7 @@
     },
     {
       "trace_id": "a9ef481c-78e7-4f9f-a991-e0807a1033c4",
-      "question_index": 22,
+      "question_index": 20,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -683,7 +683,7 @@
     },
     {
       "trace_id": "983ef060-b97d-4258-aabc-af86d02c0ab5",
-      "question_index": 23,
+      "question_index": 21,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -714,7 +714,7 @@
     },
     {
       "trace_id": "b5d7be71-3782-4fc1-af39-de57784ea1b6",
-      "question_index": 24,
+      "question_index": 22,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -745,7 +745,7 @@
     },
     {
       "trace_id": "b95829b9-1295-4001-9570-15a0bc14b08c",
-      "question_index": 25,
+      "question_index": 23,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -776,7 +776,7 @@
     },
     {
       "trace_id": "bc3d9e98-4c60-4f98-a239-8d7f64ab668c",
-      "question_index": 26,
+      "question_index": 24,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -807,7 +807,7 @@
     },
     {
       "trace_id": "8ca605c2-5ae9-43cc-9c73-cdc7d4ba8cd0",
-      "question_index": 27,
+      "question_index": 25,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -838,7 +838,7 @@
     },
     {
       "trace_id": "266c8000-88d8-4139-8e45-694ef456fda6",
-      "question_index": 28,
+      "question_index": 26,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",
@@ -869,7 +869,7 @@
     },
     {
       "trace_id": "a70efd3e-11bb-44f6-8264-45f4355f05a9",
-      "question_index": 29,
+      "question_index": 27,
       "dataset": "shieldcare_full",
       "mode": "OK",
       "reference_label": "PASS",

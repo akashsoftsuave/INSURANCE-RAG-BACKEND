@@ -9,11 +9,11 @@ from groq import Groq, RateLimitError
 from app.core.config import settings
 
 TRACES_PATH = Path("traces/traces.jsonl")
-LABELS_PATH = Path("eval/labels_30.json")
+LABELS_PATH = Path("eval/labels_27.json")
 
 TEMPERATURE = 0
-MAX_RETRIES = 12
-PACING_SECONDS = 30.0
+MAX_RETRIES = 3
+PACING_SECONDS = 15.0
 _RETRY_SECONDS_RE = re.compile(r"try again in ([\d.]+)s", re.IGNORECASE)
 
 
@@ -125,7 +125,7 @@ def main():
     }
     Path(args.out).write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    print(f"\nAgreement with eval/labels_30.json: {sum(1 for r in rows if r['agree'])}/{n} ({agreement:.2%})")
+    print(f"\nAgreement with eval/labels_27.json: {sum(1 for r in rows if r['agree'])}/{n} ({agreement:.2%})")
     print(f"Wrote {args.out}")
 
 

@@ -94,7 +94,7 @@ def build_trace_record(original: dict, question: str, retriever: RetrievalServic
                 "(RetrievalService scenario-mismatch reranking penalty) "
                 "fixes. Original pre-fix record archived verbatim in "
                 "traces/pre_fix_archive_q2_q4_q7.jsonl. Reference label "
-                "in eval/labels_30.json intentionally left unchanged."
+                "in eval/labels_27.json intentionally left unchanged."
             ),
         },
     }

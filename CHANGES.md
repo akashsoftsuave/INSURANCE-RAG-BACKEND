@@ -45,7 +45,7 @@ with the fix applied.
 
 The three fixed traces were regenerated in place through the fixed
 pipeline, **same `trace_id`**, in `traces/traces.jsonl`. Their reference
-labels in `eval/labels_30.json` were intentionally left unchanged (not
+labels in `eval/labels_27.json` were intentionally left unchanged (not
 updated just because the application was fixed). Their original pre-fix
 trace records are archived verbatim in
 `traces/pre_fix_archive_q2_q4_q7.jsonl` for evidence.
@@ -53,15 +53,17 @@ trace records are archived verbatim in
 ## 2. Active trace population
 
 `traces/traces.jsonl` now holds **27** active traces.
-`eval/labels_30.json` is unchanged and still has all 30 original
-human-reviewed reference labels.
+`eval/labels_30.json` was renamed to `eval/labels_27.json` and pruned to
+match — the 3 reference labels for questions no longer in the active
+trace population (2 mode-A, 1 mode-B summary-style questions) were
+removed, and its `population`/`population_source`/`summary.by_mode`
+fields were updated accordingly (pass 24, fail 3 — OK 24, C 2, A 1).
 
-`eval/regression_runner.py` was updated to reflect the active
-population (guard now only warns below 25, the agreed minimum) — no
-other behavior changed. Verified zero verdict changes among the 27
-traces relative to the prior 30-trace baseline (no regressions
-introduced by the code changes above — the harness scores off the
-frozen reference label, unaffected either way).
+`eval/regression_runner.py` and `eval/judge_runner.py` were updated to
+point at `eval/labels_27.json` — no other behavior changed. Verified
+zero verdict changes among the 27 traces relative to the prior 30-trace
+baseline (no regressions introduced by the code changes above — the
+harness scores off the frozen reference label, unaffected either way).
 
 ## 3. LLM-judge harness
 
@@ -69,7 +71,7 @@ frozen reference label, unaffected either way).
   For each active trace, sends QUESTION/CONTEXT/ANSWER (CONTEXT =
   `retrieval.candidates[].text_redacted`, the actual post-rerank chunks
   the frozen answer was built from) to the configured Groq model, parses
-  the verdict, and compares it against `eval/labels_30.json`. Includes
+  the verdict, and compares it against `eval/labels_27.json`. Includes
   rate-limit backoff and steady inter-call pacing (this project's Groq
   org has been observed capped as low as 8000 tokens/minute).
 - **`eval/judge_v1_results.json`, `eval/judge_v2_results.json`** — kept
