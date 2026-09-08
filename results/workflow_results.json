@@ -1,0 +1,291 @@
+[
+  {
+    "claim_id": "CLM-2026-00001",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 790,
+    "iterations": 1,
+    "tokens": 325,
+    "cost": 0.00011174999999999999,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00001",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 80000,
+      "excess": 5000,
+      "payable_amount": 75000,
+      "reason": "The claim was approved and is covered with no exclusions; the flood caused an $80,000 loss, and after applying the $5,000 excess, the insurer will pay $75,000."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-AUTO-1002 claimed_amount=80000",
+      "[workflow] step=2 adjuster_notes='Insured reports heavy monsoon rain caused waterlogging on the street; engine bay was flooded and the engine seized. Policy confirmed to include the flood rider add-on.'",
+      "[workflow] step=3 extract_cause -> flood",
+      "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=5000 sub_limit=None",
+      "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 80000, 'excess': 5000, 'payable_amount': 75000}",
+      "[workflow] step=6 reason_call tokens=325 cost=0.000112 reason='The claim was approved and is covered with no exclusions; the flood caused an $80,000 loss, and after applying the $5,000 excess, the insurer will pay $75,000.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00002",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 823,
+    "iterations": 1,
+    "tokens": 253,
+    "cost": 6.9e-05,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00002",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 60000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-HOME-2001 claimed_amount=60000",
+      "[workflow] step=2 adjuster_notes='Claimant states basement flooded after three days of continuous rain; water entered through the foundation and damaged stored furniture and electronics.'",
+      "[workflow] step=3 extract_cause -> flood",
+      "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=flood policy_excess=2000 sub_limit=None",
+      "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 60000, 'excess': 2000, 'payable_amount': 0}",
+      "[workflow] step=6 reason_call tokens=253 cost=0.000069 reason='The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00003",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 793,
+    "iterations": 1,
+    "tokens": 331,
+    "cost": 0.00011535,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00003",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 45000,
+      "excess": 2000,
+      "payable_amount": 43000,
+      "reason": "The theft claim was approved because the loss is covered and there are no exclusions; after applying the $2,000 excess to the $45,000 loss, the insurer will pay $43,000."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-HOME-2002 claimed_amount=45000",
+      "[workflow] step=2 adjuster_notes='Claimant reports garage was broken into overnight; a bicycle and a set of power tools were stolen. Police complaint filed, FIR number on record. Forced-entry marks confirmed by adjuster.'",
+      "[workflow] step=3 extract_cause -> theft",
+      "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=2000 sub_limit=50000",
+      "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 45000, 'excess': 2000, 'payable_amount': 43000}",
+      "[workflow] step=6 reason_call tokens=331 cost=0.000115 reason='The theft claim was approved because the loss is covered and there are no exclusions; after applying the $2,000 excess to the $45,000 loss, the insurer will pay $43,000.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00004",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 760,
+    "iterations": 1,
+    "tokens": 302,
+    "cost": 9.84e-05,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00004",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "theft",
+      "gross_amount": 350000,
+      "excess": 3000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because theft is an excluded peril under the policy, so the loss is not covered and no payment is due."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-AUTO-1001 claimed_amount=350000",
+      "[workflow] step=2 adjuster_notes='Vehicle stolen from the driveway overnight. Claimant admits the car was left unlocked with the keys inside while running to the store. No signs of forced entry.'",
+      "[workflow] step=3 extract_cause -> theft",
+      "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=theft policy_excess=3000 sub_limit=None",
+      "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 350000, 'excess': 3000, 'payable_amount': 0}",
+      "[workflow] step=6 reason_call tokens=302 cost=0.000098 reason='The claim was denied because theft is an excluded peril under the policy, so the loss is not covered and no payment is due.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00005",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 667,
+    "iterations": 1,
+    "tokens": 317,
+    "cost": 0.0001065,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00005",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 15000,
+      "excess": 1000,
+      "payable_amount": 14000,
+      "reason": "The claim was approved because the accidental damage is covered with no exclusions, and after applying the $1,000 excess to the $15,000 loss, the insurer will pay $14,000."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-GADGET-3001 claimed_amount=15000",
+      "[workflow] step=2 adjuster_notes='Claimant dropped laptop while moving it off a table; screen cracked on impact. Damage confirmed accidental, single incident, no prior faults reported.'",
+      "[workflow] step=3 extract_cause -> accidental_damage",
+      "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=1000 sub_limit=None",
+      "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 15000, 'excess': 1000, 'payable_amount': 14000}",
+      "[workflow] step=6 reason_call tokens=317 cost=0.000107 reason='The claim was approved because the accidental damage is covered with no exclusions, and after applying the $1,000 excess to the $15,000 loss, the insurer will pay $14,000.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00006",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 2790,
+    "iterations": 1,
+    "tokens": 308,
+    "cost": 0.00010109999999999999,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00006",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "policy_lapsed",
+      "gross_amount": 120000,
+      "excess": 2500,
+      "payable_amount": 0,
+      "reason": "The claim was denied because the policy had lapsed before the fire occurred, so the loss is not covered and no payment is due."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-HOME-2003 claimed_amount=120000",
+      "[workflow] step=2 adjuster_notes='Kitchen fire caused by an electrical short circuit in the wiring; extensive smoke and heat damage to cabinetry and appliances. Fire department report attached.'",
+      "[workflow] step=3 extract_cause -> fire",
+      "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=policy_lapsed policy_excess=2500 sub_limit=None",
+      "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 120000, 'excess': 2500, 'payable_amount': 0}",
+      "[workflow] step=6 reason_call tokens=308 cost=0.000101 reason='The claim was denied because the policy had lapsed before the fire occurred, so the loss is not covered and no payment is due.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00007",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 1803,
+    "iterations": 1,
+    "tokens": 319,
+    "cost": 0.00010815,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00007",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 25000,
+      "excess": 3000,
+      "payable_amount": 22000,
+      "reason": "The claim is approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-AUTO-1003 claimed_amount=25000",
+      "[workflow] step=2 adjuster_notes=\"Minor collision with another vehicle at a traffic signal; front bumper and headlight damaged. Straightforward own-damage claim, no disputes, other party's insurer not involved.\"",
+      "[workflow] step=3 extract_cause -> collision",
+      "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=3000 sub_limit=None",
+      "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 25000, 'excess': 3000, 'payable_amount': 22000}",
+      "[workflow] step=6 reason_call tokens=319 cost=0.000108 reason='The claim is approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00008",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 2821,
+    "iterations": 1,
+    "tokens": 329,
+    "cost": 0.0001119,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00008",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "wear_and_tear",
+      "gross_amount": 18000,
+      "excess": 1000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because the loss was caused by wear and tear, which is an excluded peril under the policy, so the damage is not covered and no payment is due."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-GADGET-3001 claimed_amount=18000",
+      "[workflow] step=2 adjuster_notes='Claimant reports washing machine motor stopped working. Adjuster inspection found significant rust and corrosion on internal components consistent with gradual wear over time, not a sudden accidental event.'",
+      "[workflow] step=3 extract_cause -> wear_and_tear",
+      "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=wear_and_tear policy_excess=1000 sub_limit=None",
+      "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 18000, 'excess': 1000, 'payable_amount': 0}",
+      "[workflow] step=6 reason_call tokens=329 cost=0.000112 reason='The claim was denied because the loss was caused by wear and tear, which is an excluded peril under the policy, so the damage is not covered and no payment is due.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00009",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 726,
+    "iterations": 1,
+    "tokens": 320,
+    "cost": 0.00010875,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00009",
+      "status": "PARTIAL",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 100000,
+      "excess": 2000,
+      "payable_amount": 48000,
+      "reason": "The policy covers theft, but after applying the $2,000 deductible and the policy’s limits, only $48,000 of the $100,000 loss is payable, resulting in a partial payment."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-HOME-2002 claimed_amount=100000",
+      "[workflow] step=2 adjuster_notes='Home burglary reported; claimant states jewelry was stolen from a bedroom safe. Police report filed. Forced entry into the house confirmed by responding officer.'",
+      "[workflow] step=3 extract_cause -> theft",
+      "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=2000 sub_limit=50000",
+      "[workflow] step=5 decide_status -> PARTIAL; compute_payout -> {'gross_amount': 100000, 'excess': 2000, 'payable_amount': 48000}",
+      "[workflow] step=6 reason_call tokens=320 cost=0.000109 reason='The policy covers theft, but after applying the $2,000 deductible and the policy’s limits, only $48,000 of the $100,000 loss is payable, resulting in a partial payment.'"
+    ]
+  },
+  {
+    "claim_id": "CLM-2026-00010",
+    "system": "workflow",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 3750,
+    "iterations": 1,
+    "tokens": 290,
+    "cost": 9.12e-05,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-00010",
+      "status": "PENDING_REVIEW",
+      "covered": false,
+      "exclusion": null,
+      "gross_amount": 90000,
+      "excess": null,
+      "payable_amount": 0,
+      "reason": "The claim is still under review and, because it is not covered under the policy, no payment will be made at this time."
+    },
+    "log": [
+      "[workflow] step=1 get_claim -> policy_id=POL-HOME-2003 claimed_amount=90000",
+      "[workflow] step=2 adjuster_notes=''",
+      "[workflow] step=3 extract_cause -> unknown",
+      "[workflow] step=4 cause unknown -> status=PENDING_REVIEW, skipping exclusion/payout steps",
+      "[workflow] step=6 reason_call tokens=290 cost=0.000091 reason='The claim is still under review and, because it is not covered under the policy, no payment will be made at this time.'"
+    ]
+  }
+]

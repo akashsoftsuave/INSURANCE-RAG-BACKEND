@@ -1,0 +1,269 @@
+[
+  {
+    "claim_id": "CLM-2026-L001",
+    "system": "agent",
+    "condition": "control",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 3464,
+    "iterations": 4,
+    "tokens": 7011,
+    "cost": 0.00124,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L001",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 70000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The policy excludes flood damage, so the claim is denied."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L002",
+    "system": "agent",
+    "condition": "control",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 44343,
+    "iterations": 4,
+    "tokens": 7119,
+    "cost": 0.001273,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L002",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 40000,
+      "excess": 2000,
+      "payable_amount": 38000,
+      "reason": "The adjuster notes indicate the loss was due to an indoor pipe burst, classified as accidental damage, which is covered under the policy with a $2,000 excess."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L003",
+    "system": "agent",
+    "condition": "control",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 35349,
+    "iterations": 4,
+    "tokens": 6741,
+    "cost": 0.001222,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L003",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 22000,
+      "excess": 1000,
+      "payable_amount": 21000,
+      "reason": "The loss was caused by accidental damage, which is covered under the policy with a $1,000 excess."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L001",
+    "system": "agent",
+    "condition": "windowed",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 18743,
+    "iterations": 4,
+    "tokens": 6697,
+    "cost": 0.001242,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L001",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 70000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The policy excludes flood damage, so the claim is denied and no payout is made."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L002",
+    "system": "agent",
+    "condition": "windowed",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 34362,
+    "iterations": 4,
+    "tokens": 6679,
+    "cost": 0.001284,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L002",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 40000,
+      "excess": 2000,
+      "payable_amount": 38000,
+      "reason": "The adjuster notes indicate the loss was due to a burst pipe, an accidental damage cause, which is covered under the policy with a $2,000 excess."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L003",
+    "system": "agent",
+    "condition": "windowed",
+    "passed": false,
+    "mismatches": [
+      "no structured output produced"
+    ],
+    "latency_ms": 58294,
+    "iterations": 5,
+    "tokens": 8650,
+    "cost": 0.001765,
+    "termination_reason": "wall_clock",
+    "output": null
+  },
+  {
+    "claim_id": "CLM-2026-L001",
+    "system": "workflow",
+    "condition": "control",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 635,
+    "iterations": 1,
+    "tokens": 270,
+    "cost": 7.965e-05,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L001",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 70000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because flood damage is excluded from the policy, so the loss is not covered and no payment is due."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L002",
+    "system": "workflow",
+    "condition": "control",
+    "passed": false,
+    "mismatches": [
+      "status: got 'DENIED' want 'APPROVED'",
+      "covered: got False want True",
+      "exclusion: got 'flood' want None",
+      "payable_amount: got 0 want 38000"
+    ],
+    "latency_ms": 668,
+    "iterations": 1,
+    "tokens": 252,
+    "cost": 6.884999999999999e-05,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L002",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 40000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L003",
+    "system": "workflow",
+    "condition": "control",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 789,
+    "iterations": 1,
+    "tokens": 321,
+    "cost": 0.00010934999999999999,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L003",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 22000,
+      "excess": 1000,
+      "payable_amount": 21000,
+      "reason": "The claim was approved because the accidental‑damage loss is covered and there are no exclusions; after applying the $1,000 excess, the insurer will pay $21,000 of the $22,000 loss."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L001",
+    "system": "workflow",
+    "condition": "windowed",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 1317,
+    "iterations": 1,
+    "tokens": 946,
+    "cost": 0.00023955,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L001",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 70000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because flood damage is excluded from the policy, so the loss is not covered and no payment is due."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L002",
+    "system": "workflow",
+    "condition": "windowed",
+    "passed": false,
+    "mismatches": [
+      "status: got 'DENIED' want 'APPROVED'",
+      "covered: got False want True",
+      "exclusion: got 'flood' want None",
+      "payable_amount: got 0 want 38000"
+    ],
+    "latency_ms": 5179,
+    "iterations": 1,
+    "tokens": 977,
+    "cost": 0.00023385,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L002",
+      "status": "DENIED",
+      "covered": false,
+      "exclusion": "flood",
+      "gross_amount": 40000,
+      "excess": 2000,
+      "payable_amount": 0,
+      "reason": "The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due."
+    }
+  },
+  {
+    "claim_id": "CLM-2026-L003",
+    "system": "workflow",
+    "condition": "windowed",
+    "passed": true,
+    "mismatches": [],
+    "latency_ms": 6372,
+    "iterations": 1,
+    "tokens": 916,
+    "cost": 0.00025574999999999996,
+    "termination_reason": "completed",
+    "output": {
+      "claim_id": "CLM-2026-L003",
+      "status": "APPROVED",
+      "covered": true,
+      "exclusion": null,
+      "gross_amount": 22000,
+      "excess": 1000,
+      "payable_amount": 21000,
+      "reason": "The claim was approved because the accidental‑damage loss is covered and there are no exclusions; after applying the $1,000 excess, the insurer will pay $21,000 of the $22,000 loss."
+    }
+  }
+]
