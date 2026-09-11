@@ -9,7 +9,7 @@ class BudgetConfig:
     max_iters: int = 6
     max_tokens: int = 6000
     max_cost: float = 0.02
-    max_wall_clock_ms: int = 45_000
+    max_wall_clock_ms: int = 20_000
 
 
 @dataclass
