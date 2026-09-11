@@ -4,7 +4,7 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 790,
+    "latency_ms": 754,
     "iterations": 1,
     "tokens": 325,
     "cost": 0.00011174999999999999,
@@ -33,10 +33,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 823,
+    "latency_ms": 615,
     "iterations": 1,
-    "tokens": 253,
-    "cost": 6.9e-05,
+    "tokens": 282,
+    "cost": 8.639999999999999e-05,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00002",
@@ -46,7 +46,7 @@
       "gross_amount": 60000,
       "excess": 2000,
       "payable_amount": 0,
-      "reason": "The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due."
+      "reason": "The claim was denied because flood damage is excluded from the policy, so the loss is not covered and no payment is due."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-HOME-2001 claimed_amount=60000",
@@ -54,7 +54,7 @@
       "[workflow] step=3 extract_cause -> flood",
       "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=flood policy_excess=2000 sub_limit=None",
       "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 60000, 'excess': 2000, 'payable_amount': 0}",
-      "[workflow] step=6 reason_call tokens=253 cost=0.000069 reason='The claim was denied because flood damage is excluded from coverage, so the loss is not covered and no payment is due.'"
+      "[workflow] step=6 reason_call tokens=282 cost=0.000086 reason='The claim was denied because flood damage is excluded from the policy, so the loss is not covered and no payment is due.'"
     ]
   },
   {
@@ -62,10 +62,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 793,
+    "latency_ms": 592,
     "iterations": 1,
-    "tokens": 331,
-    "cost": 0.00011535,
+    "tokens": 316,
+    "cost": 0.00010635,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00003",
@@ -75,7 +75,7 @@
       "gross_amount": 45000,
       "excess": 2000,
       "payable_amount": 43000,
-      "reason": "The theft claim was approved because the loss is covered and there are no exclusions; after applying the $2,000 excess to the $45,000 loss, the insurer will pay $43,000."
+      "reason": "The theft claim was approved and is covered with no exclusions; after applying the $2,000 excess, the insurer will pay $43,000 out of the $45,000 loss."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-HOME-2002 claimed_amount=45000",
@@ -83,7 +83,7 @@
       "[workflow] step=3 extract_cause -> theft",
       "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=2000 sub_limit=50000",
       "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 45000, 'excess': 2000, 'payable_amount': 43000}",
-      "[workflow] step=6 reason_call tokens=331 cost=0.000115 reason='The theft claim was approved because the loss is covered and there are no exclusions; after applying the $2,000 excess to the $45,000 loss, the insurer will pay $43,000.'"
+      "[workflow] step=6 reason_call tokens=316 cost=0.000106 reason='The theft claim was approved and is covered with no exclusions; after applying the $2,000 excess, the insurer will pay $43,000 out of the $45,000 loss.'"
     ]
   },
   {
@@ -91,10 +91,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 760,
+    "latency_ms": 580,
     "iterations": 1,
-    "tokens": 302,
-    "cost": 9.84e-05,
+    "tokens": 300,
+    "cost": 9.72e-05,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00004",
@@ -112,7 +112,7 @@
       "[workflow] step=3 extract_cause -> theft",
       "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=theft policy_excess=3000 sub_limit=None",
       "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 350000, 'excess': 3000, 'payable_amount': 0}",
-      "[workflow] step=6 reason_call tokens=302 cost=0.000098 reason='The claim was denied because theft is an excluded peril under the policy, so the loss is not covered and no payment is due.'"
+      "[workflow] step=6 reason_call tokens=300 cost=0.000097 reason='The claim was denied because theft is an excluded peril under the policy, so the loss is not covered and no payment is due.'"
     ]
   },
   {
@@ -120,10 +120,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 667,
+    "latency_ms": 3859,
     "iterations": 1,
-    "tokens": 317,
-    "cost": 0.0001065,
+    "tokens": 320,
+    "cost": 0.0001083,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00005",
@@ -133,7 +133,7 @@
       "gross_amount": 15000,
       "excess": 1000,
       "payable_amount": 14000,
-      "reason": "The claim was approved because the accidental damage is covered with no exclusions, and after applying the $1,000 excess to the $15,000 loss, the insurer will pay $14,000."
+      "reason": "The claim was approved because the accidental damage is covered and there are no exclusions; after applying the $1,000 excess, the insurer will pay $14,000."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-GADGET-3001 claimed_amount=15000",
@@ -141,7 +141,7 @@
       "[workflow] step=3 extract_cause -> accidental_damage",
       "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=1000 sub_limit=None",
       "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 15000, 'excess': 1000, 'payable_amount': 14000}",
-      "[workflow] step=6 reason_call tokens=317 cost=0.000107 reason='The claim was approved because the accidental damage is covered with no exclusions, and after applying the $1,000 excess to the $15,000 loss, the insurer will pay $14,000.'"
+      "[workflow] step=6 reason_call tokens=320 cost=0.000108 reason='The claim was approved because the accidental damage is covered and there are no exclusions; after applying the $1,000 excess, the insurer will pay $14,000.'"
     ]
   },
   {
@@ -149,10 +149,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 2790,
+    "latency_ms": 1565,
     "iterations": 1,
-    "tokens": 308,
-    "cost": 0.00010109999999999999,
+    "tokens": 291,
+    "cost": 9.09e-05,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00006",
@@ -162,7 +162,7 @@
       "gross_amount": 120000,
       "excess": 2500,
       "payable_amount": 0,
-      "reason": "The claim was denied because the policy had lapsed before the fire occurred, so the loss is not covered and no payment is due."
+      "reason": "The claim was denied because the policy had lapsed, so there was no coverage for the fire loss, resulting in a payable amount of $0."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-HOME-2003 claimed_amount=120000",
@@ -170,7 +170,7 @@
       "[workflow] step=3 extract_cause -> fire",
       "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=policy_lapsed policy_excess=2500 sub_limit=None",
       "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 120000, 'excess': 2500, 'payable_amount': 0}",
-      "[workflow] step=6 reason_call tokens=308 cost=0.000101 reason='The claim was denied because the policy had lapsed before the fire occurred, so the loss is not covered and no payment is due.'"
+      "[workflow] step=6 reason_call tokens=291 cost=0.000091 reason='The claim was denied because the policy had lapsed, so there was no coverage for the fire loss, resulting in a payable amount of $0.'"
     ]
   },
   {
@@ -178,10 +178,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 1803,
+    "latency_ms": 2859,
     "iterations": 1,
-    "tokens": 319,
-    "cost": 0.00010815,
+    "tokens": 325,
+    "cost": 0.00011174999999999999,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00007",
@@ -191,7 +191,7 @@
       "gross_amount": 25000,
       "excess": 3000,
       "payable_amount": 22000,
-      "reason": "The claim is approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000."
+      "reason": "The claim was approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-AUTO-1003 claimed_amount=25000",
@@ -199,7 +199,7 @@
       "[workflow] step=3 extract_cause -> collision",
       "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=3000 sub_limit=None",
       "[workflow] step=5 decide_status -> APPROVED; compute_payout -> {'gross_amount': 25000, 'excess': 3000, 'payable_amount': 22000}",
-      "[workflow] step=6 reason_call tokens=319 cost=0.000108 reason='The claim is approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000.'"
+      "[workflow] step=6 reason_call tokens=325 cost=0.000112 reason='The claim was approved because the loss from the collision is covered and there are no exclusions; after subtracting the $3,000 excess from the $25,000 loss, the insurer will pay $22,000.'"
     ]
   },
   {
@@ -207,10 +207,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 2821,
+    "latency_ms": 774,
     "iterations": 1,
-    "tokens": 329,
-    "cost": 0.0001119,
+    "tokens": 325,
+    "cost": 0.0001095,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00008",
@@ -228,7 +228,7 @@
       "[workflow] step=3 extract_cause -> wear_and_tear",
       "[workflow] step=4 check_policy_exclusions -> covered=False exclusion=wear_and_tear policy_excess=1000 sub_limit=None",
       "[workflow] step=5 decide_status -> DENIED; compute_payout -> {'gross_amount': 18000, 'excess': 1000, 'payable_amount': 0}",
-      "[workflow] step=6 reason_call tokens=329 cost=0.000112 reason='The claim was denied because the loss was caused by wear and tear, which is an excluded peril under the policy, so the damage is not covered and no payment is due.'"
+      "[workflow] step=6 reason_call tokens=325 cost=0.000110 reason='The claim was denied because the loss was caused by wear and tear, which is an excluded peril under the policy, so the damage is not covered and no payment is due.'"
     ]
   },
   {
@@ -236,10 +236,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 726,
+    "latency_ms": 2978,
     "iterations": 1,
-    "tokens": 320,
-    "cost": 0.00010875,
+    "tokens": 347,
+    "cost": 0.00012495,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00009",
@@ -249,7 +249,7 @@
       "gross_amount": 100000,
       "excess": 2000,
       "payable_amount": 48000,
-      "reason": "The policy covers theft, but after applying the $2,000 deductible and the policy’s limits, only $48,000 of the $100,000 loss is payable, resulting in a partial payment."
+      "reason": "The claim is covered for theft, but after applying the $2,000 excess and the policy’s limits, only a partial payment is made, resulting in a payable amount of $48,000 out of the $100,000 loss."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-HOME-2002 claimed_amount=100000",
@@ -257,7 +257,7 @@
       "[workflow] step=3 extract_cause -> theft",
       "[workflow] step=4 check_policy_exclusions -> covered=True exclusion=None policy_excess=2000 sub_limit=50000",
       "[workflow] step=5 decide_status -> PARTIAL; compute_payout -> {'gross_amount': 100000, 'excess': 2000, 'payable_amount': 48000}",
-      "[workflow] step=6 reason_call tokens=320 cost=0.000109 reason='The policy covers theft, but after applying the $2,000 deductible and the policy’s limits, only $48,000 of the $100,000 loss is payable, resulting in a partial payment.'"
+      "[workflow] step=6 reason_call tokens=347 cost=0.000125 reason='The claim is covered for theft, but after applying the $2,000 excess and the policy’s limits, only a partial payment is made, resulting in a payable amount of $48,000 out of the $100,000 loss.'"
     ]
   },
   {
@@ -265,10 +265,10 @@
     "system": "workflow",
     "passed": true,
     "mismatches": [],
-    "latency_ms": 3750,
+    "latency_ms": 2100,
     "iterations": 1,
-    "tokens": 290,
-    "cost": 9.12e-05,
+    "tokens": 288,
+    "cost": 8.999999999999999e-05,
     "termination_reason": "completed",
     "output": {
       "claim_id": "CLM-2026-00010",
@@ -278,14 +278,14 @@
       "gross_amount": 90000,
       "excess": null,
       "payable_amount": 0,
-      "reason": "The claim is still under review and, because it is not covered under the policy, no payment will be made at this time."
+      "reason": "The claim is still under review and, because it is not covered, no payment will be made at this time."
     },
     "log": [
       "[workflow] step=1 get_claim -> policy_id=POL-HOME-2003 claimed_amount=90000",
       "[workflow] step=2 adjuster_notes=''",
       "[workflow] step=3 extract_cause -> unknown",
       "[workflow] step=4 cause unknown -> status=PENDING_REVIEW, skipping exclusion/payout steps",
-      "[workflow] step=6 reason_call tokens=290 cost=0.000091 reason='The claim is still under review and, because it is not covered under the policy, no payment will be made at this time.'"
+      "[workflow] step=6 reason_call tokens=288 cost=0.000090 reason='The claim is still under review and, because it is not covered, no payment will be made at this time.'"
     ]
   }
 ]
