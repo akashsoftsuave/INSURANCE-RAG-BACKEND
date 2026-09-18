@@ -1,0 +1,821 @@
+{
+  "task": "Week 8 / Module 4 / Practical Task Set D",
+  "agent_under_test": "app/claims_agent/agent.py::run_agent",
+  "seed": 7,
+  "cases": [
+    {
+      "case_id": "TC-01",
+      "claim_id": "CLM-2026-00007",
+      "variation": "clean_claim",
+      "notes": "Straightforward collision on an active motor policy with no exclusions and no sub-limits. Nothing about the claim is contested; the only work is the four-step pipeline. Because it is clean, the correct payout is also reachable without the coverage decision — get_policy alone supplies the excess.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00007",
+        "policy_id": "POL-AUTO-1003",
+        "claimed_amount": 25000,
+        "adjuster_notes": "Minor collision with another vehicle at a traffic signal; front bumper and headlight damaged. Straightforward own-damage claim, no disputes, other party's insurer not involved."
+      },
+      "expected_outcome": {
+        "status": "APPROVED",
+        "covered": true,
+        "exclusion": null,
+        "gross_amount": 25000,
+        "excess": 3000,
+        "payable_amount": 22000
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "collision",
+        "accidental_damage"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-02",
+      "claim_id": "CLM-2026-00002",
+      "variation": "exclusion_applies",
+      "notes": "Basement flood on a home-contents policy with no flood add-on. Flood is excluded, so the outcome is DENIED / payable 0. The payable figure (0) is reachable WITHOUT calling compute_payout at all, which makes this a right-answer-wrong-path candidate.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00002",
+        "policy_id": "POL-HOME-2001",
+        "claimed_amount": 60000,
+        "adjuster_notes": "Claimant states basement flooded after three days of continuous rain; water entered through the foundation and damaged stored furniture and electronics."
+      },
+      "expected_outcome": {
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "flood",
+        "gross_amount": 60000,
+        "excess": 2000,
+        "payable_amount": 0
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "flood"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-03",
+      "claim_id": "CLM-2026-00010",
+      "variation": "missing_information",
+      "notes": "adjuster_notes is empty, so no cause of loss can be read. The contract says: status PENDING_REVIEW, payable 0, excess null, and stop — the policy terms are not needed, because the expected excess is null. Two paths are accepted: stopping at the claim record, or additionally confirming the undetermined cause against the policy, since check_exclusions ships a first-class 'unknown' branch that returns covered=False with a reason.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00010",
+        "policy_id": "POL-HOME-2003",
+        "claimed_amount": 90000,
+        "adjuster_notes": ""
+      },
+      "expected_outcome": {
+        "status": "PENDING_REVIEW",
+        "covered": false,
+        "exclusion": null,
+        "gross_amount": 90000,
+        "excess": null,
+        "payable_amount": 0
+      },
+      "expected_tool_sequence": [
+        "get_claim"
+      ],
+      "valid_paths": [
+        [
+          "get_claim"
+        ],
+        [
+          "get_claim",
+          "check_exclusions"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "unknown"
+      ],
+      "min_required_steps": 1
+    },
+    {
+      "case_id": "TC-04",
+      "claim_id": "CLM-2026-00006",
+      "variation": "requires_policy_lookup",
+      "notes": "Kitchen fire — the notes read as a clearly covered peril. The only thing that denies the claim is that the POLICY had lapsed, a fact that exists nowhere in the claim record. The agent CANNOT get this right without the policy lookup.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00006",
+        "policy_id": "POL-HOME-2003",
+        "claimed_amount": 120000,
+        "adjuster_notes": "Kitchen fire caused by an electrical short circuit in the wiring; extensive smoke and heat damage to cabinetry and appliances. Fire department report attached."
+      },
+      "expected_outcome": {
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "policy_lapsed",
+        "gross_amount": 120000,
+        "excess": 2500,
+        "payable_amount": 0
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "fire"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-05",
+      "claim_id": "CLM-2026-00008",
+      "variation": "requires_exclusion_lookup",
+      "notes": "Washing-machine failure from rust/corrosion. wear_and_tear is excluded on the gadget policy — discoverable only through the exclusion lookup.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00008",
+        "policy_id": "POL-GADGET-3001",
+        "claimed_amount": 18000,
+        "adjuster_notes": "Claimant reports washing machine motor stopped working. Adjuster inspection found significant rust and corrosion on internal components consistent with gradual wear over time, not a sudden accidental event."
+      },
+      "expected_outcome": {
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "wear_and_tear",
+        "gross_amount": 18000,
+        "excess": 1000,
+        "payable_amount": 0
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "wear_and_tear"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-06",
+      "claim_id": "CLM-2026-00009",
+      "variation": "requires_multiple_tools",
+      "notes": "Burglary claim of 100,000 against a 50,000 theft sub-limit, so the outcome is PARTIAL (48,000 after the 2,000 excess). Every number in the answer comes from a different tool: gross from get_claim, sub-limit and excess from check_policy_exclusions, the capped payable from compute_payout.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00009",
+        "policy_id": "POL-HOME-2002",
+        "claimed_amount": 100000,
+        "adjuster_notes": "Home burglary reported; claimant states jewelry was stolen from a bedroom safe. Police report filed. Forced entry into the house confirmed by responding officer."
+      },
+      "expected_outcome": {
+        "status": "PARTIAL",
+        "covered": true,
+        "exclusion": null,
+        "gross_amount": 100000,
+        "excess": 2000,
+        "payable_amount": 48000
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "theft"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-07",
+      "claim_id": "CLM-2026-00001",
+      "variation": "misleading_adjuster_notes",
+      "notes": "Engine flooded in a monsoon. The adjuster notes end with 'Policy confirmed to include the flood rider add-on' — a coverage CONCLUSION planted in free text. An agent that trusts it can skip the exclusion lookup and still be right about coverage, but it would then have to invent the 5,000 excess.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00001",
+        "policy_id": "POL-AUTO-1002",
+        "claimed_amount": 80000,
+        "adjuster_notes": "Insured reports heavy monsoon rain caused waterlogging on the street; engine bay was flooded and the engine seized. Policy confirmed to include the flood rider add-on."
+      },
+      "expected_outcome": {
+        "status": "APPROVED",
+        "covered": true,
+        "exclusion": null,
+        "gross_amount": 80000,
+        "excess": 5000,
+        "payable_amount": 75000
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "flood"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-08",
+      "claim_id": "CLM-2026-00004",
+      "variation": "exclusion_applies_high_value",
+      "notes": "350,000 vehicle theft where the owner left the keys in the car. The owner-negligence theft exclusion applies: DENIED, payable 0. Like TC-02, the correct payable (0) is reachable without the payout tool.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00004",
+        "policy_id": "POL-AUTO-1001",
+        "claimed_amount": 350000,
+        "adjuster_notes": "Vehicle stolen from the driveway overnight. Claimant admits the car was left unlocked with the keys inside while running to the store. No signs of forced entry."
+      },
+      "expected_outcome": {
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "theft",
+        "gross_amount": 350000,
+        "excess": 3000,
+        "payable_amount": 0
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "theft"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-09",
+      "claim_id": "CLM-2026-00003",
+      "variation": "correct_payout_reachable_without_exclusion_check",
+      "notes": "Garage break-in, 45,000 claimed against a 50,000 theft sub-limit — so the cap does NOT bite and the answer is a plain APPROVED 43,000. The notes are padded with irrelevant detail (FIR number, forced-entry marks). An agent that assumes 'theft on a burglary policy is obviously covered' and goes straight from get_policy to compute_payout lands on the right payout by accident: it already holds the real excess and the real sub-limit from get_policy, and the coverage decision it never made happens to have gone its way. This is the archetypal right-answer-wrong-path case.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00003",
+        "policy_id": "POL-HOME-2002",
+        "claimed_amount": 45000,
+        "adjuster_notes": "Claimant reports garage was broken into overnight; a bicycle and a set of power tools were stolen. Police complaint filed, FIR number on record. Forced-entry marks confirmed by adjuster."
+      },
+      "expected_outcome": {
+        "status": "APPROVED",
+        "covered": true,
+        "exclusion": null,
+        "gross_amount": 45000,
+        "excess": 2000,
+        "payable_amount": 43000
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "theft"
+      ],
+      "min_required_steps": 4
+    },
+    {
+      "case_id": "TC-10",
+      "claim_id": "CLM-2026-00005",
+      "variation": "clean_claim_gadget",
+      "notes": "Dropped laptop, cracked screen — sudden accidental damage on a gadget policy. Clean claim, but the same policy excludes wear_and_tear and 'general', so the exclusion lookup is what separates this from TC-05 rather than the notes alone.",
+      "claim_input": {
+        "claim_id": "CLM-2026-00005",
+        "policy_id": "POL-GADGET-3001",
+        "claimed_amount": 15000,
+        "adjuster_notes": "Claimant dropped laptop while moving it off a table; screen cracked on impact. Damage confirmed accidental, single incident, no prior faults reported."
+      },
+      "expected_outcome": {
+        "status": "APPROVED",
+        "covered": true,
+        "exclusion": null,
+        "gross_amount": 15000,
+        "excess": 1000,
+        "payable_amount": 14000
+      },
+      "expected_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions",
+        "compute_payout"
+      ],
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "allow_alternate_paths": true,
+      "acceptable_causes": [
+        "accidental_damage"
+      ],
+      "min_required_steps": 4
+    }
+  ],
+  "baseline": {
+    "n_cases": 10,
+    "outcome_pass": 6,
+    "outcome_pass_rate": 0.6,
+    "trajectory_pass": 6,
+    "trajectory_pass_rate": 0.6,
+    "outcome_vs_trajectory_gap_pp": 0.0,
+    "tool_choice_accuracy": 0.6,
+    "tool_choice_accuracy_stepwise": 0.8947368421052632,
+    "argument_validity": {
+      "valid_calls": 34,
+      "total_calls": 36,
+      "rate": 0.9444444444444444
+    },
+    "step_efficiency_aggregate": 0.972972972972973,
+    "step_efficiency_per_case": {
+      "TC-01": 1.0,
+      "TC-02": 1.0,
+      "TC-03": 2.0,
+      "TC-04": 1.0,
+      "TC-05": 0.75,
+      "TC-06": 1.0,
+      "TC-07": 1.0,
+      "TC-08": 0.75,
+      "TC-09": 1.0,
+      "TC-10": 1.0
+    },
+    "cost_usd": {
+      "p50": 0.001083,
+      "max": 0.001256,
+      "min": 0.000186,
+      "total": 0.009499
+    },
+    "latency_ms": {
+      "p50": 3473.0,
+      "max": 5218.0,
+      "min": 2392.0,
+      "total": 37510.0
+    },
+    "tokens": {
+      "p50": 6016.0,
+      "max": 6310.0,
+      "min": 1011.0,
+      "total": 50703.0
+    },
+    "failure_mode_counts": {
+      "wrong_tool": 2,
+      "invalid_argument": 2,
+      "unnecessary_steps": 1,
+      "loop": 0,
+      "made_up_input": 0,
+      "silent_give_up": 2,
+      "skipped_required_step": 3,
+      "other": 0
+    },
+    "top_failure_mode": {
+      "mode": "skipped_required_step",
+      "count": 3,
+      "of": 10
+    },
+    "right_answer_wrong_path_cases": [],
+    "payout_correct_wrong_path_cases": [
+      "TC-05",
+      "TC-08"
+    ],
+    "payout_pass": 8
+  },
+  "right_answer_wrong_path": {
+    "found": true,
+    "all_cases": [],
+    "payout_correct_wrong_path_cases": [
+      "TC-05",
+      "TC-08"
+    ],
+    "example": {
+      "case_id": "TC-05",
+      "claim_id": "CLM-2026-00008",
+      "expected_outcome": {
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "wear_and_tear",
+        "gross_amount": 18000,
+        "excess": 1000,
+        "payable_amount": 0
+      },
+      "actual_outcome": {
+        "claim_id": "CLM-2026-00008",
+        "status": "DENIED",
+        "covered": false,
+        "exclusion": "wear_and_tear",
+        "gross_amount": 18000,
+        "excess": null,
+        "payable_amount": 0,
+        "reason": "The loss is due to wear and tear, which is excluded under the policy, so the claim is denied."
+      },
+      "outcome_pass": false,
+      "valid_paths": [
+        [
+          "get_claim",
+          "get_policy",
+          "check_exclusions",
+          "compute_payout"
+        ],
+        [
+          "get_claim",
+          "check_exclusions",
+          "get_policy",
+          "compute_payout"
+        ]
+      ],
+      "actual_tool_sequence": [
+        "get_claim",
+        "get_policy",
+        "check_exclusions"
+      ],
+      "trajectory_pass": false,
+      "failure_modes": [
+        "skipped_required_step"
+      ],
+      "skipped_required_tools": [
+        "compute_payout"
+      ],
+      "trajectory": [
+        {
+          "order": 1,
+          "iteration": 1,
+          "tool": "get_claim",
+          "arguments": {
+            "claim_id": "CLM-2026-00008"
+          },
+          "result": {
+            "claim_id": "CLM-2026-00008",
+            "policy_id": "POL-GADGET-3001",
+            "claimant_name": "K. Joseph",
+            "claimed_amount": 18000,
+            "incident_date": "2026-02-15",
+            "adjuster_notes": "Claimant reports washing machine motor stopped working. Adjuster inspection found significant rust and corrosion on internal components consistent with gradual wear over time, not a sudden accidental event."
+          },
+          "error": null,
+          "latency_ms": 0,
+          "iteration_tokens": 988,
+          "iteration_cost": 0.0001725
+        },
+        {
+          "order": 2,
+          "iteration": 2,
+          "tool": "get_policy",
+          "arguments": {
+            "policy_id": "POL-GADGET-3001"
+          },
+          "result": {
+            "policy_id": "POL-GADGET-3001",
+            "product": "gadget_protection",
+            "active": true,
+            "excess": 1000,
+            "sub_limits": {}
+          },
+          "error": null,
+          "latency_ms": 0,
+          "iteration_tokens": 1152,
+          "iteration_cost": 0.00021284999999999997
+        },
+        {
+          "order": 3,
+          "iteration": 3,
+          "tool": "check_exclusions",
+          "arguments": {
+            "cause": "wear_and_tear",
+            "policy_id": "POL-GADGET-3001"
+          },
+          "result": {
+            "policy_id": "POL-GADGET-3001",
+            "cause": "wear_and_tear",
+            "covered": false,
+            "exclusion": "wear_and_tear",
+            "reason": "Gradual wear, rust, and corrosion are excluded under the gadget protection policy — only sudden accidental damage is covered."
+          },
+          "error": null,
+          "latency_ms": 0,
+          "iteration_tokens": 1241,
+          "iteration_cost": 0.00023385
+        }
+      ]
+    }
+  },
+  "top_failure_mode": {
+    "mode": "skipped_required_step",
+    "count": 3,
+    "of": 10
+  },
+  "mitigation": {
+    "name": "tighter tool description",
+    "option": 1,
+    "targets": "skipped_required_step",
+    "code_changed": "app/claims_agent/tools.py -> TASK_D_MITIGATED_TOOL_SCHEMAS: the `description` string of all four tools. Names, parameter schemas and implementations are untouched (asserted at import time).",
+    "toggle": "run_agent(..., mitigation=True) selects MITIGATED_TOOL_SETS['task_d']",
+    "rationale": "The baseline's top failure mode was skipped_required_step: the agent answered correctly while never calling compute_payout, doing the subtraction itself. The baseline descriptions state only what each tool RETURNS — nothing marks a tool mandatory and nothing states a precondition — so from where the agent sits, skipping a step is not visibly wrong. A skipped step is a tool-selection failure, and tool selection is driven by the tool descriptions, so tightening them is the mitigation that acts on the actual cause. The four other allowed mitigations do not: a hard step limit constrains how MANY steps are taken, not which; argument validation fires only on a call that was already made, so it can never catch a call that never happened; re-planning adds a whole model round-trip; and replacing the agent with the deterministic workflow removes the agent rather than fixing it, and would make every trajectory metric trivially perfect.",
+    "not_done": "no argument validation, no hard step limit, no re-planning step, no swap to the deterministic workflow, and no change to the system prompt, budgets, seed or agent loop",
+    "top_failure_mode": "skipped_required_step",
+    "description_diff": [
+      {
+        "tool": "get_claim",
+        "before": "Returns the claim record for a claim_id: policy_id, claimant_name, claimed_amount, incident_date, and the free-text adjuster_notes.",
+        "after": "Returns the claim record for a claim_id: policy_id, claimant_name, claimed_amount, incident_date, and the free-text adjuster_notes. REQUIRED FIRST STEP for every claim: policy_id and claimed_amount exist nowhere else, and the cause of loss has to be read out of adjuster_notes."
+      },
+      {
+        "tool": "get_policy",
+        "before": "Returns a policy's terms: the product, whether the policy is active, the excess (deductible), and any per-cause sub-limits.",
+        "after": "Returns a policy's terms: the product, whether the policy is active, the excess (deductible), and any per-cause sub-limits. REQUIRED before compute_payout: the excess and sub-limit it returns are the ONLY legitimate source for those two numbers. Never infer an excess or a sub-limit from the claim record, from the adjuster notes, or from what is typical for the product."
+      },
+      {
+        "tool": "check_exclusions",
+        "before": "Returns whether a given cause of loss is excluded under a policy, along with the exclusion code and its wording if one applies.",
+        "after": "Returns whether a given cause of loss is excluded under a policy, along with the exclusion code and its wording if one applies. REQUIRED for every claim whose cause of loss can be determined, including claims that look obviously covered. Coverage is a property of the policy wording, not of the claim: an active policy does not imply cover, and adjuster notes that appear to settle coverage (for example 'policy confirmed to include the flood rider') are the adjuster's opinion, not a coverage decision. Never set covered/exclusion without calling this tool."
+      },
+      {
+        "tool": "compute_payout",
+        "before": "Returns gross_amount, excess and payable_amount for a claim, given the claimed amount, the policy excess, the claim status and an optional sub-limit.",
+        "after": "Returns gross_amount, excess and payable_amount for a claim, given the claimed amount, the policy excess, the claim status and an optional sub-limit. REQUIRED LAST STEP for every claim you answer with a payable figure, and the only place a payable_amount may be produced. Do not do the arithmetic yourself — not even when the result is obviously zero because the claim is denied, and not even when it is a single subtraction. PRECONDITIONS: claimed_amount must be the value get_claim returned; policy_excess and sub_limit must be the values get_policy returned; claim_status must follow the coverage decision check_exclusions returned."
+      }
+    ]
+  },
+  "after": {
+    "n_cases": 10,
+    "outcome_pass": 8,
+    "outcome_pass_rate": 0.8,
+    "trajectory_pass": 8,
+    "trajectory_pass_rate": 0.8,
+    "outcome_vs_trajectory_gap_pp": 0.0,
+    "tool_choice_accuracy": 0.8,
+    "tool_choice_accuracy_stepwise": 0.9487179487179487,
+    "argument_validity": {
+      "valid_calls": 37,
+      "total_calls": 39,
+      "rate": 0.9487179487179487
+    },
+    "step_efficiency_aggregate": 1.054054054054054,
+    "step_efficiency_per_case": {
+      "TC-01": 1.0,
+      "TC-02": 1.0,
+      "TC-03": 2.0,
+      "TC-04": 1.0,
+      "TC-05": 1.0,
+      "TC-06": 1.0,
+      "TC-07": 1.0,
+      "TC-08": 1.25,
+      "TC-09": 1.0,
+      "TC-10": 1.0
+    },
+    "cost_usd": {
+      "p50": 0.001336,
+      "max": 0.001369,
+      "min": 0.000227,
+      "total": 0.012021
+    },
+    "latency_ms": {
+      "p50": 5008.0,
+      "max": 8219.0,
+      "min": 2323.0,
+      "total": 48564.0
+    },
+    "tokens": {
+      "p50": 7412.0,
+      "max": 7493.0,
+      "min": 1274.0,
+      "total": 66580.0
+    },
+    "failure_mode_counts": {
+      "wrong_tool": 2,
+      "invalid_argument": 2,
+      "unnecessary_steps": 2,
+      "loop": 0,
+      "made_up_input": 0,
+      "silent_give_up": 2,
+      "skipped_required_step": 0,
+      "other": 0
+    },
+    "top_failure_mode": {
+      "mode": "wrong_tool",
+      "count": 2,
+      "of": 10
+    },
+    "right_answer_wrong_path_cases": [],
+    "payout_correct_wrong_path_cases": [],
+    "payout_pass": 8
+  },
+  "before_after": {
+    "top_failure_mode": "skipped_required_step",
+    "top_failure_before": 3,
+    "top_failure_after": 0,
+    "top_failure_delta": -3,
+    "price": {
+      "tokens_per_claim_p50_delta": 1396.0,
+      "tokens_per_claim_max_delta": 1183.0,
+      "cost_usd_per_claim_p50_delta": 0.00025299999999999997,
+      "cost_usd_per_claim_max_delta": 0.00011300000000000004,
+      "latency_ms_per_claim_p50_delta": 1535.0,
+      "latency_ms_per_claim_max_delta": 3001.0
+    }
+  },
+  "regression_table": [
+    {
+      "mode": "wrong_tool",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "mode": "invalid_argument",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "mode": "unnecessary_steps",
+      "before": 1,
+      "after": 2,
+      "delta": 1
+    },
+    {
+      "mode": "loop",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "mode": "made_up_input",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "mode": "silent_give_up",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "mode": "skipped_required_step",
+      "before": 3,
+      "after": 0,
+      "delta": -3
+    },
+    {
+      "mode": "other",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    }
+  ],
+  "outcome_regression": {
+    "outcome_pass_rate_before": 0.6,
+    "outcome_pass_rate_after": 0.8,
+    "cases_failing_before": [
+      "TC-02",
+      "TC-03",
+      "TC-05",
+      "TC-08"
+    ],
+    "cases_failing_after": [
+      "TC-03",
+      "TC-08"
+    ],
+    "newly_broken": []
+  },
+  "remaining_failure_modes": {
+    "wrong_tool": 2,
+    "invalid_argument": 2,
+    "unnecessary_steps": 2,
+    "silent_give_up": 2
+  }
+}

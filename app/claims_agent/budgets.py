@@ -28,6 +28,13 @@ class BudgetTracker:
         self.tokens_total += prompt_tokens + completion_tokens
         self.cost_total += cost
 
+    def add_pause(self, seconds: float) -> None:
+        """Exclude time spent parked on a provider rate limit from the
+        wall-clock budget. Waiting for a 429 to clear is the provider's
+        time, not the agent's, and counting it would terminate a healthy
+        run for a reason that has nothing to do with its behaviour."""
+        self._start += seconds
+
     def add_side_cost(self, tokens: int, cost: float) -> None:
         """For model calls that support an iteration (e.g. context-window
         summarization) but aren't themselves an agent decision step, so
