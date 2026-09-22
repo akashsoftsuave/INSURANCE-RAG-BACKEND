@@ -1,0 +1,74 @@
+JUDGE PROMPT v1 — Insurance Claims Assistant, answer-quality grading
+=====================================================================
+Scope: this judge grades SUBJECTIVE answer quality only — faithfulness
+to the retrieved context, completeness, and appropriate refusal. It does
+NOT grade claim-number format, date-of-loss parseability, deductible /
+excess numeric-ness, or denial/exclusion-clause citation. Those four
+checks are Task Set D: objective, rule-based, and computed deterministically
+in code (eval/deterministic_checks.py). If asked to also score those,
+refuse and say so — moving them out of this judge and into code is a
+deliberate requirement, not an oversight (rule-based checks are perfectly
+reproducible; an LLM re-deriving the same regex by eyeball is strictly
+worse — slower, non-deterministic, and adds nothing).
+
+You will be given:
+  QUESTION: the user's question, as sent to the RAG pipeline
+  CONTEXT:  the retrieved document chunks the model had access to
+  ANSWER:   the model's answer
+
+Grade the ANSWER as PASS or FAIL against these criteria:
+
+1. Faithfulness — every factual claim in ANSWER must be directly
+   supported by CONTEXT. A claim generalized from a related-but-distinct
+   fact in CONTEXT (e.g. applying an exception written for one scenario
+   to a different scenario the source never addresses) is a FAIL, even
+   if it sounds plausible.
+2. Completeness — if CONTEXT contains a fact directly relevant to
+   QUESTION, ANSWER must not omit or deny it. A blanket refusal
+   ("I couldn't find this information...") when CONTEXT actually
+   contains part or all of the answer is a FAIL, even if the refusal
+   wording itself is the system's designated fallback phrase.
+3. Appropriate refusal — if CONTEXT genuinely does not contain the
+   requested fact, ANSWER must say so rather than inferring or
+   guessing. Do not penalize an honest "not stated in the documents"
+   for a fact that is truly absent from CONTEXT — that is correct
+   behavior, not a failure.
+4. No hallucinated specifics — quoted numbers, dates, names, and
+   clause/section references in ANSWER must appear verbatim (or as a
+   faithful paraphrase) in CONTEXT.
+
+Output strictly as JSON, nothing else:
+{
+  "verdict": "PASS" | "FAIL",
+  "mode": "OK" | "A" | "B" | "C" | "OTHER",
+  "reason": "<one sentence, cite the specific unsupported/omitted claim>"
+}
+
+Mode legend — reuse these from analysis/taxonomy.md; do not invent a new
+mode label without updating that file first:
+  OK — answer is fully faithful and complete.
+  A  — a fact exists in the source document but was not retrieved into
+       the top-k context, so ANSWER falsely denies that one field while
+       other fields in the same answer are handled correctly.
+  B  — blanket refusal on the whole answer despite CONTEXT containing a
+       usable partial or full answer.
+  C  — a retrieved chunk is topically related but does not actually
+       answer QUESTION, and ANSWER treats it as if it does.
+  OTHER — a real faithfulness/completeness failure that doesn't fit A/B/C;
+       explain the mechanism in "reason" so it can be triaged into a new
+       mode later.
+
+Notes for the operator wiring this prompt into a runner:
+- This is a *frozen-transcript* judge: it scores an already-generated
+  ANSWER against its own recorded CONTEXT, not a live regeneration. Do
+  not feed it a different CONTEXT than the one the ANSWER was actually
+  produced from — that would grade a hypothetical answer, not the real
+  one, and would make the baseline non-reproducible.
+- Temperature 0 recommended. Even so, do not treat this judge's verdict
+  on a fixed (QUESTION, CONTEXT, ANSWER) triple as ground truth on its
+  own — for the 27-trace baseline in traces/traces.jsonl, the reference
+  verdicts already exist as human-reviewed labels in eval/labels_27.json
+  (derived from analysis/notes.md's open-coding). This prompt is for
+  grading *new* traces that arrive without a hand-reviewed label, and for
+  spot-checking that a future judge_v2 revision still agrees with the
+  known-correct labels on this fixed set before trusting it on new data.

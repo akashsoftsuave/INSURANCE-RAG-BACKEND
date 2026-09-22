@@ -11,12 +11,9 @@ ACTIVE_DATASET below to one of the keys in eval/datasets.py
 import json
 import re
 
-from app.services.chunk_service import ChunkService
-from app.services.embedding_service import EmbeddingService
+from app.services.ingestion_pipeline import run_ingestion_pipeline
 from app.services.llm_service import LLMService
-from app.services.pdf_loader import PDFLoader
 from app.services.retrieval_service import RetrievalService
-from app.services.vector_store import VectorStore
 
 from eval.datasets import DATASETS
 
@@ -25,18 +22,39 @@ ACTIVE_DATASET = "acko_bike"
 TOP_K = 3
 
 
+def compute_metrics(results: list, relevant_ids: set = None) -> dict:
+    """Compute hit-rate@k, recall@k, and MRR metrics."""
+    k = min(len(results), TOP_K)
+
+    hit_at_k = 0
+    if relevant_ids:
+        retrieved_ids = {r.get("id") for r in results if r.get("id")}
+        hit_at_k = len(retrieved_ids & relevant_ids) > 0
+
+    recall_at_k = 0
+    if relevant_ids and len(relevant_ids) > 0:
+        retrieved_ids = {r.get("id") for r in results if r.get("id")}
+        recall_at_k = len(retrieved_ids & relevant_ids) / len(relevant_ids)
+
+    mrr = 0
+    if relevant_ids:
+        for i, r in enumerate(results, 1):
+            if r.get("id") in relevant_ids:
+                mrr = 1.0 / i
+                break
+
+    return {
+        "hit_rate_at_k": hit_at_k,
+        "recall_at_k": recall_at_k,
+        "mrr": mrr
+    }
+
+
 def ingest(pdf_path, collection_name):
-    pages = PDFLoader.extract_text(str(pdf_path))
-
-    chunk_service = ChunkService(chunk_size=500, chunk_overlap=100)
-    chunks = chunk_service.create_chunks(pages, document=pdf_path.name)
-
-    embedding_service = EmbeddingService()
-    chunks = embedding_service.generate_embeddings(chunks)
-
-    vector_store = VectorStore(collection_name=collection_name)
-    vector_store.clear_collection()
-    vector_store.add_documents(chunks)
+    result = run_ingestion_pipeline(pdf_path, collection_name=collection_name)
+    chunks = result["chunks"]
+    embedding_service = result["embedding_service"]
+    vector_store = result["vector_store"]
 
     print(f"Ingested {len(chunks)} chunks from {pdf_path.name} into collection '{collection_name}'")
     return embedding_service, vector_store
@@ -56,9 +74,9 @@ def resolve_relevant_ids(vector_store, marker: str) -> set:
 
 def run_config(retriever, llm, question: str, relevant_ids: set):
     results = retriever.retrieve(question)
-    metrics = retriever.compute_metrics(results, relevant_ids)
+    metrics = compute_metrics(results, relevant_ids)
     context = "\n\n".join(r["document"] for r in results)
-    answer = llm.generate_answer(question=question, context=context)
+    answer = llm.generate(question=question, context=context)["raw_output"]
     return {
         "results": results,
         "metrics": metrics,
