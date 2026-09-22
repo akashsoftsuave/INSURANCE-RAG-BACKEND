@@ -23,10 +23,13 @@ class RetrievalService:
     )
     SCENARIO_MISMATCH_PENALTY = 10.0
 
-    def __init__(self):
+    def __init__(self, collection_name: str | None = None):
 
+        # collection_name lets an eval harness point the same retriever at a
+        # per-dataset collection. None keeps the configured default, so
+        # `RetrievalService()` behaves exactly as before.
         self.embedding_service = EmbeddingService()
-        self.vector_store = VectorStore()
+        self.vector_store = VectorStore(collection_name=collection_name)
 
         self.cross_encoder = None
         try:

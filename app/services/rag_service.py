@@ -1,6 +1,8 @@
+import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
+from app.claims_agent.pricing import call_cost
 from app.services.retrieval_service import RetrievalService
 from app.services.llm_service import LLMService
 from app.services.guardrail_service import GuardrailService
@@ -11,15 +13,26 @@ from app.core.config import settings
 
 class RAGService:
 
-    def __init__(self, trace_logger: TraceLogger | None = None):
-
-        self.guardrail = GuardrailService()
-        self.retriever = RetrievalService()
-        self.llm = LLMService()
+    def __init__(
+        self,
+        trace_logger: TraceLogger | None = None,
+        retriever: RetrievalService | None = None,
+        llm: LLMService | None = None,
+        guardrail: GuardrailService | None = None,
+    ):
+        # The components are injectable so the fixed and agentic flows can
+        # share one RetrievalService (the cross-encoder it loads is heavy, and
+        # sharing it is also what makes a fixed-vs-agentic comparison fair —
+        # both read the same index through the same reranker). Every argument
+        # defaults to constructing its own, so `RAGService()` is unchanged.
+        self.guardrail = guardrail or GuardrailService()
+        self.retriever = retriever or RetrievalService()
+        self.llm = llm or LLMService()
         self.tracer = trace_logger or TraceLogger()
 
     def ask(self, question: str) -> Dict[str, Any]:
 
+        started = time.monotonic()
         trace_id = TraceLogger.new_trace_id()
         guard = self.guardrail.check(question)
 
@@ -38,12 +51,19 @@ class RAGService:
                 source_pages_used=[],
                 source_pages_returned=[],
                 evidence_chunks=[],
+                latency_ms=int((time.monotonic() - started) * 1000),
             )
 
             return {
                 "answer": answer,
                 "sources": [],
                 "trace_id": trace_id,
+                "mode": "fixed",
+                "rounds": 0,
+                "queries": [],
+                "latency_ms": int((time.monotonic() - started) * 1000),
+                "tokens": {"prompt": 0, "completion": 0, "total": 0},
+                "cost_usd": 0.0,
             }
 
         # Step 1: Retrieval
@@ -78,12 +98,30 @@ class RAGService:
             source_pages_used=source_pages_used,
             source_pages_returned=source_pages_returned,
             evidence_chunks=evidence_chunks,
+            latency_ms=int((time.monotonic() - started) * 1000),
         )
+
+        usage = generation.get("usage") or {}
+        prompt_tokens = usage.get("prompt_tokens", 0)
+        completion_tokens = usage.get("completion_tokens", 0)
 
         return {
             "answer": answer,
             "sources": sources,
             "trace_id": trace_id,
+            # The fixed flow is one retrieval round on the question as written;
+            # reported explicitly so a caller can compare it against agentic
+            # without special-casing either shape.
+            "mode": "fixed",
+            "rounds": 1,
+            "queries": [question],
+            "latency_ms": int((time.monotonic() - started) * 1000),
+            "tokens": {
+                "prompt": prompt_tokens,
+                "completion": completion_tokens,
+                "total": prompt_tokens + completion_tokens,
+            },
+            "cost_usd": call_cost(settings.MODEL_NAME, prompt_tokens, completion_tokens),
         }
 
     def _build_evidence_sources(
@@ -219,6 +257,7 @@ class RAGService:
         source_pages_used: List[int],
         source_pages_returned: List[int],
         evidence_chunks: List[Dict[str, Any]],
+        latency_ms: int | None = None,
     ) -> None:
 
         # Build rank maps from pre_rerank_results
@@ -287,9 +326,17 @@ class RAGService:
         if source_pages_returned:
             source_precision = len(set(source_pages_used) & set(source_pages_returned)) / len(source_pages_returned)
 
+        usage = (generation or {}).get("usage") or {}
+        prompt_tokens = usage.get("prompt_tokens", 0)
+        completion_tokens = usage.get("completion_tokens", 0)
+
         record = {
             "trace_id": trace_id,
             "timestamp": datetime.now(timezone.utc).isoformat(),
+            # Which flow produced this trace. Present on every new record so a
+            # mixed trace file can be split by flow; traces written before the
+            # agentic flow existed simply have no "mode" key.
+            "mode": "fixed",
             "question_redacted": redact(question),
             "guardrail": guard,
             "retrieval": {
@@ -313,6 +360,12 @@ class RAGService:
             } if generation else None,
             "raw_output_redacted": redact(answer),
             "final_answer_redacted": redact(answer),
+            "performance": {
+                "latency_ms": latency_ms,
+                "tokens_total": prompt_tokens + completion_tokens,
+                "cost_usd": call_cost(settings.MODEL_NAME, prompt_tokens, completion_tokens),
+                "model_calls": 1 if generation else 0,
+            },
             "redaction": {
                 "applied": True,
                 "method": "id-regex ([A-Z]{2,10}-...-YYYY-ALPHANUM)",

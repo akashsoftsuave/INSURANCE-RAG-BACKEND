@@ -81,9 +81,17 @@ Question:
             ]
         )
 
+        # Token usage is reported so callers can account for cost/latency per
+        # answer. Purely additive — nothing about the generation itself changes.
+        usage = getattr(response, "usage", None)
+
         return {
             "raw_output": response.choices[0].message.content,
             "prompt_version": PROMPT_VERSION,
             "model": settings.MODEL_NAME,
             "temperature": TEMPERATURE,
+            "usage": {
+                "prompt_tokens": getattr(usage, "prompt_tokens", 0) or 0,
+                "completion_tokens": getattr(usage, "completion_tokens", 0) or 0,
+            },
         }
