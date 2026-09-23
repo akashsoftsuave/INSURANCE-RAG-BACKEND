@@ -1,0 +1,10 @@
+{
+  "config": "week9_mcp/configs/server1_only.json",
+  "tool_count": 1,
+  "tools": [
+    {
+      "server": "policy-search",
+      "name": "search_policy_documents"
+    }
+  ]
+}

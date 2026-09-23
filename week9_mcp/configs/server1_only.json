@@ -1,0 +1,9 @@
+{
+  "servers": [
+    {
+      "name": "policy-search",
+      "command": "D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/venv/Scripts/python.exe",
+      "args": ["D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/week9_mcp/servers/policy_search_server.py"]
+    }
+  ]
+}

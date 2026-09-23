@@ -1,0 +1,37 @@
+Requirement 2 — prove ZERO lines changed in the agent module between
+"server one" and "server one + two".
+
+Method
+------
+week9_mcp/host/agent.py never names a server or a tool. It takes a single
+--config argument (a JSON file path) at run time, connects to whatever
+servers that file lists, and calls whatever tools tools/list returns
+(see MCPHost.connect / MCPHost.call_tool). So "add server two" is a change
+to week9_mcp/configs/*.json only — there is nothing in agent.py to edit.
+
+Evidence:
+1. SHA-256 of week9_mcp/host/agent.py, captured immediately before the
+   server-one-only discovery/query run and again immediately before the
+   server-one-plus-two discovery/query run:
+
+     d2142897ef8cc747f5c3208b2c3358446914a22085f8cebaf6b0637367c045c9  (before, server1_only.json)
+     d2142897ef8cc747f5c3208b2c3358446914a22085f8cebaf6b0637367c045c9  (after,  server1_and_server2.json)
+
+   Identical hash -> byte-for-byte the same file.
+
+2. `diff -u` between the two on-disk snapshots taken at each stage:
+
+     $ diff -u _agent_snapshot_at_server1_only.py _agent_snapshot_at_server1_and_2.py
+     (no output, exit code 0)
+
+   0 lines added, 0 lines removed, 0 lines changed.
+
+Note on methodology: this session did not create a git commit for the
+server-one-only state (commits are made only when the user asks for one),
+so the comparison above uses file snapshots + hashes instead of
+`git diff <commit>..<commit> -- week9_mcp/host/agent.py`. Either method
+proves the same fact; the git-based version is one `git add -A && git commit`
+away if a real commit history is wanted for the submission.
+
+See week9_mcp/deliverables/config_diff.txt for the config-only change that
+added server two.
