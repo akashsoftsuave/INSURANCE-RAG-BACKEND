@@ -21,3 +21,5 @@ python-multipart
 langchain-text-splitters
 
 rank-bm25
+
+mcp<2

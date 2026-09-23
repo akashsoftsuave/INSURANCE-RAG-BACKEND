@@ -1,0 +1,18 @@
+{
+  "config": "week9_mcp/configs/server1_and_server2.json",
+  "tool_count": 3,
+  "tools": [
+    {
+      "server": "policy-search",
+      "name": "search_policy_documents"
+    },
+    {
+      "server": "claims-system",
+      "name": "get_claim_status"
+    },
+    {
+      "server": "claims-system",
+      "name": "get_adjuster_notes"
+    }
+  ]
+}

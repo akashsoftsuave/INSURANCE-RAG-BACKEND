@@ -1,0 +1,14 @@
+--- week9_mcp/configs/server1_only.json	2026-09-22 22:11:36.065671300 +0530
++++ week9_mcp/configs/server1_and_server2.json	2026-09-22 22:11:39.406908800 +0530
+@@ -4,6 +4,11 @@
+       "name": "policy-search",
+       "command": "D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/venv/Scripts/python.exe",
+       "args": ["D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/week9_mcp/servers/policy_search_server.py"]
++    },
++    {
++      "name": "claims-system",
++      "command": "D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/venv/Scripts/python.exe",
++      "args": ["D:/INSURANCE_RAG/INSURANCE-RAG-BACKEND/week9_mcp/servers/claims_system_server.py"]
+     }
+   ]
+ }

@@ -1,0 +1,190 @@
+{
+  "exchange": [
+    {
+      "direction": "client -> server",
+      "raw": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"initialize\", \"params\": {\"protocolVersion\": \"2024-11-05\", \"capabilities\": {}, \"clientInfo\": {\"name\": \"wire-capture-script\", \"version\": \"0.1.0\"}}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2024-11-05",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "wire-capture-script",
+            "version": "0.1.0"
+          }
+        }
+      },
+      "annotations": {
+        "jsonrpc": "Protocol version tag for JSON-RPC itself (2.0) \u2014 fixed, not MCP-specific.",
+        "id": "Client-chosen correlation id (1). The matching response echoes it back so the client can pair request<->response on a single shared stdio pipe.",
+        "method": "'initialize' \u2014 the first call of every MCP session. Nothing else may be sent before this completes.",
+        "params.protocolVersion": "The MCP spec date-version the client speaks. Server checks this against its own supported versions.",
+        "params.capabilities": "Empty here \u2014 client is declaring it offers none of the optional client-side features (sampling, roots, elicitation).",
+        "params.clientInfo": "Free-text identification of the calling application, for the server's logs \u2014 not used for auth."
+      }
+    },
+    {
+      "direction": "server -> client",
+      "raw": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{\"experimental\":{},\"prompts\":{\"listChanged\":false},\"resources\":{\"subscribe\":false,\"listChanged\":false},\"tools\":{\"listChanged\":false}},\"serverInfo\":{\"name\":\"claims-system\",\"version\":\"1.30.0\"}}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "protocolVersion": "2024-11-05",
+          "capabilities": {
+            "experimental": {},
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "subscribe": false,
+              "listChanged": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "serverInfo": {
+            "name": "claims-system",
+            "version": "1.30.0"
+          }
+        }
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "id": "Echoes 1 \u2014 this is the response to the initialize request above.",
+        "result.protocolVersion": "The version the SERVER settled on (must match or be acceptable to the client).",
+        "result.capabilities": "What the server actually offers: tools (yes, listChanged=false = it won't notify on tool-list changes), resources/prompts (declared but empty \u2014 this server exposes neither).",
+        "result.serverInfo": "Server's self-reported name ('claims-system' \u2014 matches the FastMCP('claims-system') constructor call) and version (the mcp SDK's own version, 1.30.0, not an app version)."
+      }
+    },
+    {
+      "direction": "client -> server",
+      "raw": "{\"jsonrpc\": \"2.0\", \"method\": \"notifications/initialized\"}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "method": "notifications/initialized"
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "method": "'notifications/initialized' \u2014 a NOTIFICATION (no 'id' field), meaning no response is expected or sent. It tells the server the client has finished processing the initialize result and normal requests (tools/list, tools/call, ...) may now begin."
+      }
+    },
+    {
+      "direction": "client -> server",
+      "raw": "{\"jsonrpc\": \"2.0\", \"id\": 2, \"method\": \"tools/list\", \"params\": {}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/list",
+        "params": {}
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "id": "2 \u2014 a fresh id for this request, independent of the initialize exchange.",
+        "method": "'tools/list' \u2014 discovery. This is the ONLY thing that produced the tool schemas the model was given; nothing about these two tools is hard-coded in the host.",
+        "params": "Empty object \u2014 no pagination cursor supplied, so the server returns its full tool list in one page."
+      }
+    },
+    {
+      "direction": "server -> client",
+      "raw": "{\"jsonrpc\":\"2.0\",\"id\":2,\"result\":{\"tools\":[{\"name\":\"get_claim_status\",\"description\":\"Look up the current status of a claim by claim number.\\n\\nArgs:\\n    claim_number: e.g. \\\"CLM-2024-88120\\\".\\n\\nReturns:\\n    status, policy_id, claimant_name, opened_date, last_updated.\\n\",\"inputSchema\":{\"properties\":{\"claim_number\":{\"title\":\"Claim Number\",\"type\":\"string\"}},\"required\":[\"claim_number\"],\"title\":\"get_claim_statusArguments\",\"type\":\"object\"}},{\"name\":\"get_adjuster_notes\",\"description\":\"Return the adjuster note history for a claim, oldest first.\\n\\nArgs:\\n    claim_number: e.g. \\\"CLM-2024-88120\\\".\\n\\nReturns:\\n    claim_number and a chronological list of {date, author, note}.\\n\",\"inputSchema\":{\"properties\":{\"claim_number\":{\"title\":\"Claim Number\",\"type\":\"string\"}},\"required\":[\"claim_number\"],\"title\":\"get_adjuster_notesArguments\",\"type\":\"object\"}}]}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "tools": [
+            {
+              "name": "get_claim_status",
+              "description": "Look up the current status of a claim by claim number.\n\nArgs:\n    claim_number: e.g. \"CLM-2024-88120\".\n\nReturns:\n    status, policy_id, claimant_name, opened_date, last_updated.\n",
+              "inputSchema": {
+                "properties": {
+                  "claim_number": {
+                    "title": "Claim Number",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_number"
+                ],
+                "title": "get_claim_statusArguments",
+                "type": "object"
+              }
+            },
+            {
+              "name": "get_adjuster_notes",
+              "description": "Return the adjuster note history for a claim, oldest first.\n\nArgs:\n    claim_number: e.g. \"CLM-2024-88120\".\n\nReturns:\n    claim_number and a chronological list of {date, author, note}.\n",
+              "inputSchema": {
+                "properties": {
+                  "claim_number": {
+                    "title": "Claim Number",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claim_number"
+                ],
+                "title": "get_adjuster_notesArguments",
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "id": "Echoes 2.",
+        "result.tools": "Array of Tool objects. Each one's 'name' and 'description' come verbatim from the Python function name and docstring in claims_system_server.py (get_claim_status, get_adjuster_notes) \u2014 FastMCP generated this JSON from the decorated functions, nothing here was hand-written as JSON.",
+        "result.tools[].inputSchema": "JSON Schema auto-derived from the Python function's type-hinted parameters (claim_number: str -> {'type':'string'}), with 'required' populated from parameters that have no default."
+      }
+    },
+    {
+      "direction": "client -> server",
+      "raw": "{\"jsonrpc\": \"2.0\", \"id\": 3, \"method\": \"tools/call\", \"params\": {\"name\": \"get_claim_status\", \"arguments\": {\"claim_number\": \"CLM-2024-88120\"}}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 3,
+        "method": "tools/call",
+        "params": {
+          "name": "get_claim_status",
+          "arguments": {
+            "claim_number": "CLM-2024-88120"
+          }
+        }
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "id": "3 \u2014 a fresh id for this call.",
+        "method": "'tools/call' \u2014 an actual invocation, distinct from tools/list (listing a tool never runs it).",
+        "params.name": "Which discovered tool to run \u2014 must be one of the names tools/list just returned.",
+        "params.arguments": "The call's arguments, validated by the server against that tool's inputSchema before the Python function runs."
+      }
+    },
+    {
+      "direction": "server -> client",
+      "raw": "{\"jsonrpc\":\"2.0\",\"id\":3,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"claim_number\\\": \\\"CLM-2024-88120\\\",\\n  \\\"status\\\": \\\"under_review\\\",\\n  \\\"policy_id\\\": \\\"POL-AUTO-1001\\\",\\n  \\\"claimant_name\\\": \\\"R. Iyer\\\",\\n  \\\"opened_date\\\": \\\"2024-03-02\\\",\\n  \\\"last_updated\\\": \\\"2024-03-09\\\"\\n}\"}],\"isError\":false}}",
+      "parsed": {
+        "jsonrpc": "2.0",
+        "id": 3,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"claim_number\": \"CLM-2024-88120\",\n  \"status\": \"under_review\",\n  \"policy_id\": \"POL-AUTO-1001\",\n  \"claimant_name\": \"R. Iyer\",\n  \"opened_date\": \"2024-03-02\",\n  \"last_updated\": \"2024-03-09\"\n}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      "annotations": {
+        "jsonrpc": "Same fixed tag.",
+        "id": "Echoes 3.",
+        "result.content": "MCP wraps every tool's return value as a list of content blocks (here one 'text' block) rather than returning arbitrary JSON directly \u2014 this is what lets a tool return images/embedded resources too, not just text. The text itself is this server's get_claim_status() return value, JSON-serialized by FastMCP.",
+        "result.isError": "false \u2014 a normal, successful result. Had the Python function raised instead, this would be true and 'content' would carry the exception's str() as the recoverable error message (see error_before_after.md for that path in the OTHER server)."
+      }
+    }
+  ],
+  "model_call_location": "Where the model call happens and where it does not, in one line: every message in this file is client<->server tool plumbing that never touches an LLM; the ONE place an LLM is called in this whole system is week9_mcp/host/agent.py's _call_model() (Groq chat.completions.create), which runs in the HOST process after tools/list has already returned \u2014 this server only ever sees initialize/tools/list/tools/call and has no model client, API key, or prompt anywhere in it."
+}
