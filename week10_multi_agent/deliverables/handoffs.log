@@ -1,0 +1,72 @@
+# Week 10 — Per-Hand-Off Token Log (`handoffs.log`)
+# Model: openai/gpt-oss-120b | Seed: 7 | Cases: 10 (CLM-2026-00001 .. CLM-2026-00010)
+# Format:seq | claim_id (case_id) | step | handoff | prompt_tok + completion_tok = total_tok | cost_usd | latency_ms | status | payload_summary
+--------------------------------------------------------------------------------------------------------------------------------------------
+01 | CLM-2026-00001 (TC-07) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=173 = total= 484 tok | cost=$0.000150 | latency= 896ms | status=ok | claim_id=CLM-2026-00001
+02 | CLM-2026-00001 (TC-07) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1058 + comp=206 = total=1264 tok | cost=$0.000282 | latency=1340ms | status=ok | claim_id=CLM-2026-00001 -> extracted policy_id=POL-AUTO-1002, cause=flood
+03 | CLM-2026-00001 (TC-07) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2038 + comp=182 = total=2220 tok | cost=$0.000415 | latency=2034ms | status=ok | scoped={'policy_id': 'POL-AUTO-1002', 'cause': 'flood'} (raw adjuster_notes omitted)
+04 | CLM-2026-00001 (TC-07) | step=4 | workers -> orchestrator_synthesis          | prompt=2151 + comp=405 = total=2556 tok | cost=$0.000566 | latency=2166ms | status=ok | claimed_amount=80000, cause=flood, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00001 (TC-07): total_tokens=6524 | cost=$0.001413 | wall_clock_ms=6436ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+05 | CLM-2026-00002 (TC-02) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=172 = total= 483 tok | cost=$0.000150 | latency= 920ms | status=ok | claim_id=CLM-2026-00002
+06 | CLM-2026-00002 (TC-02) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1049 + comp=200 = total=1249 tok | cost=$0.000277 | latency=1332ms | status=ok | claim_id=CLM-2026-00002 -> extracted policy_id=POL-HOME-2001, cause=flood
+07 | CLM-2026-00002 (TC-02) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2049 + comp=197 = total=2246 tok | cost=$0.000426 | latency=1910ms | status=ok | scoped={'policy_id': 'POL-HOME-2001', 'cause': 'flood'} (raw adjuster_notes omitted)
+08 | CLM-2026-00002 (TC-02) | step=4 | workers -> orchestrator_synthesis          | prompt=2167 + comp=392 = total=2559 tok | cost=$0.000560 | latency=1853ms | status=ok | claimed_amount=60000, cause=flood, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00002 (TC-02): total_tokens=6537 | cost=$0.001413 | wall_clock_ms=6015ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+09 | CLM-2026-00003 (TC-09) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=171 = total= 482 tok | cost=$0.000149 | latency= 836ms | status=ok | claim_id=CLM-2026-00003
+10 | CLM-2026-00003 (TC-09) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1061 + comp=189 = total=1250 tok | cost=$0.000273 | latency=1954ms | status=ok | claim_id=CLM-2026-00003 -> extracted policy_id=POL-HOME-2002, cause=theft
+11 | CLM-2026-00003 (TC-09) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2048 + comp=338 = total=2386 tok | cost=$0.000510 | latency=2587ms | status=ok | scoped={'policy_id': 'POL-HOME-2002', 'cause': 'theft'} (raw adjuster_notes omitted)
+12 | CLM-2026-00003 (TC-09) | step=4 | workers -> orchestrator_synthesis          | prompt=2183 + comp=540 = total=2723 tok | cost=$0.000651 | latency=2043ms | status=ok | claimed_amount=45000, cause=theft, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00003 (TC-09): total_tokens=6841 | cost=$0.001583 | wall_clock_ms=7420ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+13 | CLM-2026-00004 (TC-08) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=171 = total= 482 tok | cost=$0.000149 | latency= 880ms | status=ok | claim_id=CLM-2026-00004
+14 | CLM-2026-00004 (TC-08) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1055 + comp=208 = total=1263 tok | cost=$0.000283 | latency=1396ms | status=ok | claim_id=CLM-2026-00004 -> extracted policy_id=POL-AUTO-1001, cause=theft
+15 | CLM-2026-00004 (TC-08) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2057 + comp=184 = total=2241 tok | cost=$0.000419 | latency=1888ms | status=ok | scoped={'policy_id': 'POL-AUTO-1001', 'cause': 'theft'} (raw adjuster_notes omitted)
+16 | CLM-2026-00004 (TC-08) | step=4 | workers -> orchestrator_synthesis          | prompt=2145 + comp=486 = total=2631 tok | cost=$0.000613 | latency=2389ms | status=ok | claimed_amount=350000, cause=theft, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00004 (TC-08): total_tokens=6617 | cost=$0.001465 | wall_clock_ms=6553ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+17 | CLM-2026-00005 (TC-10) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=161 = total= 472 tok | cost=$0.000143 | latency= 797ms | status=ok | claim_id=CLM-2026-00005
+18 | CLM-2026-00005 (TC-10) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1054 + comp=198 = total=1252 tok | cost=$0.000277 | latency=1376ms | status=ok | claim_id=CLM-2026-00005 -> extracted policy_id=POL-GADGET-3001, cause=accidental_damage
+19 | CLM-2026-00005 (TC-10) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2046 + comp=267 = total=2313 tok | cost=$0.000467 | latency=2082ms | status=ok | scoped={'policy_id': 'POL-GADGET-3001', 'cause': 'accidental_damage'} (raw adjuster_notes omitted)
+20 | CLM-2026-00005 (TC-10) | step=4 | workers -> orchestrator_synthesis          | prompt=2155 + comp=357 = total=2512 tok | cost=$0.000537 | latency=2093ms | status=ok | claimed_amount=15000, cause=accidental_damage, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00005 (TC-10): total_tokens=6549 | cost=$0.001425 | wall_clock_ms=6348ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+21 | CLM-2026-00006 (TC-04) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=171 = total= 482 tok | cost=$0.000149 | latency= 790ms | status=ok | claim_id=CLM-2026-00006
+22 | CLM-2026-00006 (TC-04) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1051 + comp=219 = total=1270 tok | cost=$0.000289 | latency=4000ms | status=ok | claim_id=CLM-2026-00006 -> extracted policy_id=POL-HOME-2003, cause=fire
+23 | CLM-2026-00006 (TC-04) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2050 + comp=173 = total=2223 tok | cost=$0.000411 | latency=3749ms | status=ok | scoped={'policy_id': 'POL-HOME-2003', 'cause': 'fire'} (raw adjuster_notes omitted)
+24 | CLM-2026-00006 (TC-04) | step=4 | workers -> orchestrator_synthesis          | prompt=2177 + comp=410 = total=2587 tok | cost=$0.000573 | latency=1836ms | status=ok | claimed_amount=120000, cause=fire, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00006 (TC-04): total_tokens=6562 | cost=$0.001422 | wall_clock_ms=10375ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+25 | CLM-2026-00007 (TC-01) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=164 = total= 475 tok | cost=$0.000145 | latency= 857ms | status=ok | claim_id=CLM-2026-00007
+26 | CLM-2026-00007 (TC-01) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1059 + comp=179 = total=1238 tok | cost=$0.000266 | latency=1550ms | status=ok | claim_id=CLM-2026-00007 -> extracted policy_id=POL-AUTO-1003, cause=collision
+27 | CLM-2026-00007 (TC-01) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2025 + comp=177 = total=2202 tok | cost=$0.000410 | latency=1955ms | status=ok | scoped={'policy_id': 'POL-AUTO-1003', 'cause': 'collision'} (raw adjuster_notes omitted)
+28 | CLM-2026-00007 (TC-01) | step=4 | workers -> orchestrator_synthesis          | prompt=2141 + comp=404 = total=2545 tok | cost=$0.000564 | latency=1777ms | status=ok | claimed_amount=25000, cause=collision, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00007 (TC-01): total_tokens=6460 | cost=$0.001385 | wall_clock_ms=6139ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+29 | CLM-2026-00008 (TC-05) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=173 = total= 484 tok | cost=$0.000150 | latency=1005ms | status=ok | claim_id=CLM-2026-00008
+30 | CLM-2026-00008 (TC-05) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1058 + comp=253 = total=1311 tok | cost=$0.000311 | latency=1512ms | status=ok | claim_id=CLM-2026-00008 -> extracted policy_id=POL-GADGET-3001, cause=wear_and_tear
+31 | CLM-2026-00008 (TC-05) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2081 + comp=203 = total=2284 tok | cost=$0.000434 | latency=2855ms | status=ok | scoped={'policy_id': 'POL-GADGET-3001', 'cause': 'wear_and_tear'} (raw adjuster_notes omitted)
+32 | CLM-2026-00008 (TC-05) | step=4 | workers -> orchestrator_synthesis          | prompt=2199 + comp=502 = total=2701 tok | cost=$0.000631 | latency=1860ms | status=ok | claimed_amount=18000, cause=wear_and_tear, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00008 (TC-05): total_tokens=6780 | cost=$0.001526 | wall_clock_ms=7232ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+33 | CLM-2026-00009 (TC-06) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=171 = total= 482 tok | cost=$0.000149 | latency= 940ms | status=ok | claim_id=CLM-2026-00009
+34 | CLM-2026-00009 (TC-06) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1052 + comp=212 = total=1264 tok | cost=$0.000285 | latency=1764ms | status=ok | claim_id=CLM-2026-00009 -> extracted policy_id=POL-HOME-2002, cause=theft
+35 | CLM-2026-00009 (TC-06) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=2048 + comp=352 = total=2400 tok | cost=$0.000518 | latency=2366ms | status=ok | scoped={'policy_id': 'POL-HOME-2002', 'cause': 'theft'} (raw adjuster_notes omitted)
+36 | CLM-2026-00009 (TC-06) | step=4 | workers -> orchestrator_synthesis          | prompt=2177 + comp=585 = total=2762 tok | cost=$0.000678 | latency=2364ms | status=ok | claimed_amount=100000, cause=theft, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00009 (TC-06): total_tokens=6908 | cost=$0.001630 | wall_clock_ms=7434ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+37 | CLM-2026-00010 (TC-03) | step=1 | orchestrator -> decompose_plan             | prompt= 311 + comp=169 = total= 480 tok | cost=$0.000148 | latency=1459ms | status=ok | claim_id=CLM-2026-00010
+38 | CLM-2026-00010 (TC-03) | step=2 | orchestrator -> adjuster_notes_worker      | prompt=1025 + comp=173 = total=1198 tok | cost=$0.000258 | latency=1665ms | status=ok | claim_id=CLM-2026-00010 -> extracted policy_id=POL-HOME-2003, cause=unknown
+39 | CLM-2026-00010 (TC-03) | step=3 | orchestrator -> coverage_exclusions_worker | prompt=1234 + comp=305 = total=1539 tok | cost=$0.000368 | latency=1886ms | status=ok | scoped={'policy_id': 'POL-HOME-2003', 'cause': 'unknown'} (raw adjuster_notes omitted)
+40 | CLM-2026-00010 (TC-03) | step=4 | workers -> orchestrator_synthesis          | prompt=2134 + comp=328 = total=2462 tok | cost=$0.000517 | latency=2195ms | status=ok | claimed_amount=90000, cause=unknown, exclusions_status=ok
+   +-- CLAIM SUBTOTAL CLM-2026-00010 (TC-03): total_tokens=5679 | cost=$0.001291 | wall_clock_ms=7205ms | passed=True
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+=== HAND-OFF TOKEN ATTRIBUTION SUMMARY (ACROSS ALL 10 CLAIMS) ===
+- workers -> orchestrator_synthesis         : 26,038 tokens (prompt=21,629, completion=4,409) |  39.8% of all multi-agent tokens | calls=10 | cost=$0.005890
+- orchestrator -> coverage_exclusions_worker: 22,054 tokens (prompt=19,676, completion=2,378) |  33.7% of all multi-agent tokens | calls=10 | cost=$0.004378
+- orchestrator -> adjuster_notes_worker     : 12,559 tokens (prompt=10,522, completion=2,037) |  19.2% of all multi-agent tokens | calls=10 | cost=$0.002801
+- orchestrator -> decompose_plan            :  4,806 tokens (prompt=3,110, completion=1,696) |   7.3% of all multi-agent tokens | calls=10 | cost=$0.001484
+
+Context re-send multiplier: 1.3x (65,457 multi tokens / 51,363 single tokens) — dominant hand-off: workers -> orchestrator_synthesis resend, 39.8% of all multi-agent tokens (26,038 / 65,457 tokens).

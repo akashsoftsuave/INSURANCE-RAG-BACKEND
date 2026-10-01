@@ -1,0 +1,7 @@
+**Naming the sunk-cost bias out loud:** We spent last week building the multi-agent orchestrator, two narrow workers, and scoped hand-off plumbing, which creates strong sunk-cost pressure to justify keeping the squad in production simply because we already built it.
+**Verdict: KILL the multi-agent orchestrator for standard claims triage and KEEP the single agent.**
+1. **Pass rate:** Both arms achieved **100% (10/10)** on the same 10 Week-6 eval cases under the same judge — a **0 percentage-point gain** over the single agent's **100% (10/10)** (and even against the unscripted 4-tool single agent's 80%, fixing the single agent's prompt already reaches 100% without multi-agent overhead).
+2. **Total tokens & context re-send multiplier:** The orchestrator burned **65,457 tokens** vs. the single agent's **51,363 tokens** (**1.3x** multiplier), led by `workers -> orchestrator_synthesis` at **39.8%** of all multi-agent tokens.
+3. **Cost per claim:** The multi-agent bill is **$0.001455/claim** vs. **$0.000971/claim** for the single agent (**1.5x** higher cost per claim for identical accuracy).
+4. **Latency (p50 / p99):** Sequential worker hand-offs pushed latency from **3,496 ms p50 / 4,487 ms p99** (single agent) to **6,879 ms p50 / 10,110 ms p99** (orchestrator).
+**Decision rule:** Paying a ~2x token, cost, and latency tax for 0% accuracy gain over a well-prompted single agent fails the production gate; retire the orchestrator and keep the single agent.

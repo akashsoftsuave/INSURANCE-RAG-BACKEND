@@ -1,0 +1,87 @@
+{
+  "name": "claims-squad-orchestrator",
+  "description": "Multi-agent insurance claims triage orchestrator. Decomposes a claim question, delegates to an Adjuster-Note Summary Worker and a Coverage & Exclusions Worker, and synthesises a grounded coverage/payout verdict.",
+  "url": "https://claims-squad.internal.softsuave.insure/a2a/v1",
+  "provider": {
+    "organization": "Soft Suave Insurance AI Platform",
+    "url": "https://internal.softsuave.insure"
+  },
+  "version": "1.0.0",
+  "protocolVersion": "0.2.1",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true,
+    "stateTransitionHistory": true
+  },
+  "authentication": {
+    "schemes": [
+      "Bearer",
+      "OAuth2"
+    ],
+    "credentials": "OAuth2 Client Credentials JWT (audience='a2a://claims-squad-orchestrator') with required scopes: ['claims:read', 'policy:exclusions:evaluate', 'claims:triage:write']."
+  },
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "triage_insurance_claim",
+      "name": "End-to-End Claim Triage & Payout Synthesis",
+      "description": "Accepts a claim_id, coordinates adjuster-note cause extraction and policy exclusion verification, computes the net payout after deductible and sub-limits, and returns the canonical 8-field claim decision JSON.",
+      "tags": [
+        "insurance",
+        "claims",
+        "triage",
+        "orchestrator"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "examples": [
+        "{\"claim_id\": \"CLM-2026-00001\"}",
+        "Triage claim CLM-2026-00002 and report status, coverage, exclusion, and payable amount."
+      ]
+    },
+    {
+      "id": "summarize_adjuster_notes",
+      "name": "Adjuster-Note Cause Extraction (Delegated Worker Skill)",
+      "description": "Reads raw adjuster notes for a claim_id and extracts the structured cause of loss (flood, theft, accidental_damage, fire, wear_and_tear, collision, general, unknown) and a 1-sentence factual summary.",
+      "tags": [
+        "adjuster-notes",
+        "nlp",
+        "cause-of-loss"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "evaluate_coverage_and_exclusions",
+      "name": "Policy Coverage & Exclusions Check (Delegated Worker Skill)",
+      "description": "Evaluates policy active status, per-cause exclusions, deductible (excess), and sub-limits for a scoped (policy_id, cause) pair.",
+      "tags": [
+        "policy",
+        "exclusions",
+        "coverage",
+        "sub-limits"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ]
+}

@@ -225,3 +225,8 @@ chroma_db/
 
 .bin
 
+# Weekly submission deliverables: `.log` files under a `deliverables/` folder
+# are graded evidence (e.g. Week 10 Req 3 `handoffs.log`), not runtime logs,
+# so they must stay tracked despite the global `*.log` rule above.
+!**/deliverables/*.log
+
