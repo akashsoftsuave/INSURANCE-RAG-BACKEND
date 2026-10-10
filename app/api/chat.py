@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Header, HTTPException
 from groq import RateLimitError
 
 from app.schemas.chatSchemas import ChatRequest, ChatResponse
@@ -14,11 +14,14 @@ rag_router = RAGRouter()
 
 
 @router.post("/", response_model=ChatResponse, response_model_exclude_none=True)
-async def chat(request: ChatRequest):
-    print(f"[Chat] POST /api/v1/chat | mode={request.mode} | question={request.question!r}")
+async def chat(request: ChatRequest, x_user_id: str | None = Header(default=None)):
+    user_id = request.user_id or x_user_id
+    # The raw question is not printed any more: stdout is a log too, and the
+    # Week-11 request log (redacted on write) is where questions are kept.
+    print(f"[Chat] POST /api/v1/chat | mode={request.mode} | user={user_id}")
 
     try:
-        response = rag_router.ask(request.question, mode=request.mode)
+        response = rag_router.ask(request.question, mode=request.mode, user_id=user_id)
     except RateLimitError as e:
         # The provider's per-minute token cap is low enough that a UI can hit
         # it during normal use, and agentic mode spends several calls per

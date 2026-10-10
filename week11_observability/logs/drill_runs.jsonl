@@ -1,0 +1,4 @@
+{"event": "start", "label": "drill-1", "ts": "2026-10-08T17:21:25.720922+00:00"}
+{"event": "stop", "label": "drill-1", "ts": "2026-10-08T17:21:43.745343+00:00", "found_trace_id": "26b1fd68-3b77-4220-b363-4a6fdbd4e8b1", "slice": "time", "time_to_find": "00:18", "elapsed_s": 18.0}
+{"event": "start", "label": "drill-2", "ts": "2026-10-08T17:42:59.904940+00:00"}
+{"event": "stop", "label": "drill-2", "ts": "2026-10-08T17:43:19.681727+00:00", "found_trace_id": "4c81eb88-57f0-4ef2-87c2-57e57f8c5209", "slice": "output_verdict", "time_to_find": "00:19", "elapsed_s": 19.8}

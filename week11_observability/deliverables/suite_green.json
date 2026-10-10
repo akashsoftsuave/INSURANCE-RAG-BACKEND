@@ -1,0 +1,337 @@
+{
+  "prompt_version": "insurance-qa-v4",
+  "pass": 32,
+  "total": 32,
+  "by_kind": {
+    "week6_golden": {
+      "pass": 27,
+      "total": 27
+    },
+    "case_file": {
+      "pass": 5,
+      "total": 5
+    }
+  },
+  "rows": [
+    {
+      "id": "W6-acko_bike-01",
+      "kind": "week6_golden",
+      "question": "when does my policy expire",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy expires on **10 June 2027** (see [chunk 4 | page 2]).",
+      "cost_usd": 0.00032415,
+      "latency_ms": 2400
+    },
+    {
+      "id": "W6-acko_bike-02",
+      "kind": "week6_golden",
+      "question": "does this policy cover damage to my bike if I have an accident",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - Damage to your bike resulting from an accident is not covered. The policy lists under the heading **“What’s not covered”** (page 2) “**Accident – Coverage for damages and losses to your vehicle resulting from accidents and collisions.**” This exclusion means any accident‑related damage to the bike is excluded from the coverage.",
+      "cost_usd": 0.00030104999999999997,
+      "latency_ms": 1209
+    },
+    {
+      "id": "W6-acko_bike-03",
+      "kind": "week6_golden",
+      "question": "if my bike is stolen, does this policy cover the theft",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - theft is not covered. The policy lists “Theft — Coverage for losses (up to the total declared insurance value) in the event of theft of your vehicle” under the heading **What’s not covered** on page 2, indicating that theft is excluded from this plan.",
+      "cost_usd": 0.0003141,
+      "latency_ms": 1244
+    },
+    {
+      "id": "W6-shieldcare_full-01",
+      "kind": "week6_golden",
+      "question": "what's my policy number",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy number is **TEST-INS-2026-001847**.",
+      "cost_usd": 0.00025455,
+      "latency_ms": 1375
+    },
+    {
+      "id": "W6-shieldcare_full-02",
+      "kind": "week6_golden",
+      "question": "who is the beneficiary on this policy",
+      "pass": true,
+      "reasons": [],
+      "answer": "The primary beneficiaries are:\n\n- **Priya Kumar** – Spouse – **70 %**\n- **Aarav Kumar** – Son – **20 %**\n\nThe contingent beneficiary (receiving a share only if a primary beneficiary predeceases the policyholder or cannot be located within 12 months of a valid claim) is:\n\n- **Meena Kumar** – Mother – **10 %** (contingent)【chunk 7 | page 3】.",
+      "cost_usd": 0.00031079999999999997,
+      "latency_ms": 1226
+    },
+    {
+      "id": "W6-shieldcare_full-03",
+      "kind": "week6_golden",
+      "question": "what percentage does my beneficiary get",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy specifies the following beneficiary percentages:\n\n- **Priya Kumar (Spouse)** – **70 %** of the benefit  \n- **Aarav Kumar (Son)** – **20 %** of the benefit  \n- **Meena Kumar (Mother, Contingent)** – **10 %** of the benefit (receives this share only if a primary beneficiary predeceases the policyholder or cannot be located within 12 months of a valid claim).",
+      "cost_usd": 0.00037095,
+      "latency_ms": 2461
+    },
+    {
+      "id": "W6-shieldcare_full-04",
+      "kind": "week6_golden",
+      "question": "what's the deductible for hospitalization",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - The deductible for hospitalization is **Rs. 10,000** per policy year, as listed under **Hospitalization** in the **Coverage Details** table (page 2, section 3). This amount is the policyholder’s out‑of‑pocket share before the hospitalization benefit applies.",
+      "cost_usd": 0.00037769999999999997,
+      "latency_ms": 1772
+    },
+    {
+      "id": "W6-shieldcare_full-05",
+      "kind": "week6_golden",
+      "question": "how much was my hospitalization claim for",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your hospitalization claim was for **Rs. 48,750** (Claim Ref CLM‑2026‑00421, dated 12 Aug 2026).",
+      "cost_usd": 0.00033164999999999996,
+      "latency_ms": 1223
+    },
+    {
+      "id": "W6-shieldcare_full-06",
+      "kind": "week6_golden",
+      "question": "what's the coverage limit for diagnostic tests",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Diagnostic Tests have a coverage limit of **Rs. 15,000 per policy year** (subject to a 10 % co‑pay) as listed under the **Coverage Details** heading on page 2.",
+      "cost_usd": 0.00030599999999999996,
+      "latency_ms": 2385
+    },
+    {
+      "id": "W6-shieldcare_full-07",
+      "kind": "week6_golden",
+      "question": "what was the amount of my diagnostic claim",
+      "pass": true,
+      "reasons": [],
+      "answer": "The diagnostic claims listed in the document are:\n\n- Claim CLM‑2026‑00437 (15 Aug 2026) – amount **Rs. 6,200** (status: Under Review)  \n- Claim CLM‑2026‑00459 (02 Sep 2026) – amount **Rs. 3,400** (status: Approved)",
+      "cost_usd": 0.00044354999999999997,
+      "latency_ms": 1558
+    },
+    {
+      "id": "W6-shieldcare_full-08",
+      "kind": "week6_golden",
+      "question": "is my diagnostic claim approved yet",
+      "pass": true,
+      "reasons": [],
+      "answer": "The records show two diagnostic claims:\n\n- **Claim CLM‑2026‑00459** (dated 02 Sep 2026, Rs. 3,400) – **Approved**.  \n- **Claim CLM‑2026‑00437** (dated 15 Aug 2026, Rs. 6,200) – **Under Review**.  \n\nSo one of your diagnostic claims has been approved, while the other is still pending.",
+      "cost_usd": 0.00045329999999999996,
+      "latency_ms": 1784
+    },
+    {
+      "id": "W6-shieldcare_full-09",
+      "kind": "week6_golden",
+      "question": "are cosmetic procedures covered",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - Cosmetic procedures are excluded. The Exclusions section (page 5) states: “Cosmetic procedures, elective treatment, and non‑medically necessary services are excluded unless specifically covered by an endorsement.” No coverage limit or deductible applies because the item is not covered.",
+      "cost_usd": 0.00029160000000000004,
+      "latency_ms": 1263
+    },
+    {
+      "id": "W6-shieldcare_full-10",
+      "kind": "week6_golden",
+      "question": "how much co-pay do I have for diagnostic tests",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Diagnostic Tests are covered with a 10% co‑pay. The policy states in **Coverage Details** (page 2) that “Diagnostic Tests … 10% co‑pay” with a limit of Rs 15,000 per policy year.",
+      "cost_usd": 0.0005046,
+      "latency_ms": 2201
+    },
+    {
+      "id": "W6-shieldcare_full-11",
+      "kind": "week6_golden",
+      "question": "what's the ambulance services coverage limit",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Ambulance Services are covered with a limit of **Rs. 10,000 per policy year** (no deductible), as shown in the **Coverage Details** section, page 2.",
+      "cost_usd": 0.0003051,
+      "latency_ms": 1485
+    },
+    {
+      "id": "W6-shieldcare_full-12",
+      "kind": "week6_golden",
+      "question": "when does my policy expire",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy expires on **31 July 2027**.",
+      "cost_usd": 0.00026865,
+      "latency_ms": 1133
+    },
+    {
+      "id": "W6-shieldcare_basic-01",
+      "kind": "week6_golden",
+      "question": "what's my policy number",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy number is **TEST-INS-2026-001847** (see page 1, “Policy Number”).",
+      "cost_usd": 0.0002871,
+      "latency_ms": 1641
+    },
+    {
+      "id": "W6-shieldcare_basic-02",
+      "kind": "week6_golden",
+      "question": "who is the beneficiary on this policy",
+      "pass": true,
+      "reasons": [],
+      "answer": "The beneficiary on this policy is **Priya Kumar** (spouse, 100% beneficiary).",
+      "cost_usd": 0.0002418,
+      "latency_ms": 891
+    },
+    {
+      "id": "W6-shieldcare_basic-03",
+      "kind": "week6_golden",
+      "question": "what percentage does my beneficiary get",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your beneficiary, Priya Kumar, receives **100 %** of the designated benefit. This is stated in the Beneficiary Information section as “Beneficiary Percentage 100%.”",
+      "cost_usd": 0.00037515,
+      "latency_ms": 1373
+    },
+    {
+      "id": "W6-shieldcare_basic-04",
+      "kind": "week6_golden",
+      "question": "what's the deductible for hospitalization",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - The deductible for hospitalization is **I10,000** as listed under the **Coverage Details** heading on page 1 (“Hospitalization … Deductible I10,000”).",
+      "cost_usd": 0.00030765,
+      "latency_ms": 1934
+    },
+    {
+      "id": "W6-shieldcare_basic-05",
+      "kind": "week6_golden",
+      "question": "how much was my hospitalization claim for",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your hospitalization claim (Claim Reference CLM‑2026‑00421) was for **₹48,750**.",
+      "cost_usd": 0.0002862,
+      "latency_ms": 1004
+    },
+    {
+      "id": "W6-shieldcare_basic-06",
+      "kind": "week6_golden",
+      "question": "what's the coverage limit for diagnostic tests",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Diagnostic Tests are covered with a limit of **I15,000 per policy year** as shown in the **“Coverage Details”** heading on **page 1**. The policy lists “Diagnostic Tests – I15,000 per policy year” under the coverage items.",
+      "cost_usd": 0.00030405,
+      "latency_ms": 1250
+    },
+    {
+      "id": "W6-shieldcare_basic-07",
+      "kind": "week6_golden",
+      "question": "what was the amount of my diagnostic claim",
+      "pass": true,
+      "reasons": [],
+      "answer": "The amount of your diagnostic claim was **I6,200** (see Claim Reference CLM-2026-00437, Type Diagnostic, Amount I6,200, page 2, section 4. Claims Information).",
+      "cost_usd": 0.00025814999999999996,
+      "latency_ms": 1047
+    },
+    {
+      "id": "W6-shieldcare_basic-08",
+      "kind": "week6_golden",
+      "question": "is my diagnostic claim approved yet",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - Your diagnostic claim (CLM‑2026‑00437) is currently listed as “Under Review” in the Claims Information section and has not been approved yet.",
+      "cost_usd": 0.00041505,
+      "latency_ms": 2263
+    },
+    {
+      "id": "W6-shieldcare_basic-09",
+      "kind": "week6_golden",
+      "question": "are cosmetic procedures covered",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - Cosmetic procedures are excluded. The Exclusions section (page 2) states: “Cosmetic procedures, elective treatment, and non‑medically necessary services are excluded unless specifically covered by an endorsement.” No coverage limit or deductible applies because the item is not covered.",
+      "cost_usd": 0.00026714999999999996,
+      "latency_ms": 1982
+    },
+    {
+      "id": "W6-shieldcare_basic-10",
+      "kind": "week6_golden",
+      "question": "how much co-pay do I have for diagnostic tests",
+      "pass": true,
+      "reasons": [],
+      "answer": "The co‑pay for Diagnostic Tests is **10 %** of the claim amount, as stated in the Coverage Details table (“Diagnostic Tests – I15,000 per policy year – **10% co‑pay**”) on page 1.",
+      "cost_usd": 0.00034544999999999997,
+      "latency_ms": 1107
+    },
+    {
+      "id": "W6-shieldcare_basic-11",
+      "kind": "week6_golden",
+      "question": "what's the ambulance services coverage limit",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Ambulance Services are covered with a limit of I10,000 per policy year and no deductible, as shown in the **Coverage Details** section on page 1 (“Ambulance Services I10,000 per policy year None”).",
+      "cost_usd": 0.0003183,
+      "latency_ms": 1289
+    },
+    {
+      "id": "W6-shieldcare_basic-12",
+      "kind": "week6_golden",
+      "question": "when does my policy expire",
+      "pass": true,
+      "reasons": [],
+      "answer": "Your policy expires on **31 July 2027** (see “Expiry Date” in the policy details on page 1).",
+      "cost_usd": 0.0003273,
+      "latency_ms": 1097
+    },
+    {
+      "id": "W11-EXCL-001",
+      "kind": "case_file",
+      "question": "The claimant's bike was stolen last night. Will ACKO pay for the theft?",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - theft is excluded. The policy lists “Theft – Coverage for losses (up to the total declared insurance value) in the event of theft of your vehicle.” under the heading **What’s not covered** on **page 2**. Because it appears in the exclusion list, the theft loss is not payable under this policy.",
+      "cost_usd": 0.00034185,
+      "latency_ms": 2121
+    },
+    {
+      "id": "W11-EXCL-002",
+      "kind": "case_file",
+      "question": "Is fire damage to my bike covered?",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - fire damage to your bike is excluded. The policy lists under the heading **“What’s not covered”** (page 2): “Coverage for damages and losses to your vehicle resulting from accidental fires.” No limit, deductible or co‑pay is provided for this exclusion.",
+      "cost_usd": 0.00032715,
+      "latency_ms": 2118
+    },
+    {
+      "id": "W11-EXCL-003",
+      "kind": "case_file",
+      "question": "Is rat bite damage to my bike's wiring covered?",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - rat bite damage to your bike's wiring is not covered. It is listed under the **“What’s not covered”** heading on **page 2**, which states “Coverage for wiring damage caused by rat bites.” No limit, deductible, or co‑pay is applicable because the item is excluded.",
+      "cost_usd": 0.0003738,
+      "latency_ms": 1986
+    },
+    {
+      "id": "W11-EXCL-004",
+      "kind": "case_file",
+      "question": "Are flood damages to my bike covered?",
+      "pass": true,
+      "reasons": [],
+      "answer": "No - Flood damages are not covered. The policy lists “Calamities … such as earthquakes, floods, and cyclones” under the **What’s not covered** heading (page 2), indicating that flood damage is excluded.",
+      "cost_usd": 0.00038774999999999997,
+      "latency_ms": 4399
+    },
+    {
+      "id": "W11-CTRL-001",
+      "kind": "case_file",
+      "question": "Is damage to the third party's car covered if I hit it?",
+      "pass": true,
+      "reasons": [],
+      "answer": "Yes - Damage to the third‑party’s car is covered. The policy’s **Third Party liability** section states it “covers financial or legal losses due to damage to any third‑party person (unlimited) or **property (up to Rs. 1 Lac)**” (page 2). This provides coverage for third‑party vehicle damage up to the Rs 1 Lac limit.",
+      "cost_usd": 0.0003693,
+      "latency_ms": 2394
+    }
+  ]
+}

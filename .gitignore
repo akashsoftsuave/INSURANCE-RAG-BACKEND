@@ -230,3 +230,7 @@ chroma_db/
 # so they must stay tracked despite the global `*.log` rule above.
 !**/deliverables/*.log
 
+
+# Week 11: legacy trace sinks store raw chunk text (owner name, address) - never committed
+week11_observability/logs/legacy_traces.jsonl
+week11_observability/logs/suite_legacy_traces.jsonl

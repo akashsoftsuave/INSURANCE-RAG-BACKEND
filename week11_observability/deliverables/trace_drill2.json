@@ -1,0 +1,256 @@
+{
+  "summary": {
+    "trace_id": "4c81eb88-57f0-4ef2-87c2-57e57f8c5209",
+    "ts": "2026-10-08T17:42:10.959+00:00",
+    "user_id": "ADJ-0103",
+    "prompt_version": "insurance-qa-v2",
+    "model": "openai/gpt-oss-120b",
+    "input_type": "coverage_question",
+    "retrieved_context_ids": [
+      "2",
+      "6",
+      "3",
+      "4",
+      "1"
+    ],
+    "spans": [
+      {
+        "span": "guardrail.check",
+        "stage": "tools",
+        "latency_ms": 0.0,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      },
+      {
+        "span": "retrieval.hybrid_rerank",
+        "stage": "retrieval",
+        "latency_ms": 301.7,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      },
+      {
+        "span": "generation.llm",
+        "stage": "generation",
+        "latency_ms": 1123.3,
+        "tokens_prompt": 814,
+        "tokens_completion": 207,
+        "cost_usd": 0.0002463
+      },
+      {
+        "span": "tools.evidence_sources",
+        "stage": "tools",
+        "latency_ms": 0.2,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      }
+    ],
+    "totals": {
+      "latency_ms": 1425.4,
+      "tokens": 1021,
+      "cost_usd": 0.0002463,
+      "by_stage": {
+        "retrieval": {
+          "latency_ms": 301.7,
+          "tokens": 0,
+          "cost_usd": 0.0
+        },
+        "generation": {
+          "latency_ms": 1123.3,
+          "tokens": 1021,
+          "cost_usd": 0.0002463
+        },
+        "tools": {
+          "latency_ms": 0.3,
+          "tokens": 0,
+          "cost_usd": 0.0
+        }
+      }
+    }
+  },
+  "log_line": {
+    "schema": "week11-log-v2",
+    "ts": "2026-10-08T17:42:10.959+00:00",
+    "trace_id": "4c81eb88-57f0-4ef2-87c2-57e57f8c5209",
+    "user_id": "ADJ-0103",
+    "channel": "adjuster_console",
+    "collection": "insurance_documents",
+    "prompt_version": "insurance-qa-v2",
+    "model": "openai/gpt-oss-120b",
+    "input_type": "coverage_question",
+    "question_redacted": "Are flood damages to my bike covered?",
+    "answer_redacted": "**Yes, flood damages to your bike are covered.**  \nThe policy’s “Calamities” coverage includes damages and losses resulting from calamities such as earthquakes, **floods**, and cyclones.",
+    "context_ids": [
+      {
+        "chunk_id": "2",
+        "page": 2,
+        "section": "Unknown",
+        "rerank_score": 1.6944
+      },
+      {
+        "chunk_id": "6",
+        "page": 3,
+        "section": "Unknown",
+        "rerank_score": 0.5338
+      },
+      {
+        "chunk_id": "3",
+        "page": 2,
+        "section": "Unknown",
+        "rerank_score": -0.2858
+      },
+      {
+        "chunk_id": "4",
+        "page": 2,
+        "section": "Unknown",
+        "rerank_score": -1.6561
+      },
+      {
+        "chunk_id": "1",
+        "page": 1,
+        "section": "Unknown",
+        "rerank_score": -7.587
+      }
+    ],
+    "guardrail": {
+      "allowed": true,
+      "reason": "Insurance-related question - verify from knowledge base"
+    },
+    "spans": [
+      {
+        "name": "guardrail.check",
+        "stage": "tools",
+        "start_offset_ms": 0.1,
+        "latency_ms": 0.0,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "allowed": true
+        }
+      },
+      {
+        "name": "retrieval.hybrid_rerank",
+        "stage": "retrieval",
+        "start_offset_ms": 0.1,
+        "latency_ms": 301.7,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "top_k": 5,
+          "sub_stage_ms": {
+            "embed_ms": 31.6,
+            "vector_ms": 2.1,
+            "bm25_ms": 3.7,
+            "fuse_ms": 0.1,
+            "rerank_ms": 264.2
+          },
+          "candidate_pool_size": 20,
+          "context_ids": [
+            "2",
+            "6",
+            "3",
+            "4",
+            "1"
+          ]
+        }
+      },
+      {
+        "name": "generation.llm",
+        "stage": "generation",
+        "start_offset_ms": 301.9,
+        "latency_ms": 1123.3,
+        "tokens": {
+          "prompt": 814,
+          "completion": 207,
+          "total": 1021
+        },
+        "cost_usd": 0.0002463,
+        "attrs": {
+          "billing": "groq_per_token",
+          "model": "openai/gpt-oss-120b",
+          "prompt_version": "insurance-qa-v2",
+          "provider_timing_ms": {
+            "wall": 1122,
+            "queue": 395.4,
+            "prompt": 238.7,
+            "completion": 436.3
+          },
+          "context_chars": 2347
+        }
+      },
+      {
+        "name": "tools.evidence_sources",
+        "stage": "tools",
+        "start_offset_ms": 1425.2,
+        "latency_ms": 0.2,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "evidence_chunk_ids": [
+            "2",
+            "6",
+            "3",
+            "4"
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "latency_ms": 1425.4,
+      "tokens": 1021,
+      "cost_usd": 0.0002463,
+      "by_stage": {
+        "retrieval": {
+          "latency_ms": 301.7,
+          "tokens": 0,
+          "cost_usd": 0.0
+        },
+        "generation": {
+          "latency_ms": 1123.3,
+          "tokens": 1021,
+          "cost_usd": 0.0002463
+        },
+        "tools": {
+          "latency_ms": 0.3,
+          "tokens": 0,
+          "cost_usd": 0.0
+        }
+      }
+    },
+    "rate_limit": {
+      "limit_requests_per_day": 1000,
+      "remaining_requests_today": 827,
+      "limit_tokens_per_minute": 8000,
+      "remaining_tokens_this_minute": 6812
+    },
+    "redaction": {
+      "applied_on_write": true,
+      "method": "app.core.redaction.redact_pii",
+      "chunk_text_logged": false
+    },
+    "coverage_verdict": "covered",
+    "exclusion_context_ids": [
+      "2",
+      "6",
+      "3"
+    ],
+    "contradiction_flag": true
+  }
+}

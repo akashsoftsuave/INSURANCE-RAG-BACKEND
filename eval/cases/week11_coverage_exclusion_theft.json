@@ -1,0 +1,49 @@
+{
+  "_about": "Week 11 Task Set D - eval cases born from the drill. Case W11-EXCL-001 is the exact request found in the request log (question text copied from the log's question_redacted field; trace id kept for provenance). The siblings W11-EXCL-002..004 cover the same failure on the other items in the same 'What's not covered' list, so the fix cannot pass by special-casing the word 'theft'. W11-CTRL-001 is the over-correction guard: third-party liability IS covered, and a fix that makes the model answer 'No' to everything must fail. Collection eval_acko_bike holds the same 25 chunks as the production collection insurance_documents (verified: identical documents).",
+  "added_in": "week-11",
+  "suite": "eval/coverage_suite.py (Week-6 golden questions + Week-6 deterministic checks + these cases)",
+  "cases": [
+    {
+      "id": "W11-EXCL-001",
+      "source": "drill-1 found trace (see week11_observability/deliverables/trace.json)",
+      "source_trace_id": "26b1fd68-3b77-4220-b363-4a6fdbd4e8b1",
+      "collection": "eval_acko_bike",
+      "question": "The claimant's bike was stolen last night. Will ACKO pay for the theft?",
+      "expected_verdict": "not_covered",
+      "must_mention": "theft|stolen",
+      "why": "Theft is listed under \"What's not covered\" on page 2 of the ACKO third-party schedule (chunk 2). Prompt insurance-qa-v2 answered 'Yes, theft is covered' with chunk 2 in its context."
+    },
+    {
+      "id": "W11-EXCL-002",
+      "source": "sibling of W11-EXCL-001 (same exclusion list)",
+      "collection": "eval_acko_bike",
+      "question": "Is fire damage to my bike covered?",
+      "expected_verdict": "not_covered",
+      "must_mention": "fire"
+    },
+    {
+      "id": "W11-EXCL-003",
+      "source": "sibling of W11-EXCL-001 (same exclusion list, item split into chunk 3 away from its heading)",
+      "collection": "eval_acko_bike",
+      "question": "Is rat bite damage to my bike's wiring covered?",
+      "expected_verdict": "not_covered",
+      "must_mention": "rat"
+    },
+    {
+      "id": "W11-EXCL-004",
+      "source": "sibling of W11-EXCL-001 (same exclusion list)",
+      "collection": "eval_acko_bike",
+      "question": "Are flood damages to my bike covered?",
+      "expected_verdict": "not_covered",
+      "must_mention": "flood|calamit"
+    },
+    {
+      "id": "W11-CTRL-001",
+      "source": "over-correction control",
+      "collection": "eval_acko_bike",
+      "question": "Is damage to the third party's car covered if I hit it?",
+      "expected_verdict": "covered",
+      "must_mention": "third"
+    }
+  ]
+}

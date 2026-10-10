@@ -118,7 +118,7 @@ class RAGRouter:
             config=agentic_config,
         )
 
-    def ask(self, question: str, mode: str = FIXED) -> Dict[str, Any]:
+    def ask(self, question: str, mode: str = FIXED, user_id: str | None = None) -> Dict[str, Any]:
         requested = (mode or FIXED).lower()
         if requested not in VALID_MODES:
             raise ValueError(f"unknown mode {mode!r}; expected one of {VALID_MODES}")
@@ -145,8 +145,12 @@ class RAGRouter:
 
         print(f"[Router] mode={requested} -> {resolved} | {routing['explanation']}")
 
-        service = self.agentic if resolved == AGENTIC else self.fixed
-        result = service.ask(question)
+        # Week 11: the fixed flow is the instrumented one (request log, spans,
+        # canary prompt selection) and is told who is asking.
+        if resolved == AGENTIC:
+            result = self.agentic.ask(question)
+        else:
+            result = self.fixed.ask(question, user_id=user_id)
         result["requested_mode"] = requested
         result["routing"] = routing
         return result

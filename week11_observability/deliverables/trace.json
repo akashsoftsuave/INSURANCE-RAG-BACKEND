@@ -1,0 +1,248 @@
+{
+  "summary": {
+    "trace_id": "26b1fd68-3b77-4220-b363-4a6fdbd4e8b1",
+    "ts": "2026-10-08T17:19:11.292+00:00",
+    "user_id": "ADJ-0106",
+    "prompt_version": "insurance-qa-v2",
+    "model": "openai/gpt-oss-120b",
+    "input_type": "coverage_question",
+    "retrieved_context_ids": [
+      "6",
+      "5",
+      "17",
+      "2",
+      "7"
+    ],
+    "spans": [
+      {
+        "span": "guardrail.check",
+        "stage": "tools",
+        "latency_ms": 0.0,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      },
+      {
+        "span": "retrieval.hybrid_rerank",
+        "stage": "retrieval",
+        "latency_ms": 324.2,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      },
+      {
+        "span": "generation.llm",
+        "stage": "generation",
+        "latency_ms": 1775.9,
+        "tokens_prompt": 850,
+        "tokens_completion": 338,
+        "cost_usd": 0.0003303
+      },
+      {
+        "span": "tools.evidence_sources",
+        "stage": "tools",
+        "latency_ms": 0.6,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "cost_usd": 0.0
+      }
+    ],
+    "totals": {
+      "latency_ms": 2100.8,
+      "tokens": 1188,
+      "cost_usd": 0.0003303,
+      "by_stage": {
+        "retrieval": {
+          "latency_ms": 324.2,
+          "tokens": 0,
+          "cost_usd": 0.0
+        },
+        "generation": {
+          "latency_ms": 1775.9,
+          "tokens": 1188,
+          "cost_usd": 0.0003303
+        },
+        "tools": {
+          "latency_ms": 0.6,
+          "tokens": 0,
+          "cost_usd": 0.0
+        }
+      }
+    }
+  },
+  "log_line": {
+    "schema": "week11-log-v1",
+    "ts": "2026-10-08T17:19:11.292+00:00",
+    "trace_id": "26b1fd68-3b77-4220-b363-4a6fdbd4e8b1",
+    "user_id": "ADJ-0106",
+    "channel": "adjuster_console",
+    "collection": "insurance_documents",
+    "prompt_version": "insurance-qa-v2",
+    "model": "openai/gpt-oss-120b",
+    "input_type": "coverage_question",
+    "question_redacted": "The claimant's bike was stolen last night. Will ACKO pay for the theft?",
+    "answer_redacted": "Yes. According to the policy details, theft is covered – the insurer will pay for losses “up to the total declared insurance value” in the event of theft of your vehicle.",
+    "context_ids": [
+      {
+        "chunk_id": "6",
+        "page": 3,
+        "section": "Unknown",
+        "rerank_score": -1.3835
+      },
+      {
+        "chunk_id": "5",
+        "page": 2,
+        "section": "Unknown",
+        "rerank_score": -2.9665
+      },
+      {
+        "chunk_id": "17",
+        "page": 6,
+        "section": "2.  \nLimitations as to use",
+        "rerank_score": -3.9284
+      },
+      {
+        "chunk_id": "2",
+        "page": 2,
+        "section": "Unknown",
+        "rerank_score": -4.922
+      },
+      {
+        "chunk_id": "7",
+        "page": 3,
+        "section": "Unknown",
+        "rerank_score": -6.4193
+      }
+    ],
+    "guardrail": {
+      "allowed": true,
+      "reason": "Insurance-related question - verify from knowledge base"
+    },
+    "spans": [
+      {
+        "name": "guardrail.check",
+        "stage": "tools",
+        "start_offset_ms": 0.0,
+        "latency_ms": 0.0,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "allowed": true
+        }
+      },
+      {
+        "name": "retrieval.hybrid_rerank",
+        "stage": "retrieval",
+        "start_offset_ms": 0.0,
+        "latency_ms": 324.2,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "top_k": 5,
+          "sub_stage_ms": {
+            "embed_ms": 27.6,
+            "vector_ms": 3.0,
+            "bm25_ms": 3.3,
+            "fuse_ms": 0.1,
+            "rerank_ms": 290.3
+          },
+          "candidate_pool_size": 20,
+          "context_ids": [
+            "6",
+            "5",
+            "17",
+            "2",
+            "7"
+          ]
+        }
+      },
+      {
+        "name": "generation.llm",
+        "stage": "generation",
+        "start_offset_ms": 324.3,
+        "latency_ms": 1775.9,
+        "tokens": {
+          "prompt": 850,
+          "completion": 338,
+          "total": 1188
+        },
+        "cost_usd": 0.0003303,
+        "attrs": {
+          "billing": "groq_per_token",
+          "model": "openai/gpt-oss-120b",
+          "prompt_version": "insurance-qa-v2",
+          "provider_timing_ms": {
+            "wall": 1774,
+            "queue": 214.3,
+            "prompt": 42.6,
+            "completion": 713.4
+          },
+          "context_chars": 2312
+        }
+      },
+      {
+        "name": "tools.evidence_sources",
+        "stage": "tools",
+        "start_offset_ms": 2100.2,
+        "latency_ms": 0.6,
+        "tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        },
+        "cost_usd": 0.0,
+        "attrs": {
+          "billing": "local_cpu",
+          "evidence_chunk_ids": [
+            "6",
+            "17",
+            "2"
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "latency_ms": 2100.8,
+      "tokens": 1188,
+      "cost_usd": 0.0003303,
+      "by_stage": {
+        "retrieval": {
+          "latency_ms": 324.2,
+          "tokens": 0,
+          "cost_usd": 0.0
+        },
+        "generation": {
+          "latency_ms": 1775.9,
+          "tokens": 1188,
+          "cost_usd": 0.0003303
+        },
+        "tools": {
+          "latency_ms": 0.6,
+          "tokens": 0,
+          "cost_usd": 0.0
+        }
+      }
+    },
+    "rate_limit": {
+      "limit_requests_per_day": 1000,
+      "remaining_requests_today": 968,
+      "limit_tokens_per_minute": 8000,
+      "remaining_tokens_this_minute": 6471
+    },
+    "redaction": {
+      "applied_on_write": true,
+      "method": "app.core.redaction.redact_pii",
+      "chunk_text_logged": false
+    }
+  }
+}

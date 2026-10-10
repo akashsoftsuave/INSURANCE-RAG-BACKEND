@@ -4,7 +4,9 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from app.claims_agent.pricing import call_cost
 from app.services.retrieval_service import RetrievalService
-from app.services.llm_service import LLMService
+from app.services.llm_service import LLMService, select_prompt_version
+from app.observability.request_log import RequestLog
+from app.observability.tracing import RequestTrace
 from app.services.guardrail_service import GuardrailService
 from app.services.trace_logger import TraceLogger
 from app.core.redaction import redact
@@ -19,6 +21,8 @@ class RAGService:
         retriever: RetrievalService | None = None,
         llm: LLMService | None = None,
         guardrail: GuardrailService | None = None,
+        request_log: RequestLog | None = None,
+        enable_request_log: bool = True,
     ):
         # The components are injectable so the fixed and agentic flows can
         # share one RetrievalService (the cross-encoder it loads is heavy, and
@@ -29,15 +33,31 @@ class RAGService:
         self.retriever = retriever or RetrievalService()
         self.llm = llm or LLMService()
         self.tracer = trace_logger or TraceLogger()
+        # Week 11 request log (redact-on-write, per-span). Disabled only by
+        # harnesses that must not pollute the production log (the eval suite).
+        self.request_log = (request_log or RequestLog()) if enable_request_log else None
 
-    def ask(self, question: str) -> Dict[str, Any]:
+    def ask(self, question: str, user_id: str | None = None,
+            prompt_version: str | None = None, channel: str = "api") -> Dict[str, Any]:
+        """Week 11: `user_id` (adjuster id) and `channel` are logged and
+        indexed; `prompt_version` pins a version, otherwise the canary
+        selector picks one per user. Every request now also writes one line
+        to the Week-11 request log with per-span latency/tokens/cost."""
 
         started = time.monotonic()
         trace_id = TraceLogger.new_trace_id()
-        guard = self.guardrail.check(question)
+        rtrace = RequestTrace(trace_id)
+        version = prompt_version or select_prompt_version(user_id)
+
+        with rtrace.span("guardrail.check", "tools", billing="local_cpu") as sp:
+            guard = self.guardrail.check(question)
+            sp.attrs["allowed"] = guard["allowed"]
 
         if not guard["allowed"]:
             answer = "I can only answer questions related to your insurance policy documents."
+            self._write_request_log(rtrace, user_id=user_id, channel=channel, question=question,
+                                    answer=answer, prompt_version=None, model=None,
+                                    context_chunks=[], guard=guard, rate_limit=None)
 
             self._write_trace(
                 trace_id=trace_id,
@@ -67,22 +87,45 @@ class RAGService:
             }
 
         # Step 1: Retrieval
-        retrieval_results, pre_rerank_results = self.retriever.retrieve(question, return_pre_rerank=True)
+        with rtrace.span("retrieval.hybrid_rerank", "retrieval", billing="local_cpu",
+                         top_k=settings.TOP_K) as sp:
+            sub_timings: Dict[str, float] = {}
+            retrieval_results, pre_rerank_results = self.retriever.retrieve(
+                question, return_pre_rerank=True, timings=sub_timings)
+            sp.attrs["sub_stage_ms"] = sub_timings
+            sp.attrs["candidate_pool_size"] = len(pre_rerank_results)
+            sp.attrs["context_ids"] = [str(r.get("id")) for r in retrieval_results]
 
         # Step 2: Context Selection - currently sends all retrieved chunks (TOP_K)
         final_context_chunks = retrieval_results
 
-        # Step 3: Build context for LLM from selected chunks
-        context = "\n\n".join(r["document"] for r in final_context_chunks)
+        # Step 3: Build context for LLM from selected chunks. How the chunks
+        # are assembled is part of the prompt version (see llm_service.PROMPTS).
+        context = self.llm.build_context(final_context_chunks, version)
 
         # Step 4: Generate answer
-        generation = self.llm.generate(question=question, context=context)
+        with rtrace.span("generation.llm", "generation", billing="groq_per_token",
+                         model=settings.MODEL_NAME, prompt_version=version) as sp:
+            generation = self.llm.generate(question=question, context=context, prompt_version=version)
+            g_usage = generation.get("usage") or {}
+            sp.prompt_tokens = g_usage.get("prompt_tokens", 0)
+            sp.completion_tokens = g_usage.get("completion_tokens", 0)
+            sp.cost_usd = call_cost(settings.MODEL_NAME, sp.prompt_tokens, sp.completion_tokens)
+            sp.attrs["provider_timing_ms"] = generation.get("provider_timing_ms")
+            sp.attrs["context_chars"] = len(context)
         answer = generation["raw_output"]
 
         # Step 5: Evidence-based source selection
-        sources, source_pages_used, source_pages_returned, evidence_chunks = self._build_evidence_sources(
-            answer, final_context_chunks, retrieval_results
-        )
+        with rtrace.span("tools.evidence_sources", "tools", billing="local_cpu") as sp:
+            sources, source_pages_used, source_pages_returned, evidence_chunks = self._build_evidence_sources(
+                answer, final_context_chunks, retrieval_results
+            )
+            sp.attrs["evidence_chunk_ids"] = [str(e["chunk_id"]) for e in evidence_chunks]
+
+        self._write_request_log(rtrace, user_id=user_id, channel=channel, question=question,
+                                answer=answer, prompt_version=version, model=settings.MODEL_NAME,
+                                context_chunks=final_context_chunks, guard=guard,
+                                rate_limit=generation.get("rate_limit"))
 
 
         # Step 7: Write trace with all observability data
@@ -122,7 +165,21 @@ class RAGService:
                 "total": prompt_tokens + completion_tokens,
             },
             "cost_usd": call_cost(settings.MODEL_NAME, prompt_tokens, completion_tokens),
+            "prompt_version": version,
         }
+
+    def _write_request_log(self, rtrace: RequestTrace, *, user_id, channel, question, answer,
+                           prompt_version, model, context_chunks, guard, rate_limit) -> None:
+        if self.request_log is None:
+            return
+        record = self.request_log.build_record(
+            trace_id=rtrace.trace_id, user_id=user_id, channel=channel,
+            collection=getattr(self.retriever.vector_store.collection, "name", None),
+            question=question, answer=answer, prompt_version=prompt_version, model=model,
+            context_chunks=context_chunks, spans=rtrace.to_list(), totals=rtrace.totals(),
+            guardrail=guard, rate_limit=rate_limit,
+        )
+        self.request_log.write(record)
 
     def _build_evidence_sources(
         self,

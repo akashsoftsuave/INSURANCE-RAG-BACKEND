@@ -9,6 +9,10 @@ class ChatRequest(BaseModel):
     # is made in app/services/rag_router.py, never on the client. Defaults to
     # "fixed" so existing clients that send no mode keep the previous behavior.
     mode: Literal["fixed", "agentic", "auto"] = "fixed"
+    # Week 11: the adjuster's internal staff id. Logged and indexed (the
+    # "user" slice of the drill) and used to bucket the prompt canary.
+    # Optional; the X-User-Id header is used when this is absent.
+    user_id: str | None = None
 
 
 class Source(BaseModel):
@@ -37,6 +41,7 @@ class ChatResponse(BaseModel):
     latency_ms: int | None = None
     tokens: TokenUsage | None = None
     cost_usd: float | None = None
+    prompt_version: str | None = None
     routing: dict[str, Any] | None = Field(
         default=None,
         description="Why this question was routed to the flow that ran it.",

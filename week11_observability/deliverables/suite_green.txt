@@ -1,0 +1,35 @@
+PASS  W6-acko_bike-01        when does my policy expire                                   
+PASS  W6-acko_bike-02        does this policy cover damage to my bike if I have an accide 
+PASS  W6-acko_bike-03        if my bike is stolen, does this policy cover the theft       
+PASS  W6-shieldcare_full-01  what's my policy number                                      
+PASS  W6-shieldcare_full-02  who is the beneficiary on this policy                        
+PASS  W6-shieldcare_full-03  what percentage does my beneficiary get                      
+PASS  W6-shieldcare_full-04  what's the deductible for hospitalization                    
+PASS  W6-shieldcare_full-05  how much was my hospitalization claim for                    
+PASS  W6-shieldcare_full-06  what's the coverage limit for diagnostic tests               
+PASS  W6-shieldcare_full-07  what was the amount of my diagnostic claim                   
+PASS  W6-shieldcare_full-08  is my diagnostic claim approved yet                          
+PASS  W6-shieldcare_full-09  are cosmetic procedures covered                              
+PASS  W6-shieldcare_full-10  how much co-pay do I have for diagnostic tests               
+PASS  W6-shieldcare_full-11  what's the ambulance services coverage limit                 
+PASS  W6-shieldcare_full-12  when does my policy expire                                   
+PASS  W6-shieldcare_basic-01 what's my policy number                                      
+PASS  W6-shieldcare_basic-02 who is the beneficiary on this policy                        
+PASS  W6-shieldcare_basic-03 what percentage does my beneficiary get                      
+PASS  W6-shieldcare_basic-04 what's the deductible for hospitalization                    
+PASS  W6-shieldcare_basic-05 how much was my hospitalization claim for                    
+PASS  W6-shieldcare_basic-06 what's the coverage limit for diagnostic tests               
+PASS  W6-shieldcare_basic-07 what was the amount of my diagnostic claim                   
+PASS  W6-shieldcare_basic-08 is my diagnostic claim approved yet                          
+PASS  W6-shieldcare_basic-09 are cosmetic procedures covered                              
+PASS  W6-shieldcare_basic-10 how much co-pay do I have for diagnostic tests               
+PASS  W6-shieldcare_basic-11 what's the ambulance services coverage limit                 
+PASS  W6-shieldcare_basic-12 when does my policy expire                                   
+PASS  W11-EXCL-001           The claimant's bike was stolen last night. Will ACKO pay for 
+PASS  W11-EXCL-002           Is fire damage to my bike covered?                           
+PASS  W11-EXCL-003           Is rat bite damage to my bike's wiring covered?              
+PASS  W11-EXCL-004           Are flood damages to my bike covered?                        
+PASS  W11-CTRL-001           Is damage to the third party's car covered if I hit it?      
+  week6_golden   27/27
+  case_file      5/5
+SUITE insurance-qa-v4: 32/32 PASS

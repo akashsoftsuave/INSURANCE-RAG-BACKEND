@@ -1,4 +1,5 @@
 import re
+import time
 from collections import defaultdict
 from rank_bm25 import BM25Okapi
 
@@ -113,7 +114,20 @@ class RetrievalService:
 
         return fused_results
 
-    def retrieve(self, question: str, return_pre_rerank: bool = False):
+    def retrieve(self, question: str, return_pre_rerank: bool = False, timings: dict | None = None):
+        # Week 11: `timings`, when a dict is passed, is filled with the
+        # per-sub-stage milliseconds (embed / vector / bm25 / fuse / rerank)
+        # so the retrieval span can say where its latency went. Pure
+        # instrumentation — results are identical with or without it.
+        t0 = time.monotonic()
+
+        def _mark(name):
+            nonlocal t0
+            if timings is not None:
+                now = time.monotonic()
+                timings[name] = round((now - t0) * 1000, 1)
+                t0 = now
+
         total_docs = self.vector_store.collection.count()
         if total_docs == 0:
             return ([], []) if return_pre_rerank else []
@@ -121,6 +135,7 @@ class RetrievalService:
         candidate_k = min(settings.TOP_K * 4, total_docs)
 
         query_embedding = self.embedding_service.generate_query_embedding(question)
+        _mark("embed_ms")
 
         vector_results = self.vector_store.collection.query(
             query_embeddings=[query_embedding],
@@ -141,17 +156,21 @@ class RetrievalService:
                 "score": float(all_distances[i]) if i < len(all_distances) else 0.0
             })
 
+        _mark("vector_ms")
         bm25_results = self._bm25_search(question, k=candidate_k)
+        _mark("bm25_ms")
 
         fused_results = self._rrf_fusion(vector_formatted, bm25_results, k=60)
 
         # Snapshot pre-rerank state before `_rerank` mutates scores and reorders in place.
         pre_rerank_results = [dict(r) for r in fused_results]
+        _mark("fuse_ms")
 
         if fused_results:
             fused_results = self._rerank(fused_results, question, use_cross_encoder=True)
 
         final_results = fused_results[:settings.TOP_K]
+        _mark("rerank_ms")
 
         if return_pre_rerank:
             return final_results, pre_rerank_results
