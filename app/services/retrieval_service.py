@@ -46,8 +46,10 @@ class RetrievalService:
         """Tokenize text into lowercase alphanumeric tokens."""
         return re.findall(r"\w+", text.lower())
 
-    def _bm25_search(self, question: str, k: int = 10):
-        all_data = self.vector_store.collection.get()
+    def _bm25_search(self, question: str, k: int = 10, where: dict | None = None):
+        # Week 12: `where` (Chroma metadata filter) restricts the BM25 corpus the
+        # same way it restricts the vector query. None = unchanged behaviour.
+        all_data = self.vector_store.collection.get(where=where) if where else self.vector_store.collection.get()
         documents = all_data.get("documents", [])
         ids = all_data.get("ids", [])
         metadatas = all_data.get("metadatas", [])
@@ -114,7 +116,8 @@ class RetrievalService:
 
         return fused_results
 
-    def retrieve(self, question: str, return_pre_rerank: bool = False, timings: dict | None = None):
+    def retrieve(self, question: str, return_pre_rerank: bool = False, timings: dict | None = None,
+                 where: dict | None = None):
         # Week 11: `timings`, when a dict is passed, is filled with the
         # per-sub-stage milliseconds (embed / vector / bm25 / fuse / rerank)
         # so the retrieval span can say where its latency went. Pure
@@ -128,7 +131,8 @@ class RetrievalService:
                 timings[name] = round((now - t0) * 1000, 1)
                 t0 = now
 
-        total_docs = self.vector_store.collection.count()
+        total_docs = (len(self.vector_store.collection.get(where=where)["ids"]) if where
+                      else self.vector_store.collection.count())
         if total_docs == 0:
             return ([], []) if return_pre_rerank else []
 
@@ -139,7 +143,8 @@ class RetrievalService:
 
         vector_results = self.vector_store.collection.query(
             query_embeddings=[query_embedding],
-            n_results=candidate_k
+            n_results=candidate_k,
+            **({"where": where} if where else {}),
         )
 
         all_docs = vector_results.get("documents", [[]])[0] if vector_results.get("documents") else []
@@ -157,7 +162,7 @@ class RetrievalService:
             })
 
         _mark("vector_ms")
-        bm25_results = self._bm25_search(question, k=candidate_k)
+        bm25_results = self._bm25_search(question, k=candidate_k, where=where)
         _mark("bm25_ms")
 
         fused_results = self._rrf_fusion(vector_formatted, bm25_results, k=60)

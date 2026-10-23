@@ -1,0 +1,505 @@
+{
+ "trace_id": "30c32bec71c7406a",
+ "case_id": "S-14_2025-01-27_motor_theft",
+ "claim_id": "CLM-2025-00019",
+ "policy_id": "POL-MOT-2024-000069",
+ "product": "motor",
+ "loss_date_used": "2025-01-27",
+ "loss_date_on_file": "2025-01-27",
+ "wording_set_expected_for_loss_date": "2023",
+ "in_force": {
+  "in_force_on_loss_date": true,
+  "period_of_insurance": {
+   "from": "2024-07-16",
+   "to": "2025-07-15"
+  }
+ },
+ "citations": [
+  {
+   "citation": "[MOTOR cl.5.4 | MOT-END-THF-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-01-27]",
+   "url": "/api/v1/capstone/clause/motor/5.4?as_of=2025-01-27",
+   "product": "motor",
+   "clause": "5.4",
+   "title": "Theft Endorsement (2023 set)",
+   "endorsement_id": "MOT-END-THF-2023",
+   "endorsement_version": "2023",
+   "effective_from": 20230101,
+   "effective_to": 20250228,
+   "chunk_id": "motor|5.4|2023",
+   "excerpt": "Theft of the insured vehicle, or of its parts, is an insured peril. EXCLUDED: theft where the ignition key or key fob was left in the vehicle."
+  },
+  {
+   "citation": "[MOTOR wording cl.5.4 (base wording, all dates) | loss date 2025-01-27]",
+   "url": "/api/v1/capstone/clause/motor/5.4?as_of=2025-01-27",
+   "product": "motor",
+   "clause": "5.4",
+   "title": "Theft",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "motor|5.4|BASE",
+   "excerpt": "Loss of or damage to the insured vehicle by theft is governed by the Theft Endorsement in force on the date of loss. See the endorsement schedule."
+  },
+  {
+   "citation": "[MOTOR wording cl.5.1 (base wording, all dates) | loss date 2025-01-27]",
+   "url": "/api/v1/capstone/clause/motor/5.1?as_of=2025-01-27",
+   "product": "motor",
+   "clause": "5.1",
+   "title": "General exclusion: wear and tear",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "motor|5.1|BASE",
+   "excerpt": "We do not pay for wear and tear, depreciation, mechanical or electrical breakdown, rust or corrosion, or damage that develops gradually."
+  }
+ ],
+ "wrong_version_citations": [],
+ "limits": {
+  "deductible": 5000,
+  "sub_limit": 600000,
+  "policy_limit": 500000
+ },
+ "referral": {
+  "referral_id": "REF-478389387",
+  "status": "REFERRED_TO_ADJUSTER",
+  "reason_guard_replaced": true,
+  "forced_by_code": false
+ },
+ "fnol_redacted": "Claim [ID_REDACTED]. My car was stolen on 2025-01-27. It was locked and parked overnight.  This is [NAME], living at [ADDRESS], phone [PHONE].",
+ "summary": "The loss occurred on 2025-01-27 while the motor policy was in force (2024-07-16 to 2025-07-15) under the 2023 wording set. The theft endorsement (MOT-END-THF-2023) applies, with a deductible of 5,000, a sub-limit of 600,000 and a policy limit of 500,000. Please review the cited clauses for the final determination.",
+ "guard": {
+  "guard_replaced": false,
+  "violations": []
+ },
+ "raw_model_summary_redacted": "The loss occurred on 2025‑01‑27 while the motor policy was in force (2024‑07‑16 to 2025‑07‑15) under the 2023 wording set. The theft endorsement (MOT‑END‑THF‑2023) applies, with a deductible of 5,000, a sub‑limit of 600,000 and a policy limit of 500,000. Please review the cited clauses for the final determination.",
+ "stop_reason": "final_answer",
+ "tool_sequence": [
+  "lookup_policy",
+  "check_coverage_in_force",
+  "search_policy_wording",
+  "get_limits",
+  "refer_to_adjuster"
+ ],
+ "trajectory": [
+  {
+   "order": 1,
+   "tool": "lookup_policy",
+   "origin": "local",
+   "arguments": {
+    "identifier": "CLM-2025-00019"
+   },
+   "result": {
+    "policy_id": "POL-MOT-2024-000069",
+    "product": "motor",
+    "policy_limit": 500000,
+    "flood_cover_addon_on_schedule": false,
+    "periods_of_insurance": [
+     {
+      "from": "2024-07-16",
+      "to": "2025-07-15"
+     },
+     {
+      "from": "2025-07-16",
+      "to": "2026-07-15"
+     },
+     {
+      "from": "2026-07-16",
+      "to": "2027-07-15"
+     }
+    ],
+    "claim_id": "CLM-2025-00019",
+    "loss_date_on_file": "2025-01-27",
+    "adjuster_notes_redacted": "Spoke with insured [NAME] at [ADDRESS] (ph [PHONE]). Facts recorded: {\"keys_in_vehicle\": false, \"standing_water\": false, \"unattended_unlocked\": false}. Photos reviewed; no inconsistency noted.",
+    "photo_captions": [
+     "Photo 1: theft damage, motor claim",
+     "Photo 2: wide shot of insured location"
+    ]
+   }
+  },
+  {
+   "order": 2,
+   "tool": "check_coverage_in_force",
+   "origin": "local",
+   "arguments": {
+    "loss_date": "2025-01-27",
+    "policy_id": "POL-MOT-2024-000069"
+   },
+   "result": {
+    "policy_id": "POL-MOT-2024-000069",
+    "loss_date": "2025-01-27",
+    "in_force_on_loss_date": true,
+    "period_of_insurance": {
+     "from": "2024-07-16",
+     "to": "2025-07-15"
+    },
+    "periods_on_file": null,
+    "wording_set_in_force_on_loss_date": "2023",
+    "note": "Policy-period fact only. This is not a decision on the claim."
+   }
+  },
+  {
+   "order": 3,
+   "tool": "search_policy_wording",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-01-27",
+    "product": "motor",
+    "query": "theft exclusion or conditions"
+   },
+   "result": {
+    "mode": "in_force",
+    "loss_date": "2025-01-27",
+    "product": "motor",
+    "citations": [
+     {
+      "chunk_id": "motor|5.4|2023",
+      "product": "motor",
+      "clause": "5.4",
+      "title": "Theft Endorsement (2023 set)",
+      "endorsement_id": "MOT-END-THF-2023",
+      "endorsement_version": "2023",
+      "effective_from": 20230101,
+      "effective_to": 20250228,
+      "text": "Theft of the insured vehicle, or of its parts, is an insured peril. EXCLUDED: theft where the ignition key or key fob was left in the vehicle.",
+      "score": 4.0229,
+      "citation": "[MOTOR cl.5.4 | MOT-END-THF-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-01-27]",
+      "url": "/api/v1/capstone/clause/motor/5.4?as_of=2025-01-27"
+     },
+     {
+      "chunk_id": "motor|5.4|BASE",
+      "product": "motor",
+      "clause": "5.4",
+      "title": "Theft",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "Loss of or damage to the insured vehicle by theft is governed by the Theft Endorsement in force on the date of loss. See the endorsement schedule.",
+      "score": -1.8708,
+      "citation": "[MOTOR wording cl.5.4 (base wording, all dates) | loss date 2025-01-27]",
+      "url": "/api/v1/capstone/clause/motor/5.4?as_of=2025-01-27"
+     },
+     {
+      "chunk_id": "motor|5.1|BASE",
+      "product": "motor",
+      "clause": "5.1",
+      "title": "General exclusion: wear and tear",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "We do not pay for wear and tear, depreciation, mechanical or electrical breakdown, rust or corrosion, or damage that develops gradually.",
+      "score": -3.9869,
+      "citation": "[MOTOR wording cl.5.1 (base wording, all dates) | loss date 2025-01-27]",
+      "url": "/api/v1/capstone/clause/motor/5.1?as_of=2025-01-27"
+     }
+    ],
+    "date_filter_violations": 0,
+    "timings_ms": {
+     "embed_ms": 17.9,
+     "vector_ms": 2.3,
+     "bm25_ms": 1.9,
+     "fuse_ms": 0.0,
+     "rerank_ms": 89.2,
+     "total_ms": 111.4
+    },
+    "_span": {
+     "trace_id": "30c32bec71c7406a",
+     "hop": "mcp",
+     "tool": "search_policy_wording",
+     "latency_ms": 112.0,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "30c32bec71c7406a"
+   }
+  },
+  {
+   "order": 4,
+   "tool": "get_limits",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-01-27",
+    "peril": "theft",
+    "policy_id": "POL-MOT-2024-000069",
+    "product": "motor"
+   },
+   "result": {
+    "deductible": 5000,
+    "sub_limit": 600000,
+    "policy_limit": 500000,
+    "limits_version": "2023",
+    "peril": "theft",
+    "loss_date": "2025-01-27",
+    "currency": "INR",
+    "reading_note": "deductible, sub_limit and policy_limit are three distinct figures; sub_limit null = no peril cap below the policy limit.",
+    "_span": {
+     "trace_id": "30c32bec71c7406a",
+     "hop": "mcp",
+     "tool": "get_limits",
+     "latency_ms": 1.3,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "30c32bec71c7406a"
+   }
+  },
+  {
+   "order": 5,
+   "tool": "refer_to_adjuster",
+   "origin": "local",
+   "arguments": {
+    "cited_clauses": [
+     "MOTOR cl.5.4 | MOT-END-THF-2023",
+     "MOTOR cl.5.4 (base wording)"
+    ],
+    "claim_id": "CLM-2025-00019",
+    "reason": "Loss date 2025-01-27 falls within an in‑force period (2024-07-16 to 2025-07-15) under the 2023 wording set. The theft peril is covered by the Theft Endorsement (MOT-END-THF-2023) with a deductible of 5,000, a sub‑limit of 600,000 and a policy limit of 500,000. The applicable wording version is the 2023 endorsement set."
+   },
+   "result": {
+    "referral_id": "REF-478389387",
+    "status": "REFERRED_TO_ADJUSTER",
+    "reason_guard_replaced": true
+   }
+  }
+ ],
+ "tools_discovered_over_mcp": [
+  "get_limits",
+  "search_policy_wording"
+ ],
+ "wording_mode": "in_force",
+ "prompt_version": "capstone-triage-v1",
+ "model": "openai/gpt-oss-120b",
+ "spans": [
+  {
+   "name": "input.sanitize",
+   "stage": "tools",
+   "start_offset_ms": 0.0,
+   "latency_ms": 0.4,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "pii_known_from_record": true
+   }
+  },
+  {
+   "name": "llm.call.1",
+   "stage": "generation",
+   "start_offset_ms": 0.4,
+   "latency_ms": 389.0,
+   "tokens": {
+    "prompt": 857,
+    "completion": 52,
+    "total": 909
+   },
+   "cost_usd": 0.00015975,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.lookup_policy",
+   "stage": "tools",
+   "start_offset_ms": 389.5,
+   "latency_ms": 0.3,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "lookup_policy"
+   }
+  },
+  {
+   "name": "llm.call.2",
+   "stage": "generation",
+   "start_offset_ms": 389.9,
+   "latency_ms": 882.2,
+   "tokens": {
+    "prompt": 1118,
+    "completion": 165,
+    "total": 1283
+   },
+   "cost_usd": 0.0002667,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 1272.1,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.3",
+   "stage": "generation",
+   "start_offset_ms": 1272.2,
+   "latency_ms": 4134.3,
+   "tokens": {
+    "prompt": 1273,
+    "completion": 250,
+    "total": 1523
+   },
+   "cost_usd": 0.00034095,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 3.1
+   }
+  },
+  {
+   "name": "mcp.search_policy_wording",
+   "stage": "retrieval",
+   "start_offset_ms": 5406.5,
+   "latency_ms": 115.7,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "search_policy_wording",
+    "server_latency_ms": 112.0,
+    "server_trace_id": "30c32bec71c7406a"
+   }
+  },
+  {
+   "name": "llm.call.4",
+   "stage": "generation",
+   "start_offset_ms": 5522.3,
+   "latency_ms": 7371.2,
+   "tokens": {
+    "prompt": 1551,
+    "completion": 70,
+    "total": 1621
+   },
+   "cost_usd": 0.00027465,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 6.9
+   }
+  },
+  {
+   "name": "mcp.get_limits",
+   "stage": "tools",
+   "start_offset_ms": 12893.6,
+   "latency_ms": 5.7,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "get_limits",
+    "server_latency_ms": 1.3,
+    "server_trace_id": "30c32bec71c7406a"
+   }
+  },
+  {
+   "name": "llm.call.5",
+   "stage": "generation",
+   "start_offset_ms": 12899.3,
+   "latency_ms": 39892.2,
+   "tokens": {
+    "prompt": 1664,
+    "completion": 284,
+    "total": 1948
+   },
+   "cost_usd": 0.00042,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 38.3
+   }
+  },
+  {
+   "name": "tool.refer_to_adjuster",
+   "stage": "tools",
+   "start_offset_ms": 52791.5,
+   "latency_ms": 1.4,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "refer_to_adjuster"
+   }
+  },
+  {
+   "name": "llm.call.6",
+   "stage": "generation",
+   "start_offset_ms": 52792.9,
+   "latency_ms": 9832.7,
+   "tokens": {
+    "prompt": 1873,
+    "completion": 102,
+    "total": 1975
+   },
+   "cost_usd": 0.00034215,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 6.7
+   }
+  }
+ ],
+ "totals": {
+  "latency_ms": 62625.8,
+  "tokens": 9259,
+  "cost_usd": 0.0018042,
+  "by_stage": {
+   "retrieval": {
+    "latency_ms": 115.7,
+    "tokens": 0,
+    "cost_usd": 0.0
+   },
+   "generation": {
+    "latency_ms": 62501.6,
+    "tokens": 9259,
+    "cost_usd": 0.0018042
+   },
+   "tools": {
+    "latency_ms": 7.8,
+    "tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ }
+}

@@ -1,0 +1,6 @@
+{
+ "case_id": "B5-3_2025-01-31_motor_flood",
+ "crashed": true,
+ "error": "RuntimeError: rate-limit retries exhausted",
+ "traceback": "Traceback (most recent call last):\n  File \"D:\\INSURANCE_RAG\\INSURANCE-RAG-BACKEND\\capstone\\evals\\runner.py\", line 35, in _run\n    out = await agent.triage(c[\"fnol\"], claim_id=c.get(\"claim_id\"), case_id=c[\"case_id\"])\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\INSURANCE_RAG\\INSURANCE-RAG-BACKEND\\capstone\\agent.py\", line 147, in triage\n    resp, waited = self._llm(messages, schemas)\n                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"D:\\INSURANCE_RAG\\INSURANCE-RAG-BACKEND\\capstone\\agent.py\", line 122, in _llm\n    raise RuntimeError(\"rate-limit retries exhausted\")\nRuntimeError: rate-limit retries exhausted\n"
+}

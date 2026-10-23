@@ -1,0 +1,508 @@
+{
+ "trace_id": "618326a620d54ece",
+ "case_id": "S-15_2025-01-09_household_theft",
+ "claim_id": "CLM-2025-00033",
+ "policy_id": "POL-HOM-2023-000092",
+ "product": "household",
+ "loss_date_used": "2025-01-09",
+ "loss_date_on_file": "2025-01-09",
+ "wording_set_expected_for_loss_date": "2023",
+ "in_force": {
+  "in_force_on_loss_date": true,
+  "period_of_insurance": {
+   "from": "2024-09-21",
+   "to": "2025-09-20"
+  }
+ },
+ "citations": [
+  {
+   "citation": "[HOUSEHOLD cl.6.4 | HOM-END-THF-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-01-09]",
+   "url": "/api/v1/capstone/clause/household/6.4?as_of=2025-01-09",
+   "product": "household",
+   "clause": "6.4",
+   "title": "Theft Endorsement (2023 set)",
+   "endorsement_id": "HOM-END-THF-2023",
+   "endorsement_version": "2023",
+   "effective_from": 20230101,
+   "effective_to": 20250228,
+   "chunk_id": "household|6.4|2023",
+   "excerpt": "Theft or burglary involving forcible and violent entry to or exit from the insured home is an insured peril, up to the theft Sub-limit. EXCLUDED: theft without evidence of forcible entry."
+  },
+  {
+   "citation": "[HOUSEHOLD wording cl.6.4 (base wording, all dates) | loss date 2025-01-09]",
+   "url": "/api/v1/capstone/clause/household/6.4?as_of=2025-01-09",
+   "product": "household",
+   "clause": "6.4",
+   "title": "Theft and burglary",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "household|6.4|BASE",
+   "excerpt": "Loss of or damage to contents by theft or burglary is governed by the Theft Endorsement in force on the date of loss. See the endorsement schedule."
+  },
+  {
+   "citation": "[HOUSEHOLD wording cl.8.1 (base wording, all dates) | loss date 2025-01-09]",
+   "url": "/api/v1/capstone/clause/household/8.1?as_of=2025-01-09",
+   "product": "household",
+   "clause": "8.1",
+   "title": "Claims procedure",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "household|8.1|BASE",
+   "excerpt": "Notify Us promptly, preserve damaged items for inspection, and report theft or burglary to the police and obtain a copy of the report."
+  }
+ ],
+ "wrong_version_citations": [],
+ "limits": {
+  "deductible": 2000,
+  "sub_limit": 50000,
+  "policy_limit": 700000
+ },
+ "referral": {
+  "referral_id": "REF-478487191",
+  "status": "REFERRED_TO_ADJUSTER",
+  "reason_guard_replaced": false,
+  "forced_by_code": false
+ },
+ "fnol_redacted": "Claim [ID_REDACTED]. We had a burglary on 2025-01-09. The back door lock was broken open.  This is [NAME], living at [ADDRESS], phone [PHONE]. I also hurt myself: [INJURY].",
+ "summary": "Referred to an adjuster. The wording in force on the loss date, the policy-period check and the three financial figures are listed below for the adjuster's decision.",
+ "guard": {
+  "guard_replaced": true,
+  "violations": [
+   "covered",
+   "is covered"
+  ]
+ },
+ "raw_model_summary_redacted": "The loss occurred on 2025‑01‑09 and the household policy was in force (2024‑09‑21 to 2025‑09‑20) under the 2023 endorsement set. The applicable wording (HOUSEHOLD cl.6.4 | HOM‑END‑THF‑2023) states that theft or burglary with forcible entry is covered up to the theft sub‑limit, while theft without forcible entry is excluded. The deductible is INR 2,000, the theft sub‑limit INR 50,000, and the overall policy limit INR 700,000.",
+ "stop_reason": "final_answer",
+ "tool_sequence": [
+  "lookup_policy",
+  "check_coverage_in_force",
+  "search_policy_wording",
+  "get_limits",
+  "refer_to_adjuster"
+ ],
+ "trajectory": [
+  {
+   "order": 1,
+   "tool": "lookup_policy",
+   "origin": "local",
+   "arguments": {
+    "identifier": "CLM-2025-00033"
+   },
+   "result": {
+    "policy_id": "POL-HOM-2023-000092",
+    "product": "household",
+    "policy_limit": 700000,
+    "flood_cover_addon_on_schedule": false,
+    "periods_of_insurance": [
+     {
+      "from": "2023-09-22",
+      "to": "2024-09-20"
+     },
+     {
+      "from": "2024-09-21",
+      "to": "2025-09-20"
+     },
+     {
+      "from": "2025-09-21",
+      "to": "2026-09-20"
+     }
+    ],
+    "claim_id": "CLM-2025-00033",
+    "loss_date_on_file": "2025-01-09",
+    "adjuster_notes_redacted": "Spoke with insured [NAME] at [ADDRESS] (ph [PHONE]). Facts recorded: {\"basement\": false, \"forced_entry\": true, \"unoccupied_30d\": false}. Insured reports injury: [INJURY]. Photos reviewed; no inconsistency noted.",
+    "photo_captions": [
+     "Photo 1: theft damage, household claim",
+     "Photo 2: wide shot of insured location"
+    ]
+   }
+  },
+  {
+   "order": 2,
+   "tool": "check_coverage_in_force",
+   "origin": "local",
+   "arguments": {
+    "loss_date": "2025-01-09",
+    "policy_id": "POL-HOM-2023-000092"
+   },
+   "result": {
+    "policy_id": "POL-HOM-2023-000092",
+    "loss_date": "2025-01-09",
+    "in_force_on_loss_date": true,
+    "period_of_insurance": {
+     "from": "2024-09-21",
+     "to": "2025-09-20"
+    },
+    "periods_on_file": null,
+    "wording_set_in_force_on_loss_date": "2023",
+    "note": "Policy-period fact only. This is not a decision on the claim."
+   }
+  },
+  {
+   "order": 3,
+   "tool": "search_policy_wording",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-01-09",
+    "product": "household",
+    "query": "theft"
+   },
+   "result": {
+    "mode": "in_force",
+    "loss_date": "2025-01-09",
+    "product": "household",
+    "citations": [
+     {
+      "chunk_id": "household|6.4|2023",
+      "product": "household",
+      "clause": "6.4",
+      "title": "Theft Endorsement (2023 set)",
+      "endorsement_id": "HOM-END-THF-2023",
+      "endorsement_version": "2023",
+      "effective_from": 20230101,
+      "effective_to": 20250228,
+      "text": "Theft or burglary involving forcible and violent entry to or exit from the insured home is an insured peril, up to the theft Sub-limit. EXCLUDED: theft without evidence of forcible entry.",
+      "score": 6.0427,
+      "citation": "[HOUSEHOLD cl.6.4 | HOM-END-THF-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-01-09]",
+      "url": "/api/v1/capstone/clause/household/6.4?as_of=2025-01-09"
+     },
+     {
+      "chunk_id": "household|6.4|BASE",
+      "product": "household",
+      "clause": "6.4",
+      "title": "Theft and burglary",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "Loss of or damage to contents by theft or burglary is governed by the Theft Endorsement in force on the date of loss. See the endorsement schedule.",
+      "score": 5.7809,
+      "citation": "[HOUSEHOLD wording cl.6.4 (base wording, all dates) | loss date 2025-01-09]",
+      "url": "/api/v1/capstone/clause/household/6.4?as_of=2025-01-09"
+     },
+     {
+      "chunk_id": "household|8.1|BASE",
+      "product": "household",
+      "clause": "8.1",
+      "title": "Claims procedure",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "Notify Us promptly, preserve damaged items for inspection, and report theft or burglary to the police and obtain a copy of the report.",
+      "score": -0.6383,
+      "citation": "[HOUSEHOLD wording cl.8.1 (base wording, all dates) | loss date 2025-01-09]",
+      "url": "/api/v1/capstone/clause/household/8.1?as_of=2025-01-09"
+     }
+    ],
+    "date_filter_violations": 0,
+    "timings_ms": {
+     "embed_ms": 17.4,
+     "vector_ms": 2.1,
+     "bm25_ms": 1.7,
+     "fuse_ms": 0.0,
+     "rerank_ms": 74.3,
+     "total_ms": 95.7
+    },
+    "_span": {
+     "trace_id": "618326a620d54ece",
+     "hop": "mcp",
+     "tool": "search_policy_wording",
+     "latency_ms": 96.2,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "618326a620d54ece"
+   }
+  },
+  {
+   "order": 4,
+   "tool": "get_limits",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-01-09",
+    "peril": "theft",
+    "policy_id": "POL-HOM-2023-000092",
+    "product": "household"
+   },
+   "result": {
+    "deductible": 2000,
+    "sub_limit": 50000,
+    "policy_limit": 700000,
+    "limits_version": "2023",
+    "peril": "theft",
+    "loss_date": "2025-01-09",
+    "currency": "INR",
+    "reading_note": "deductible, sub_limit and policy_limit are three distinct figures; sub_limit null = no peril cap below the policy limit.",
+    "_span": {
+     "trace_id": "618326a620d54ece",
+     "hop": "mcp",
+     "tool": "get_limits",
+     "latency_ms": 2.0,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "618326a620d54ece"
+   }
+  },
+  {
+   "order": 5,
+   "tool": "refer_to_adjuster",
+   "origin": "local",
+   "arguments": {
+    "cited_clauses": [
+     "HOUSEHOLD cl.6.4 | HOM-END-THF-2023",
+     "HOUSEHOLD cl.6.4 (base wording)"
+    ],
+    "claim_id": "CLM-2025-00033",
+    "reason": "Loss date: 2025-01-09. Policy period in force on loss date (2024-09-21 to 2025-09-20) confirmed. Wording set in force: 2023 endorsement set. Relevant wording: Theft or burglary involving forcible entry is an insured peril up to the theft sub‑limit; theft without forcible entry is excluded. Deductible INR 2,000, theft sub‑limit INR 50,000, overall policy limit INR 700,000."
+   },
+   "result": {
+    "referral_id": "REF-478487191",
+    "status": "REFERRED_TO_ADJUSTER",
+    "reason_guard_replaced": false
+   }
+  }
+ ],
+ "tools_discovered_over_mcp": [
+  "get_limits",
+  "search_policy_wording"
+ ],
+ "wording_mode": "in_force",
+ "prompt_version": "capstone-triage-v1",
+ "model": "openai/gpt-oss-120b",
+ "spans": [
+  {
+   "name": "input.sanitize",
+   "stage": "tools",
+   "start_offset_ms": 0.0,
+   "latency_ms": 0.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "pii_known_from_record": true
+   }
+  },
+  {
+   "name": "llm.call.1",
+   "stage": "generation",
+   "start_offset_ms": 0.2,
+   "latency_ms": 1421.1,
+   "tokens": {
+    "prompt": 868,
+    "completion": 52,
+    "total": 920
+   },
+   "cost_usd": 0.0001614,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.lookup_policy",
+   "stage": "tools",
+   "start_offset_ms": 1421.3,
+   "latency_ms": 0.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "lookup_policy"
+   }
+  },
+  {
+   "name": "llm.call.2",
+   "stage": "generation",
+   "start_offset_ms": 1421.5,
+   "latency_ms": 881.7,
+   "tokens": {
+    "prompt": 1139,
+    "completion": 181,
+    "total": 1320
+   },
+   "cost_usd": 0.00027945,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 2303.2,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.3",
+   "stage": "generation",
+   "start_offset_ms": 2303.2,
+   "latency_ms": 5156.8,
+   "tokens": {
+    "prompt": 1294,
+    "completion": 362,
+    "total": 1656
+   },
+   "cost_usd": 0.0004113,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 3.9
+   }
+  },
+  {
+   "name": "mcp.search_policy_wording",
+   "stage": "retrieval",
+   "start_offset_ms": 7460.0,
+   "latency_ms": 102.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "search_policy_wording",
+    "server_latency_ms": 96.2,
+    "server_trace_id": "618326a620d54ece"
+   }
+  },
+  {
+   "name": "llm.call.4",
+   "stage": "generation",
+   "start_offset_ms": 7562.3,
+   "latency_ms": 42064.2,
+   "tokens": {
+    "prompt": 1578,
+    "completion": 71,
+    "total": 1649
+   },
+   "cost_usd": 0.0002793,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 41.3
+   }
+  },
+  {
+   "name": "mcp.get_limits",
+   "stage": "tools",
+   "start_offset_ms": 49626.6,
+   "latency_ms": 12.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "get_limits",
+    "server_latency_ms": 2.0,
+    "server_trace_id": "618326a620d54ece"
+   }
+  },
+  {
+   "name": "llm.call.5",
+   "stage": "generation",
+   "start_offset_ms": 49638.8,
+   "latency_ms": 38327.9,
+   "tokens": {
+    "prompt": 1692,
+    "completion": 381,
+    "total": 2073
+   },
+   "cost_usd": 0.0004824,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 36.8
+   }
+  },
+  {
+   "name": "tool.refer_to_adjuster",
+   "stage": "tools",
+   "start_offset_ms": 87966.8,
+   "latency_ms": 0.7,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "refer_to_adjuster"
+   }
+  },
+  {
+   "name": "llm.call.6",
+   "stage": "generation",
+   "start_offset_ms": 87967.5,
+   "latency_ms": 233391.4,
+   "tokens": {
+    "prompt": 1907,
+    "completion": 133,
+    "total": 2040
+   },
+   "cost_usd": 0.00036585,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 232.2
+   }
+  }
+ ],
+ "totals": {
+  "latency_ms": 321359.3,
+  "tokens": 9658,
+  "cost_usd": 0.0019797,
+  "by_stage": {
+   "retrieval": {
+    "latency_ms": 102.2,
+    "tokens": 0,
+    "cost_usd": 0.0
+   },
+   "generation": {
+    "latency_ms": 321243.1,
+    "tokens": 9658,
+    "cost_usd": 0.0019797
+   },
+   "tools": {
+    "latency_ms": 13.2,
+    "tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ }
+}

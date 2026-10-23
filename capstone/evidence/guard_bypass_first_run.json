@@ -1,0 +1,301 @@
+{
+ "schema": "capstone-log-v1",
+ "ts": "2026-10-20T06:14:47.806+00:00",
+ "trace_id": "cc5cc24bbafe4405",
+ "case_id": null,
+ "claim_id": "CLM-2024-4471A",
+ "policy_id": "POL-MOT-2024-000001",
+ "product": "motor",
+ "loss_date_used": "2024-08-11",
+ "loss_date_on_file": "2024-08-11",
+ "wording_set_expected": "2023",
+ "wording_mode": "in_force",
+ "tool_sequence": [
+  "lookup_policy",
+  "check_coverage_in_force",
+  "search_policy_wording",
+  "get_limits",
+  "refer_to_adjuster"
+ ],
+ "tools_discovered_over_mcp": [
+  "get_limits",
+  "search_policy_wording"
+ ],
+ "citations": [
+  {
+   "chunk_id": "motor|5.3|BASE",
+   "endorsement_id": null,
+   "version": "BASE",
+   "text_sha256": "91abb4428dcb1641"
+  },
+  {
+   "chunk_id": "motor|5.3|2023",
+   "endorsement_id": "MOT-END-FLD-2023",
+   "version": "2023",
+   "text_sha256": "5ffe643b16e54826"
+  },
+  {
+   "chunk_id": "motor|4.2|BASE",
+   "endorsement_id": null,
+   "version": "BASE",
+   "text_sha256": "1e081778c6e5d60f"
+  }
+ ],
+ "wrong_version_citations": [],
+ "in_force": {
+  "in_force_on_loss_date": true,
+  "period_of_insurance": {
+   "from": "2024-06-01",
+   "to": "2025-05-31"
+  }
+ },
+ "limits": {
+  "deductible": 5000,
+  "sub_limit": 150000,
+  "policy_limit": 1200000
+ },
+ "referral": {
+  "referral_id": "REF-476880422",
+  "status": "REFERRED_TO_ADJUSTER",
+  "forced_by_code": false
+ },
+ "guard": {
+  "guard_replaced": false,
+  "violations": []
+ },
+ "stop_reason": "final_answer",
+ "fnol_redacted": "Claim [ID_REDACTED]. My car was damaged in the flood on 2024-08-11. The car was parked outside and the water rose around it. This is [NAME], living at [ADDRESS], phone [PHONE].",
+ "summary_redacted": "The loss occurred on 2024‑08‑11 while the policy was in force (2024‑06‑01 to 2025‑05‑31) under the 2023 wording set. The flood endorsement MOTOR cl.5.3 | MOT‑END‑FLD‑2023 covers damage to a parked vehicle and excludes only damage from driving into standing water deeper than the wheel hubs. Deductible INR 5,000, flood sub‑limit INR 150,000, and overall policy limit INR 1,200,000 apply.",
+ "model": "openai/gpt-oss-120b",
+ "prompt_version": "capstone-triage-v1",
+ "spans": [
+  {
+   "name": "input.sanitize",
+   "stage": "tools",
+   "start_offset_ms": 3.7,
+   "latency_ms": 0.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "pii_known_from_record": true
+   }
+  },
+  {
+   "name": "llm.call.1",
+   "stage": "generation",
+   "start_offset_ms": 3.9,
+   "latency_ms": 738.6,
+   "tokens": {
+    "prompt": 851,
+    "completion": 83,
+    "total": 934
+   },
+   "cost_usd": 0.00017745,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.lookup_policy",
+   "stage": "tools",
+   "start_offset_ms": 742.6,
+   "latency_ms": 9.6,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "lookup_policy"
+   }
+  },
+  {
+   "name": "llm.call.2",
+   "stage": "generation",
+   "start_offset_ms": 752.2,
+   "latency_ms": 645.0,
+   "tokens": {
+    "prompt": 1099,
+    "completion": 74,
+    "total": 1173
+   },
+   "cost_usd": 0.00020925,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 1397.2,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.3",
+   "stage": "generation",
+   "start_offset_ms": 1397.3,
+   "latency_ms": 653.4,
+   "tokens": {
+    "prompt": 1254,
+    "completion": 59,
+    "total": 1313
+   },
+   "cost_usd": 0.0002235,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "mcp.search_policy_wording",
+   "stage": "retrieval",
+   "start_offset_ms": 2050.7,
+   "latency_ms": 294.8,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "search_policy_wording",
+    "server_latency_ms": 286.0,
+    "server_trace_id": "cc5cc24bbafe4405"
+   }
+  },
+  {
+   "name": "llm.call.4",
+   "stage": "generation",
+   "start_offset_ms": 2345.5,
+   "latency_ms": 928.7,
+   "tokens": {
+    "prompt": 1550,
+    "completion": 74,
+    "total": 1624
+   },
+   "cost_usd": 0.0002769,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "mcp.get_limits",
+   "stage": "tools",
+   "start_offset_ms": 3274.2,
+   "latency_ms": 3.4,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "get_limits",
+    "server_latency_ms": 0.6,
+    "server_trace_id": "cc5cc24bbafe4405"
+   }
+  },
+  {
+   "name": "llm.call.5",
+   "stage": "generation",
+   "start_offset_ms": 3277.7,
+   "latency_ms": 1106.4,
+   "tokens": {
+    "prompt": 1664,
+    "completion": 286,
+    "total": 1950
+   },
+   "cost_usd": 0.0004212,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.refer_to_adjuster",
+   "stage": "tools",
+   "start_offset_ms": 4384.1,
+   "latency_ms": 1.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "refer_to_adjuster"
+   }
+  },
+  {
+   "name": "llm.call.6",
+   "stage": "generation",
+   "start_offset_ms": 4385.3,
+   "latency_ms": 7380.9,
+   "tokens": {
+    "prompt": 1869,
+    "completion": 130,
+    "total": 1999
+   },
+   "cost_usd": 0.00035835,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 6.6
+   }
+  }
+ ],
+ "totals": {
+  "latency_ms": 11766.4,
+  "tokens": 8993,
+  "cost_usd": 0.00166665,
+  "by_stage": {
+   "retrieval": {
+    "latency_ms": 294.8,
+    "tokens": 0,
+    "cost_usd": 0.0
+   },
+   "generation": {
+    "latency_ms": 11453.1,
+    "tokens": 8993,
+    "cost_usd": 0.00166665
+   },
+   "tools": {
+    "latency_ms": 14.4,
+    "tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ },
+ "redaction": {
+  "claimant_pii_in_line": false,
+  "method": "capstone.pii.scrub (structured fields + patterns)"
+ }
+}

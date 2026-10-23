@@ -1,0 +1,559 @@
+{
+ "trace_id": "e5eff88b04554d28",
+ "case_id": "B5-5_2025-02-28_household_flood",
+ "claim_id": "CLM-2025-0005A",
+ "policy_id": "POL-HOM-2023-000004",
+ "product": "household",
+ "loss_date_used": "2025-02-28",
+ "loss_date_on_file": "2025-02-28",
+ "wording_set_expected_for_loss_date": "2023",
+ "in_force": {
+  "in_force_on_loss_date": true,
+  "period_of_insurance": {
+   "from": "2024-03-01",
+   "to": "2025-02-28"
+  }
+ },
+ "citations": [
+  {
+   "citation": "[HOUSEHOLD cl.6.2 | HOM-END-FLD-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-02-28]",
+   "url": "/api/v1/capstone/clause/household/6.2?as_of=2025-02-28",
+   "product": "household",
+   "clause": "6.2",
+   "title": "Flood Endorsement (2023 set)",
+   "endorsement_id": "HOM-END-FLD-2023",
+   "endorsement_version": "2023",
+   "effective_from": 20230101,
+   "effective_to": 20250228,
+   "chunk_id": "household|6.2|2023",
+   "excerpt": "Loss or damage to insured buildings and contents at ground level or above caused by flood, storm water or escape of water is an insured peril, up to the flood Sub-limit. EXCLUDED: contents stored in a basement or below ground level."
+  },
+  {
+   "citation": "[HOUSEHOLD wording cl.6.2 (base wording, all dates) | loss date 2025-02-28]",
+   "url": "/api/v1/capstone/clause/household/6.2?as_of=2025-02-28",
+   "product": "household",
+   "clause": "6.2",
+   "title": "Flood and water",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "household|6.2|BASE",
+   "excerpt": "Loss or damage caused by flood, storm water or escape of water is governed by the Flood Endorsement in force on the date of loss. See the endorsement schedule."
+  },
+  {
+   "citation": "[HOUSEHOLD wording cl.6.1 (base wording, all dates) | loss date 2025-02-28]",
+   "url": "/api/v1/capstone/clause/household/6.1?as_of=2025-02-28",
+   "product": "household",
+   "clause": "6.1",
+   "title": "General exclusion: wear and tear",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "household|6.1|BASE",
+   "excerpt": "We do not pay for wear and tear, gradual deterioration, damp, rot, rust, corrosion, insects or vermin."
+  }
+ ],
+ "wrong_version_citations": [],
+ "limits": {
+  "deductible": 2000,
+  "sub_limit": 120000,
+  "policy_limit": 700000
+ },
+ "referral": {
+  "referral_id": "REF-477841595",
+  "status": "REFERRED_TO_ADJUSTER",
+  "reason_guard_replaced": false,
+  "forced_by_code": false
+ },
+ "fnol_redacted": "Claim [ID_REDACTED]. Water entered our home on 2025-02-28 after heavy rain. The water reached the ground floor living room.  This is [NAME], living at [ADDRESS], phone [PHONE]. I also hurt myself: [INJURY].",
+ "summary": "The loss occurred on 2025-02-28 while the household policy was in force (2024-03-01 to 2025-02-28) under the 2023 wording set. The flood endorsement (HOUSEHOLD cl.6.2 HOM-END-FLD-2023) applies, with a deductible of INR 2,000, a flood sub-limit of INR 120,000 and a total policy limit of INR 700,000.",
+ "guard": {
+  "guard_replaced": false,
+  "violations": []
+ },
+ "raw_model_summary_redacted": "The loss occurred on 2025‑02‑28 while the household policy was in force (2024‑03‑01 to 2025‑02‑28) under the 2023 wording set. The flood endorsement (HOUSEHOLD cl.6.2 HOM‑END‑FLD‑2023) applies, with a deductible of INR 2,000, a flood sub‑limit of INR 120,000 and a total policy limit of INR 700,000.",
+ "stop_reason": "final_answer",
+ "tool_sequence": [
+  "lookup_policy",
+  "check_coverage_in_force",
+  "check_coverage_in_force",
+  "search_policy_wording",
+  "get_limits",
+  "refer_to_adjuster"
+ ],
+ "trajectory": [
+  {
+   "order": 1,
+   "tool": "lookup_policy",
+   "origin": "local",
+   "arguments": {
+    "identifier": "CLM-2025-0005A"
+   },
+   "result": {
+    "policy_id": "POL-HOM-2023-000004",
+    "product": "household",
+    "policy_limit": 700000,
+    "flood_cover_addon_on_schedule": false,
+    "periods_of_insurance": [
+     {
+      "from": "2023-03-01",
+      "to": "2024-02-29"
+     },
+     {
+      "from": "2024-03-01",
+      "to": "2025-02-28"
+     },
+     {
+      "from": "2025-03-01",
+      "to": "2026-02-28"
+     }
+    ],
+    "claim_id": "CLM-2025-0005A",
+    "loss_date_on_file": "2025-02-28",
+    "adjuster_notes_redacted": "Spoke with insured [NAME] at [ADDRESS] (ph [PHONE]). Facts recorded: {\"basement\": false}. Insured reports injury: [INJURY]. Photos reviewed; no inconsistency noted.",
+    "photo_captions": [
+     "Photo 1: flood damage, household claim",
+     "Photo 2: wide shot of insured location"
+    ]
+   }
+  },
+  {
+   "order": 2,
+   "tool": "check_coverage_in_force",
+   "origin": "local",
+   "arguments": {
+    "loss_date": "2025-02-28",
+    "policy_id": "POL-HOM-2023-000004"
+   },
+   "result": {
+    "policy_id": "POL-HOM-2023-000004",
+    "loss_date": "2025-02-28",
+    "in_force_on_loss_date": true,
+    "period_of_insurance": {
+     "from": "2024-03-01",
+     "to": "2025-02-28"
+    },
+    "periods_on_file": null,
+    "wording_set_in_force_on_loss_date": "2023",
+    "note": "Policy-period fact only. This is not a decision on the claim."
+   }
+  },
+  {
+   "order": 3,
+   "tool": "check_coverage_in_force",
+   "origin": "local",
+   "arguments": {
+    "loss_date": "2025-02-28",
+    "policy_id": "POL-HOM-2023-000004"
+   },
+   "result": {
+    "policy_id": "POL-HOM-2023-000004",
+    "loss_date": "2025-02-28",
+    "in_force_on_loss_date": true,
+    "period_of_insurance": {
+     "from": "2024-03-01",
+     "to": "2025-02-28"
+    },
+    "periods_on_file": null,
+    "wording_set_in_force_on_loss_date": "2023",
+    "note": "Policy-period fact only. This is not a decision on the claim."
+   }
+  },
+  {
+   "order": 4,
+   "tool": "search_policy_wording",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-02-28",
+    "product": "household",
+    "query": "flood exclusion"
+   },
+   "result": {
+    "mode": "in_force",
+    "loss_date": "2025-02-28",
+    "product": "household",
+    "citations": [
+     {
+      "chunk_id": "household|6.2|2023",
+      "product": "household",
+      "clause": "6.2",
+      "title": "Flood Endorsement (2023 set)",
+      "endorsement_id": "HOM-END-FLD-2023",
+      "endorsement_version": "2023",
+      "effective_from": 20230101,
+      "effective_to": 20250228,
+      "text": "Loss or damage to insured buildings and contents at ground level or above caused by flood, storm water or escape of water is an insured peril, up to the flood Sub-limit. EXCLUDED: contents stored in a basement or below ground level.",
+      "score": 4.1377,
+      "citation": "[HOUSEHOLD cl.6.2 | HOM-END-FLD-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-02-28]",
+      "url": "/api/v1/capstone/clause/household/6.2?as_of=2025-02-28"
+     },
+     {
+      "chunk_id": "household|6.2|BASE",
+      "product": "household",
+      "clause": "6.2",
+      "title": "Flood and water",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "Loss or damage caused by flood, storm water or escape of water is governed by the Flood Endorsement in force on the date of loss. See the endorsement schedule.",
+      "score": -2.5854,
+      "citation": "[HOUSEHOLD wording cl.6.2 (base wording, all dates) | loss date 2025-02-28]",
+      "url": "/api/v1/capstone/clause/household/6.2?as_of=2025-02-28"
+     },
+     {
+      "chunk_id": "household|6.1|BASE",
+      "product": "household",
+      "clause": "6.1",
+      "title": "General exclusion: wear and tear",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "We do not pay for wear and tear, gradual deterioration, damp, rot, rust, corrosion, insects or vermin.",
+      "score": -4.8977,
+      "citation": "[HOUSEHOLD wording cl.6.1 (base wording, all dates) | loss date 2025-02-28]",
+      "url": "/api/v1/capstone/clause/household/6.1?as_of=2025-02-28"
+     }
+    ],
+    "date_filter_violations": 0,
+    "timings_ms": {
+     "embed_ms": 16.5,
+     "vector_ms": 2.3,
+     "bm25_ms": 1.6,
+     "fuse_ms": 0.0,
+     "rerank_ms": 82.8,
+     "total_ms": 103.3
+    },
+    "_span": {
+     "trace_id": "e5eff88b04554d28",
+     "hop": "mcp",
+     "tool": "search_policy_wording",
+     "latency_ms": 103.8,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "e5eff88b04554d28"
+   }
+  },
+  {
+   "order": 5,
+   "tool": "get_limits",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-02-28",
+    "peril": "flood",
+    "policy_id": "POL-HOM-2023-000004",
+    "product": "household"
+   },
+   "result": {
+    "deductible": 2000,
+    "sub_limit": 120000,
+    "policy_limit": 700000,
+    "limits_version": "2023",
+    "peril": "flood",
+    "loss_date": "2025-02-28",
+    "currency": "INR",
+    "reading_note": "deductible, sub_limit and policy_limit are three distinct figures; sub_limit null = no peril cap below the policy limit.",
+    "_span": {
+     "trace_id": "e5eff88b04554d28",
+     "hop": "mcp",
+     "tool": "get_limits",
+     "latency_ms": 2.4,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "e5eff88b04554d28"
+   }
+  },
+  {
+   "order": 6,
+   "tool": "refer_to_adjuster",
+   "origin": "local",
+   "arguments": {
+    "cited_clauses": [
+     "HOUSEHOLD cl.6.2 HOM-END-FLD-2023"
+    ],
+    "claim_id": "CLM-2025-0005A",
+    "reason": "Loss date 2025-02-28 falls within an in‑force period (2024‑03‑01 to 2025‑02‑28) under the 2023 wording set. The flood endorsement (cl.6.2) applies, with a deductible of INR 2,000, a flood sub‑limit of INR 120,000 and a total policy limit of INR 700,000."
+   },
+   "result": {
+    "referral_id": "REF-477841595",
+    "status": "REFERRED_TO_ADJUSTER",
+    "reason_guard_replaced": false
+   }
+  }
+ ],
+ "tools_discovered_over_mcp": [
+  "get_limits",
+  "search_policy_wording"
+ ],
+ "wording_mode": "in_force",
+ "prompt_version": "capstone-triage-v1",
+ "model": "openai/gpt-oss-120b",
+ "spans": [
+  {
+   "name": "input.sanitize",
+   "stage": "tools",
+   "start_offset_ms": 0.0,
+   "latency_ms": 0.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "pii_known_from_record": true
+   }
+  },
+  {
+   "name": "llm.call.1",
+   "stage": "generation",
+   "start_offset_ms": 0.1,
+   "latency_ms": 702.3,
+   "tokens": {
+    "prompt": 873,
+    "completion": 53,
+    "total": 926
+   },
+   "cost_usd": 0.00016275,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.lookup_policy",
+   "stage": "tools",
+   "start_offset_ms": 702.5,
+   "latency_ms": 0.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "lookup_policy"
+   }
+  },
+  {
+   "name": "llm.call.2",
+   "stage": "generation",
+   "start_offset_ms": 702.8,
+   "latency_ms": 21094.5,
+   "tokens": {
+    "prompt": 1131,
+    "completion": 221,
+    "total": 1352
+   },
+   "cost_usd": 0.00030225,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 20.0
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 21797.3,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.3",
+   "stage": "generation",
+   "start_offset_ms": 21797.4,
+   "latency_ms": 6552.1,
+   "tokens": {
+    "prompt": 1286,
+    "completion": 301,
+    "total": 1587
+   },
+   "cost_usd": 0.0003735,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 5.3
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 28349.5,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.4",
+   "stage": "generation",
+   "start_offset_ms": 28349.6,
+   "latency_ms": 13107.1,
+   "tokens": {
+    "prompt": 1441,
+    "completion": 364,
+    "total": 1805
+   },
+   "cost_usd": 0.00043455,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 11.8
+   }
+  },
+  {
+   "name": "mcp.search_policy_wording",
+   "stage": "retrieval",
+   "start_offset_ms": 41456.7,
+   "latency_ms": 108.2,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "search_policy_wording",
+    "server_latency_ms": 103.8,
+    "server_trace_id": "e5eff88b04554d28"
+   }
+  },
+  {
+   "name": "llm.call.5",
+   "stage": "generation",
+   "start_offset_ms": 41564.9,
+   "latency_ms": 65944.4,
+   "tokens": {
+    "prompt": 1735,
+    "completion": 71,
+    "total": 1806
+   },
+   "cost_usd": 0.00030285,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 64.8
+   }
+  },
+  {
+   "name": "mcp.get_limits",
+   "stage": "tools",
+   "start_offset_ms": 107509.3,
+   "latency_ms": 12.7,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "get_limits",
+    "server_latency_ms": 2.4,
+    "server_trace_id": "e5eff88b04554d28"
+   }
+  },
+  {
+   "name": "llm.call.6",
+   "stage": "generation",
+   "start_offset_ms": 107522.0,
+   "latency_ms": 14433.6,
+   "tokens": {
+    "prompt": 1849,
+    "completion": 319,
+    "total": 2168
+   },
+   "cost_usd": 0.00046875,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 13.2
+   }
+  },
+  {
+   "name": "tool.refer_to_adjuster",
+   "stage": "tools",
+   "start_offset_ms": 121955.7,
+   "latency_ms": 0.5,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "refer_to_adjuster"
+   }
+  },
+  {
+   "name": "llm.call.7",
+   "stage": "generation",
+   "start_offset_ms": 121956.2,
+   "latency_ms": 47478.9,
+   "tokens": {
+    "prompt": 2029,
+    "completion": 107,
+    "total": 2136
+   },
+   "cost_usd": 0.00036855,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 46.4
+   }
+  }
+ ],
+ "totals": {
+  "latency_ms": 169435.5,
+  "tokens": 11780,
+  "cost_usd": 0.0024132,
+  "by_stage": {
+   "retrieval": {
+    "latency_ms": 108.2,
+    "tokens": 0,
+    "cost_usd": 0.0
+   },
+   "generation": {
+    "latency_ms": 169312.9,
+    "tokens": 11780,
+    "cost_usd": 0.0024132
+   },
+   "tools": {
+    "latency_ms": 13.6,
+    "tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ }
+}

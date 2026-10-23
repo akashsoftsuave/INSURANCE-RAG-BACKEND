@@ -1,0 +1,506 @@
+{
+ "trace_id": "a9b370d156674497",
+ "case_id": "B5-4_2025-02-27_motor_flood",
+ "claim_id": "CLM-2025-0010A",
+ "policy_id": "POL-MOT-2024-000001",
+ "product": "motor",
+ "loss_date_used": "2025-02-27",
+ "loss_date_on_file": "2025-02-27",
+ "wording_set_expected_for_loss_date": "2023",
+ "in_force": {
+  "in_force_on_loss_date": true,
+  "period_of_insurance": {
+   "from": "2024-06-01",
+   "to": "2025-05-31"
+  }
+ },
+ "citations": [
+  {
+   "citation": "[MOTOR cl.5.3 | MOT-END-FLD-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-02-27]",
+   "url": "/api/v1/capstone/clause/motor/5.3?as_of=2025-02-27",
+   "product": "motor",
+   "clause": "5.3",
+   "title": "Flood Endorsement (2023 set)",
+   "endorsement_id": "MOT-END-FLD-2023",
+   "endorsement_version": "2023",
+   "effective_from": 20230101,
+   "effective_to": 20250228,
+   "chunk_id": "motor|5.3|2023",
+   "excerpt": "Damage to the insured vehicle caused by flood or rising water is an insured peril and is paid up to the flood Sub-limit. EXCLUDED: damage where the driver drove the vehicle into or through standing water deeper than the wheel hubs, including engine damage from water ingress. Flood damage to a parked vehicle is not excluded."
+  },
+  {
+   "citation": "[MOTOR wording cl.5.3 (base wording, all dates) | loss date 2025-02-27]",
+   "url": "/api/v1/capstone/clause/motor/5.3?as_of=2025-02-27",
+   "product": "motor",
+   "clause": "5.3",
+   "title": "Flood and inundation",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "motor|5.3|BASE",
+   "excerpt": "Loss or damage caused by flood or inundation is governed by the Flood Endorsement in force on the date of loss. See the endorsement schedule."
+  },
+  {
+   "citation": "[MOTOR wording cl.5.1 (base wording, all dates) | loss date 2025-02-27]",
+   "url": "/api/v1/capstone/clause/motor/5.1?as_of=2025-02-27",
+   "product": "motor",
+   "clause": "5.1",
+   "title": "General exclusion: wear and tear",
+   "endorsement_id": null,
+   "endorsement_version": "BASE",
+   "effective_from": 19000101,
+   "effective_to": 99991231,
+   "chunk_id": "motor|5.1|BASE",
+   "excerpt": "We do not pay for wear and tear, depreciation, mechanical or electrical breakdown, rust or corrosion, or damage that develops gradually."
+  }
+ ],
+ "wrong_version_citations": [],
+ "limits": {
+  "deductible": 5000,
+  "sub_limit": 150000,
+  "policy_limit": 1200000
+ },
+ "referral": {
+  "referral_id": "REF-477707645",
+  "status": "REFERRED_TO_ADJUSTER",
+  "reason_guard_replaced": false,
+  "forced_by_code": false
+ },
+ "fnol_redacted": "Claim [ID_REDACTED]. My car was damaged in the flood on 2025-02-27. The car was parked outside and the water rose around it.  This is [NAME], living at [ADDRESS], phone [PHONE].",
+ "summary": "The loss occurred on 2025-02-27 while the vehicle was parked; the policy was in force (2024-06-01 to 2025-05-31) under the 2023 endorsement set. The 2023 flood wording (MOT-END-FLD-2023, MOTOR cl.5.3) states that flood damage to a parked vehicle is not excluded, and the applicable limits are a INR 5,000 deductible, a INR 150,000 flood sub-limit, and a INR 1,200,000 overall policy limit.",
+ "guard": {
+  "guard_replaced": false,
+  "violations": []
+ },
+ "raw_model_summary_redacted": "The loss occurred on 2025‑02‑27 while the vehicle was parked; the policy was in force (2024‑06‑01 to 2025‑05‑31) under the 2023 endorsement set. The 2023 flood wording (MOT‑END‑FLD‑2023, MOTOR cl.5.3) states that flood damage to a parked vehicle is not excluded, and the applicable limits are a INR 5,000 deductible, a INR 150,000 flood sub‑limit, and a INR 1,200,000 overall policy limit.",
+ "stop_reason": "final_answer",
+ "tool_sequence": [
+  "lookup_policy",
+  "check_coverage_in_force",
+  "search_policy_wording",
+  "get_limits",
+  "refer_to_adjuster"
+ ],
+ "trajectory": [
+  {
+   "order": 1,
+   "tool": "lookup_policy",
+   "origin": "local",
+   "arguments": {
+    "identifier": "CLM-2025-0010A"
+   },
+   "result": {
+    "policy_id": "POL-MOT-2024-000001",
+    "product": "motor",
+    "policy_limit": 1200000,
+    "flood_cover_addon_on_schedule": false,
+    "periods_of_insurance": [
+     {
+      "from": "2023-06-01",
+      "to": "2024-05-31"
+     },
+     {
+      "from": "2024-06-01",
+      "to": "2025-05-31"
+     },
+     {
+      "from": "2025-06-01",
+      "to": "2026-05-31"
+     }
+    ],
+    "claim_id": "CLM-2025-0010A",
+    "loss_date_on_file": "2025-02-27",
+    "adjuster_notes_redacted": "Spoke with insured [NAME] at [ADDRESS] (ph [PHONE]). Facts recorded: {\"standing_water\": false}. Photos reviewed; no inconsistency noted.",
+    "photo_captions": [
+     "Photo 1: flood damage, motor claim",
+     "Photo 2: wide shot of insured location"
+    ]
+   }
+  },
+  {
+   "order": 2,
+   "tool": "check_coverage_in_force",
+   "origin": "local",
+   "arguments": {
+    "loss_date": "2025-02-27",
+    "policy_id": "POL-MOT-2024-000001"
+   },
+   "result": {
+    "policy_id": "POL-MOT-2024-000001",
+    "loss_date": "2025-02-27",
+    "in_force_on_loss_date": true,
+    "period_of_insurance": {
+     "from": "2024-06-01",
+     "to": "2025-05-31"
+    },
+    "periods_on_file": null,
+    "wording_set_in_force_on_loss_date": "2023",
+    "note": "Policy-period fact only. This is not a decision on the claim."
+   }
+  },
+  {
+   "order": 3,
+   "tool": "search_policy_wording",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-02-27",
+    "product": "motor",
+    "query": "flood exclusion and conditions"
+   },
+   "result": {
+    "mode": "in_force",
+    "loss_date": "2025-02-27",
+    "product": "motor",
+    "citations": [
+     {
+      "chunk_id": "motor|5.3|2023",
+      "product": "motor",
+      "clause": "5.3",
+      "title": "Flood Endorsement (2023 set)",
+      "endorsement_id": "MOT-END-FLD-2023",
+      "endorsement_version": "2023",
+      "effective_from": 20230101,
+      "effective_to": 20250228,
+      "text": "Damage to the insured vehicle caused by flood or rising water is an insured peril and is paid up to the flood Sub-limit. EXCLUDED: damage where the driver drove the vehicle into or through standing water deeper than the wheel hubs, including engine damage from water ingress. Flood damage to a parked vehicle is not excluded.",
+      "score": 1.479,
+      "citation": "[MOTOR cl.5.3 | MOT-END-FLD-2023 (2023 endorsement set, in force 2023-01-01 to 2025-02-28) | resolved for loss date 2025-02-27]",
+      "url": "/api/v1/capstone/clause/motor/5.3?as_of=2025-02-27"
+     },
+     {
+      "chunk_id": "motor|5.3|BASE",
+      "product": "motor",
+      "clause": "5.3",
+      "title": "Flood and inundation",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "Loss or damage caused by flood or inundation is governed by the Flood Endorsement in force on the date of loss. See the endorsement schedule.",
+      "score": -3.7014,
+      "citation": "[MOTOR wording cl.5.3 (base wording, all dates) | loss date 2025-02-27]",
+      "url": "/api/v1/capstone/clause/motor/5.3?as_of=2025-02-27"
+     },
+     {
+      "chunk_id": "motor|5.1|BASE",
+      "product": "motor",
+      "clause": "5.1",
+      "title": "General exclusion: wear and tear",
+      "endorsement_id": null,
+      "endorsement_version": "BASE",
+      "effective_from": 19000101,
+      "effective_to": 99991231,
+      "text": "We do not pay for wear and tear, depreciation, mechanical or electrical breakdown, rust or corrosion, or damage that develops gradually.",
+      "score": -5.7832,
+      "citation": "[MOTOR wording cl.5.1 (base wording, all dates) | loss date 2025-02-27]",
+      "url": "/api/v1/capstone/clause/motor/5.1?as_of=2025-02-27"
+     }
+    ],
+    "date_filter_violations": 0,
+    "timings_ms": {
+     "embed_ms": 31.5,
+     "vector_ms": 2.6,
+     "bm25_ms": 1.9,
+     "fuse_ms": 0.0,
+     "rerank_ms": 91.1,
+     "total_ms": 127.2
+    },
+    "_span": {
+     "trace_id": "a9b370d156674497",
+     "hop": "mcp",
+     "tool": "search_policy_wording",
+     "latency_ms": 128.0,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "a9b370d156674497"
+   }
+  },
+  {
+   "order": 4,
+   "tool": "get_limits",
+   "origin": "mcp",
+   "arguments": {
+    "loss_date": "2025-02-27",
+    "peril": "flood",
+    "policy_id": "POL-MOT-2024-000001",
+    "product": "motor"
+   },
+   "result": {
+    "deductible": 5000,
+    "sub_limit": 150000,
+    "policy_limit": 1200000,
+    "limits_version": "2023",
+    "peril": "flood",
+    "loss_date": "2025-02-27",
+    "currency": "INR",
+    "reading_note": "deductible, sub_limit and policy_limit are three distinct figures; sub_limit null = no peril cap below the policy limit.",
+    "_span": {
+     "trace_id": "a9b370d156674497",
+     "hop": "mcp",
+     "tool": "get_limits",
+     "latency_ms": 0.5,
+     "cost_usd": 0.0,
+     "billing": "local CPU (embeddings + BM25 + cross-encoder); no provider charge",
+     "mode": "in_force",
+     "pii_redacted_on_response": false
+    },
+    "trace_id": "a9b370d156674497"
+   }
+  },
+  {
+   "order": 5,
+   "tool": "refer_to_adjuster",
+   "origin": "local",
+   "arguments": {
+    "cited_clauses": [
+     "MOT-END-FLD-2023",
+     "MOTOR cl.5.3",
+     "MOTOR cl.5.1"
+    ],
+    "claim_id": "CLM-2025-0010A",
+    "reason": "Loss date: 2025-02-27. Policy period in force (2024-06-01 to 2025-05-31) with 2023 endorsement set applied. Flood wording version 2023 indicates flood damage to a parked vehicle is not excluded; deductible INR 5,000, flood sub‑limit INR 150,000, overall policy limit INR 1,200,000."
+   },
+   "result": {
+    "referral_id": "REF-477707645",
+    "status": "REFERRED_TO_ADJUSTER",
+    "reason_guard_replaced": false
+   }
+  }
+ ],
+ "tools_discovered_over_mcp": [
+  "get_limits",
+  "search_policy_wording"
+ ],
+ "wording_mode": "in_force",
+ "prompt_version": "capstone-triage-v1",
+ "model": "openai/gpt-oss-120b",
+ "spans": [
+  {
+   "name": "input.sanitize",
+   "stage": "tools",
+   "start_offset_ms": 0.0,
+   "latency_ms": 0.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "pii_known_from_record": true
+   }
+  },
+  {
+   "name": "llm.call.1",
+   "stage": "generation",
+   "start_offset_ms": 0.2,
+   "latency_ms": 494.0,
+   "tokens": {
+    "prompt": 866,
+    "completion": 53,
+    "total": 919
+   },
+   "cost_usd": 0.0001617,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 0.0
+   }
+  },
+  {
+   "name": "tool.lookup_policy",
+   "stage": "tools",
+   "start_offset_ms": 494.2,
+   "latency_ms": 0.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "lookup_policy"
+   }
+  },
+  {
+   "name": "llm.call.2",
+   "stage": "generation",
+   "start_offset_ms": 494.3,
+   "latency_ms": 5226.1,
+   "tokens": {
+    "prompt": 1114,
+    "completion": 159,
+    "total": 1273
+   },
+   "cost_usd": 0.0002625,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 3.5
+   }
+  },
+  {
+   "name": "tool.check_coverage_in_force",
+   "stage": "tools",
+   "start_offset_ms": 5720.4,
+   "latency_ms": 0.0,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "check_coverage_in_force"
+   }
+  },
+  {
+   "name": "llm.call.3",
+   "stage": "generation",
+   "start_offset_ms": 5720.4,
+   "latency_ms": 7782.1,
+   "tokens": {
+    "prompt": 1269,
+    "completion": 580,
+    "total": 1849
+   },
+   "cost_usd": 0.00053835,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 2.9
+   }
+  },
+  {
+   "name": "mcp.search_policy_wording",
+   "stage": "retrieval",
+   "start_offset_ms": 13502.6,
+   "latency_ms": 134.8,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "search_policy_wording",
+    "server_latency_ms": 128.0,
+    "server_trace_id": "a9b370d156674497"
+   }
+  },
+  {
+   "name": "llm.call.4",
+   "stage": "generation",
+   "start_offset_ms": 13637.4,
+   "latency_ms": 6007.5,
+   "tokens": {
+    "prompt": 1573,
+    "completion": 73,
+    "total": 1646
+   },
+   "cost_usd": 0.00027975,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 5.3
+   }
+  },
+  {
+   "name": "mcp.get_limits",
+   "stage": "tools",
+   "start_offset_ms": 19645.0,
+   "latency_ms": 3.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "mcp",
+    "tool": "get_limits",
+    "server_latency_ms": 0.5,
+    "server_trace_id": "a9b370d156674497"
+   }
+  },
+  {
+   "name": "llm.call.5",
+   "stage": "generation",
+   "start_offset_ms": 19648.1,
+   "latency_ms": 14129.8,
+   "tokens": {
+    "prompt": 1687,
+    "completion": 371,
+    "total": 2058
+   },
+   "cost_usd": 0.00047565,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 12.5
+   }
+  },
+  {
+   "name": "tool.refer_to_adjuster",
+   "stage": "tools",
+   "start_offset_ms": 33778.0,
+   "latency_ms": 2.1,
+   "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+   },
+   "cost_usd": 0.0,
+   "attrs": {
+    "hop": "agent",
+    "tool": "refer_to_adjuster"
+   }
+  },
+  {
+   "name": "llm.call.6",
+   "stage": "generation",
+   "start_offset_ms": 33780.2,
+   "latency_ms": 11989.0,
+   "tokens": {
+    "prompt": 1875,
+    "completion": 126,
+    "total": 2001
+   },
+   "cost_usd": 0.00035685,
+   "attrs": {
+    "hop": "agent",
+    "model": "openai/gpt-oss-120b",
+    "rate_limit_wait_s": 11.1
+   }
+  }
+ ],
+ "totals": {
+  "latency_ms": 45769.5,
+  "tokens": 9746,
+  "cost_usd": 0.0020748,
+  "by_stage": {
+   "retrieval": {
+    "latency_ms": 134.8,
+    "tokens": 0,
+    "cost_usd": 0.0
+   },
+   "generation": {
+    "latency_ms": 45628.6,
+    "tokens": 9746,
+    "cost_usd": 0.0020748
+   },
+   "tools": {
+    "latency_ms": 5.4,
+    "tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ }
+}

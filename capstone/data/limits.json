@@ -1,0 +1,128 @@
+[
+ {
+  "product": "motor",
+  "peril": "flood",
+  "version": "2023",
+  "effective_from": 20230101,
+  "effective_to": 20250228,
+  "deductible": 5000,
+  "sub_limit": 150000
+ },
+ {
+  "product": "motor",
+  "peril": "flood",
+  "version": "2025",
+  "effective_from": 20250301,
+  "effective_to": 99991231,
+  "deductible": 7500,
+  "sub_limit": 100000
+ },
+ {
+  "product": "motor",
+  "peril": "theft",
+  "version": "2023",
+  "effective_from": 20230101,
+  "effective_to": 20250228,
+  "deductible": 5000,
+  "sub_limit": 600000
+ },
+ {
+  "product": "motor",
+  "peril": "theft",
+  "version": "2025",
+  "effective_from": 20250301,
+  "effective_to": 99991231,
+  "deductible": 5000,
+  "sub_limit": 600000
+ },
+ {
+  "product": "motor",
+  "peril": "collision",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 3000,
+  "sub_limit": null
+ },
+ {
+  "product": "motor",
+  "peril": "fire",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 3000,
+  "sub_limit": 800000
+ },
+ {
+  "product": "motor",
+  "peril": "wear_and_tear",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 0,
+  "sub_limit": 0
+ },
+ {
+  "product": "household",
+  "peril": "flood",
+  "version": "2023",
+  "effective_from": 20230101,
+  "effective_to": 20250228,
+  "deductible": 2000,
+  "sub_limit": 120000
+ },
+ {
+  "product": "household",
+  "peril": "flood",
+  "version": "2025",
+  "effective_from": 20250301,
+  "effective_to": 99991231,
+  "deductible": 4000,
+  "sub_limit": 75000
+ },
+ {
+  "product": "household",
+  "peril": "theft",
+  "version": "2023",
+  "effective_from": 20230101,
+  "effective_to": 20250228,
+  "deductible": 2000,
+  "sub_limit": 50000
+ },
+ {
+  "product": "household",
+  "peril": "theft",
+  "version": "2025",
+  "effective_from": 20250301,
+  "effective_to": 99991231,
+  "deductible": 2500,
+  "sub_limit": 40000
+ },
+ {
+  "product": "household",
+  "peril": "collision",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 0,
+  "sub_limit": 0
+ },
+ {
+  "product": "household",
+  "peril": "fire",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 2000,
+  "sub_limit": 500000
+ },
+ {
+  "product": "household",
+  "peril": "wear_and_tear",
+  "version": "ALL",
+  "effective_from": 19000101,
+  "effective_to": 99991231,
+  "deductible": 0,
+  "sub_limit": 0
+ }
+]
